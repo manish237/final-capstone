@@ -1,0 +1,57 @@
+<div class="row" id="md-form-row">
+    {{ctrl.loginUname}}
+    <form id="form-input" name="inputForm" novalidate ng-submit="ctrl.loginResetSubmit(inputForm)">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4"><label>Username</label></div>
+            <div class="col-md-4">
+                <input type="email" class="form-control" ng-model="ctrl.resetUname" id="username" name="username" required
+                       ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/"
+                       ng-minlength="5">
+                <div ng-if="inputForm.$submitted" ng-messages="inputForm.username.$error">
+                    <span class="error" ng-message="required">Field is required!</span>
+                    <span class="error" ng-message="pattern">Please enter valid email address</span>
+                    <span class="error" ng-message="minlength">Minimum 5 characters expected</span>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4"><label for="password">Password</label></div>
+            <div class="col-md-4">
+                <input type="password" class="form-control" ng-model="ctrl.pwd" id="password" name="password" required
+                       ng-minlength="6">
+                <div ng-if="inputForm.$submitted" ng-messages="inputForm.username.$error">
+                    <span class="error" ng-message="required">Field is required!</span>
+                    <span class="error" ng-message="minlength">Minimum 5 characters expected</span>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4"><label for="cpassword">Confirm Password</label></div>
+            <div class="col-md-4">
+                <input type="password" class="form-control" ng-model="ctrl.cpwd" id="cpassword" name="cpassword" required
+                       ng-minlength="6"
+                       password-matcher="{{ctrl.pwd}}"
+                >
+
+                <div ng-if="inputForm.$submitted" ng-messages="inputForm.cpassword.$error">
+                    <span class="error" ng-message="required">Field is required!</span>
+                    <span class="error" ng-message="minlength">Minimum 5 characters expected</span>
+                    <span class="error" ng-message="matcher">Confirm Password should be same as old Password.</span>
+                </div>
+
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12 text-center">
+                <input type="submit" class="form-control" value="Login" id="btn-login-submit">
+            </div>
+        </div>
+    </form>
+</div>
