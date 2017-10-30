@@ -45,7 +45,7 @@ angular.module('dirLibrary', ['apiLibrary'])
 
 
             ngModel.$asyncValidators.uniqueUsername = function(modelValue , viewValue) {
-                //console.log("call- " +modelValue + " " + viewValue)
+                console.log("call- " +modelValue + " " + viewValue)
                 // var userInput= modelValue || viewValue;
                 return unameExists(modelValue||viewValue)
                     .then(function(response) {

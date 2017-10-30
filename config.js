@@ -28,6 +28,7 @@ config.servicetype = 'CONTENT CONSULTATION BOTH'
 config.commtype = 'MESSAGE CHAT'
 config.standarddiagnosis = 'CAVITIES CARIES DIABETES'
 config.qbCategories = 'HISTORY HYGENE'
+config.dietCategories = 'BREAKFAST LUNCH DINNER OTHER'
 
 
 module.exports = config;

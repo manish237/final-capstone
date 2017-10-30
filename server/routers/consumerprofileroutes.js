@@ -159,38 +159,39 @@ router.put('/:uname', jsonParser, (req, res) => {
 
     input.username = req.body.username;
 
-    if(req.body.age!==undefined) {
-        input.age = req.body.age;
-    }
-
-    if(req.body.healthscore!==undefined && req.body.healthscore!==0) {
-        input.healthscore = req.body.healthscore;
+    if(req.body.hygenescore!==undefined && req.body.hygenescore!==0) {
+        input.hygenescore = req.body.hygenescore;
     }
 
     if(req.body.lastvisit!==undefined) {
         input.lastvisit = req.body.lastvisit;
     }
 
-    if(req.body.lastvisitDiagnosis!==undefined && req.body.lastvisitDiagnosis.length!==0) {
-        input.lastvisitDiagnosis = [];
-        for(let i = 0;i<req.body.lastvisitDiagnosis.length;i++)
-        {
-            input.lastvisitDiagnosis.push(req.body.lastvisitDiagnosis[i])
-        }
+    if(req.body.nextvisit!==undefined) {
+        input.nextvisit = req.body.nextvisit;
     }
-    
+    if(req.body.age!==undefined) {
+        input.age = req.body.age;
+    }
     if(req.body.preferredlanguage!==undefined && req.body.preferredlanguage.length!==0) {
         input.preferredlanguage = req.body.preferredlanguage;
     }
 
-    if(req.body.conditionlist!==undefined && req.body.conditionlist.length!==0) {
-        input.conditionlist = [];
-        for(let i = 0;i<req.body.conditionlist.length;i++)
+    if(req.body.medHistorylist!==undefined && req.body.medHistorylist.length!==0) {
+        input.medHistorylist = [];
+        for(let i = 0;i<req.body.medHistorylist.length;i++)
         {
-            input.conditionlist.push(req.body.conditionlist[i])
+            input.medHistorylist.push(req.body.medHistorylist[i])
         }
     }
 
+    if(req.body.oralassessment!==undefined && req.body.oralassessment.length!==0) {
+        input.oralassessment = [];
+        for(let i = 0;i<req.body.oralassessment.length;i++)
+        {
+            input.oralassessment.push(req.body.oralassessment[i])
+        }
+    }
     if(req.body.medicationlist!==undefined && req.body.medicationlist.length!==0) {
         input.medicationlist = [];
         for(let i = 0;i<req.body.medicationlist.length;i++)
@@ -211,6 +212,7 @@ router.put('/:uname', jsonParser, (req, res) => {
             )
         }
     }
+
     console.log("consumer profile data put 02")
 
     input.dateupdated=req.body.dateupdated||Date.now();
@@ -287,7 +289,7 @@ router.get('/:uname', (req, res) => {
         })
         .then(data => {
             console.log("consumer profile data get 04")
-            //console.log(addressHistData)
+            console.log(data)
             res.status(200).json(data)
         })
         .catch(

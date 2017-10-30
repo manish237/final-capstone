@@ -18,12 +18,98 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="bower_components/angucomplete-alt/angucomplete-alt.css">
     <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css">
+    <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,300i,400,500' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/external/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/external/ionicons/css/ionicons.min.css">
+
+
 
 
 </head>
-<body class="container" ng-controller="MainController as ctrl">
+<body ng-controller="MainController as ctrl">
+<ng-view></ng-view>
+<!--
 
 
+
+<header>
+    <nav>
+        <div class="row">
+           &lt;!&ndash; <img src="resources/img/logo-white.png" alt="Omnifood logo" class="logo">
+            <img src="resources/img/logo.png" alt="Omnifood logo" class="logo-black">&ndash;&gt;
+            <ul class="main-nav">
+                <li><a href="#/aboutus">About Us</a></li>
+                <li><a href="#/signup">Sign Up</a></li>
+                <li><a href="#/login">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="hero-text-box">
+        <h1>TheApp - Your personal dental health manager</h1>
+        <h2>Consult a Dentist,Get Dental Visit Alerts and get health information on your screen.</h2>
+    </div>
+
+</header>
+
+
+<section class="section-tabs" id="tabs">
+<div class="row">
+    <div class="col-lg-4">
+        <div class="tab-small tab-small-1">
+            <div>
+                <h3>Assess Your Oral Hygene</h3>
+            </div>
+            <div>
+                <ul>
+                    <li><i class="ion-ios-checkmark-empty icon-small"></i>Take our Oral Hygene Assessment</li>
+                    <li><i class="ion-ios-checkmark-empty icon-small"></i>Get Recommendations based on you score</li>
+                </ul>
+            </div>
+            <div>
+                <a href="#" class="btn btn-ghost" ng-click="ctrl.openMyModal('assessment')">Take Assessment Now!!</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="tab-small tab-small-2">
+            <div>
+                <h3>Track your Diet</h3>
+            </div>
+            <div>
+                <ul>
+                    <li><i class="ion-ios-checkmark-empty icon-small"></i>Use out food tracker</li>
+                    <li><i class="ion-ios-checkmark-empty icon-small"></i>See nutrition information for the food you eat</li>
+                </ul>
+            </div>
+            <div>
+                <a href="#" class="btn btn-ghost" ng-click="ctrl.openMyModal('diet')">Track your food.</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="tab-small  tab-small-3">
+            <div>
+                <h3>Consult with a Provider</h3>
+            </div>
+            <div>
+                <ul>
+                    <li><i class="ion-ios-checkmark-empty icon-small"></i>Consult with a Provider on our Panel</li>
+                    <li><i class="ion-ios-checkmark-empty icon-small"></i>Use available group chat to get help.</li>
+                </ul>
+            </div>
+            <div>
+                <a href="#" class="btn btn-ghost" ng-click="ctrl.openMyModal('message')">Consult Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</section>-->
 
 
 
@@ -32,6 +118,8 @@
 
 
 <script src="./bower_components/jquery/dist/jquery.js"                type="text/javascript"></script>
+<script src="./js/external/raphael-2.1.4.min.js"                      type="text/javascript"></script>
+<script src="./js/external/justgage.js"                               type="text/javascript"></script>
 <script src="./bower_components/tether/dist/js/tether.js"             type="text/javascript"></script>
 <script src="./bower_components/bootstrap/dist/js/bootstrap.js"       type="text/javascript"></script>
 <script src="./bower_components/underscore/underscore.js"             type="text/javascript"></script>
@@ -43,6 +131,10 @@
 <script src="./bower_components/angular-animate/angular-animate.js"   type="text/javascript"></script>
 <script src="./bower_components/angular-sanitize/angular-sanitize.js" type="text/javascript"></script>
 <script src="./bower_components/angucomplete-alt/angucomplete-alt.js" type="text/javascript"></script>
+<script src="./bower_components/angular-bootstrap/ui-bootstrap-tpls.js" type="text/javascript"></script>
+<script src="./bower_components/angular-css/angular-css.js" type="text/javascript"></script>
+<script src="./bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+
 
 <script src="./js/app.js" type="text/javascript"></script>
 <script src="./js/controllers.js" type="text/javascript"></script>
@@ -51,6 +143,7 @@
 <script src="./js/constants.js" type="text/javascript"></script>
 <script src="./js/services.js" type="text/javascript"></script>
 <script src="./js/filters.js" type="text/javascript"></script>
+<script src="./js/components.js" type="text/javascript"></script>
 
 <script src="./js/index.js" type="text/javascript"></script>
 </body>

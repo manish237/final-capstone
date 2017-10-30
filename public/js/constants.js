@@ -20,6 +20,10 @@ angular.module('apiLibraryConstants', [])
 .constant('API_PUT_PROVIDER_PROFILE', '/profile/provider/')
 .constant('API_GET_PROVIDER_PROFILE', '/profile/provider/')
 
+.constant('API_POST_USER_DIET', '/diet/')
+.constant('API_PUT_USER_DIET', '/diet/')
+.constant('API_GET_USER_DIET', '/diet/')
+
 .constant('API_POST_MESSAGE', '/message/')
 .constant('API_GET_MESSAGE', '/message/')
 

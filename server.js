@@ -12,6 +12,7 @@ const commonProfileRoutes = require('./server/routers/commonprofileroutes');
 const consumerProfileRoutes = require('./server/routers/consumerprofileroutes');
 const providerProfileRoutes = require('./server/routers/providerprofileroutes');
 const messageRoutes = require('./server/routers/messageroutes');
+const dietRoutes = require('./server/routers/userdietroutes');
 const extRoutes = require('./server/routers/extRoutes');
 const socketio = require('socket.io');
 const socket = require('./server/routers/socket');
@@ -44,6 +45,7 @@ app.use('/profile/provider', providerProfileRoutes);
 app.use('/message', messageRoutes);
 app.use('/meta', metaRoutes);
 app.use('/ext', extRoutes);
+app.use('/diet', dietRoutes);
 
 
 /*

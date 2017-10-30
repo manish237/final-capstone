@@ -1,0 +1,214 @@
+/*HEX: ##FFEEE4
+RGB: 71,71,71 // text color
+
+HEX: #F17F42
+RGB: 242,175,41 //link/button
+
+HEX: #CE6D39
+RGB: 209,96,61 //hover dark
+
+HEX: #000000
+RGB: 224,224,206 //background*/
+/* ----------------------------------------------- */
+/* BASIC SETUP */
+/* ----------------------------------------------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    background-color: #474747;
+    color: black;/*#474747;*/
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+}
+
+
+
+header {
+    background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/vintage-concrete.png);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/vintage-concrete.png);
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
+    background-attachment: fixed;
+}
+
+.icon-small {
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+    color: #000000;
+    font-size: 140%;
+    margin-right: 10px;
+
+    /*secrets to align text and icons*/
+    line-height: 120%;
+    vertical-align: middle;
+    margin-top: -5px;
+}
+
+/* Main navi */
+.main-nav {
+    float: left;
+    list-style: none;
+    margin-top: 5vh;
+}
+
+.main-nav li {
+    display: inline-block;
+    margin-left: 40px;
+}
+
+.main-nav li a:link,
+.main-nav li a:visited {
+    padding: 8px 0;
+    color: #FFEEE4;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 90%;
+    border-bottom: 2px solid transparent;
+    -webkit-transition: border-bottom 0.2s;
+    transition: border-bottom 0.2s;
+}
+
+.main-nav li a:hover,
+.main-nav li a:active {
+    border-bottom: 2px solid #CE6D39;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+h1 {
+    margin-top: 15vh;
+    margin-bottom: 20px;
+
+    color: #FFEEE4;
+    font-size: 240%;
+    word-spacing: 4px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+h2 {
+    color: #FFEEE4;
+    font-size: 180%;
+    word-spacing: 2px;
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+h3 {
+    font-size: 110%;
+    margin-bottom: 15px;
+}
+
+.section-tabs{
+    margin-top: 1em;
+    padding-right: 1%;
+}
+
+
+.tab-small{
+    background-color: #F6B352;
+    border-radius: 5px;
+    width: 95%;
+    margin-left: 4%;
+
+    box-shadow: 0 4px 4px #efefef;
+    height: 30vh;
+
+
+
+    position: relative;
+}
+.tab-small-1,.tab-small-2,.tab-small-3{
+    -webkit-transition: transform 0.2s;
+    /*transition: transform 0.2s, margin-left 0.2s, z-index 0.2s, width 0.2s, margin-top 0.2s, box-shadow 0.2s,height 0.2s;*/
+    transition:1s ease;
+}
+
+.tab-small-1:hover {
+    transform: scale(1.2);
+    z-index: 12;
+    margin-left: 10%;
+}
+
+.tab-small-2:hover {
+    transform: scale(1.2);
+    z-index: 12;
+}
+
+.tab-small-3:hover {
+    transform: scale(1.2);
+    z-index: 10;
+}
+
+.tab-small ul{
+    list-style: none;
+    padding-left: 20px;
+}
+
+.tab-small div {
+    padding: 15px;
+    border-bottom: 1px solid #CE6D39;
+}
+
+.tab-small ul li {
+    padding: 5px 0;
+    font-size: 90%;
+}
+
+.tab-small div:last-child{
+    text-align: center;
+}
+
+.tab-small div:first-child{
+    text-align: center;
+}
+
+
+.btn:link,
+.btn:visited,
+input[type=submit] {
+    display: inline-block;
+    padding: 10px 30px;
+    font-weight: 300;
+    text-decoration: none;
+    border-radius: 200px;
+    -webkit-transition: background-color 0.2s, border 0.2s, color 0.2s;
+    transition: background-color 0.2s, border 0.2s, color 0.2s;
+}
+
+.btn:hover,
+.btn:active,
+input[type=submit]:hover,
+input[type=submit]:active {
+    background-color: #CE6D39;
+}
+
+.btn-ghost:link,
+.btn-ghost:visited {
+    border: 1px solid #e67e22;
+    color: #000000;
+}
+
+.btn-ghost:hover,
+.btn-ghost:active {
+    border: 1px solid #CE6D39;
+    color: #fff;
+}
+

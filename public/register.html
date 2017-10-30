@@ -1,0 +1,125 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Regitration From</h3>
+    <button type="button" class="close" ng-click="$ctrl.cancel()">&times;</button>
+
+    <span>Form Submitted! {{inputForm.$submitted}}</span><br>
+    <span>Form $valid! {{inputForm.$valid}}</span><br>
+    <span>Form $invalid! {{inputForm.$invalid}}</span><br>
+    <span>Error username! {{inputForm.username.$error}}</span><br>
+    <span>Error username2! {{inputForm.username.$dirty}}</span><br>
+    <span>Error password! {{inputForm.password.$error}}</span><br>
+    <span>Error cpassword! {{inputForm.cpassword.$error}}</span><br>
+    <span>Error cpassword! {{$ctrl.match}}</span><br>
+    <span>Error errorMessage! {{$ctrl.errorMessage}}</span><br>
+</div>
+<div class="modal-body" id="modal-body">
+<!--
+    <h1>Regitration From</h1>
+    <span>Form Submitted! {{inputForm.$submitted}}</span><br>
+    <span>Form $valid! {{inputForm.$valid}}</span><br>
+    <span>Form $invalid! {{inputForm.$invalid}}</span><br>
+    <span>Error username! {{inputForm.username.$error}}</span><br>
+    <span>Error username2! {{inputForm.username.$dirty}}</span><br>
+    <span>Error password! {{inputForm.password.$error}}</span><br>
+    <span>Error cpassword! {{inputForm.cpassword.$error}}</span><br>
+    <span>Error cpassword! {{$ctrl.match}}</span><br>
+    <span>Error errorMessage! {{$ctrl.errorMessage}}</span><br>
+-->
+
+    <div class="row" id="md-form-row">
+        <form id="form-input" name="inputForm" novalidate>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4"><label>Username</label></div>
+                <div class="col-md-4">
+                    <input type="email" class="form-control" ng-model="$ctrl.uname" id="username" name="username" required
+                           username-validator
+                           ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/"
+                           ng-minlength="5"
+                           ng-model-options="{ debounce: 1000 }">
+                    <div ng-if="inputForm.$submitted" ng-messages="inputForm.username.$error">
+                        <span class="error" ng-message="required">Field is required!</span>
+                        <span class="error" ng-message="pattern">Please enter valid email address</span>
+                        <span class="error" ng-message="minlength">Minimum 5 characters expected</span>
+                        <span class="error" ng-message="uniqueUsername">Username already taken!!</span>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4"><label for="password">Password</label></div>
+                <div class="col-md-4">
+                    <input type="password" class="form-control" ng-model="$ctrl.pwd" id="password" name="password" required
+                           ng-minlength="6">
+                    <div ng-if="inputForm.$submitted" ng-messages="inputForm.username.$error">
+                        <span class="error" ng-message="required">Field is required!</span>
+                        <span class="error" ng-message="minlength">Minimum 5 characters expected</span>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4"><label for="cpassword">Confirm Password</label></div>
+                <div class="col-md-4">
+                    <input type="password" class="form-control" ng-model="$ctrl.cpwd" id="cpassword" name="cpassword" required
+                           ng-minlength="6"
+                           password-matcher="{{$ctrl.pwd}}"
+                    >
+
+                    <div ng-if="inputForm.$submitted" ng-messages="inputForm.cpassword.$error">
+                        <span class="error" ng-message="required">Field is required!</span>
+                        <span class="error" ng-message="minlength">Minimum 5 characters expected</span>
+                        <span class="error" ng-message="matcher">Confirm Password should be same as old Password.</span>
+                    </div>
+
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4"><label for="name">Name</label></div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-model="$ctrl.name" id="name" name="name" required
+                           ng-minlength="6" ng-pattern="/^[a-zA-Z ]*$/">
+
+                    <div ng-if="inputForm.$submitted" ng-messages="inputForm.name.$error">
+                        <span class="error" ng-message="required">Field is required!</span>
+                        <span class="error" ng-message="minlength">Minimum 5 characters expected</span>
+                        <span class="error" ng-message="pattern">Numbers not allowed</span>
+                    </div>
+
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4"><label for="utype">Medical Provider</label></div>
+                <div class="col-md-4">
+                    <select ng-model="$ctrl.utype" id="utype" required name="utype">
+                        <option value = "CONSUMER" selected>No</option>
+                        <option value = "PROVIDER">Yes</option>
+                    </select>
+                    <div ng-if="inputForm.$submitted" ng-messages="inputForm.genderOptions.$error" >
+                        <span class="error" ng-message="required">Field is required!</span>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <!--<div class="form-group">
+                <div class="col-sm-6 text-center">
+                    <input type="submit" class="form-control" value="Submit" id="btn-submit">
+                </div>
+                <div class="col-sm-6 text-center">
+                    <input type="button" class="form-control" ng-click="$ctrl.cancel()" value="Forgot Password">
+                </div>
+            </div>-->
+        </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <input type="submit" class="form-control" ng-click="$ctrl.registerSubmit(inputForm)" value="Register">
+    <input type="button" class="form-control" ng-click="$ctrl.cancel()" value="Cancel">
+</div>

@@ -1,2 +1,1 @@
-var myApp = angular.module('myApp',['ngRoute','ngMessages', 'ngAnimate','ctrlLibrary','dirLibrary','filterLibrary']);
-
+var myApp = angular.module('myApp',['ngRoute','angularCSS','ngMessages', 'ngAnimate','ngSanitize','ctrlLibrary','dirLibrary','filterLibrary','ui.bootstrap','componentLibrary','routeLibrary','LocalStorageModule']);

@@ -38,6 +38,13 @@ const localStrategy = new LocalStrategy({
             else {
                 return callback(null, user.apiRepr())
             }
+        })
+        .catch(err => {
+            //console.log("err")
+            //console.error(err);
+            //console.log("in reset 08")
+            return callback(null, false, {message: 'Incorrect username'});
+
         });
 });
 
@@ -175,17 +182,21 @@ router.post('/register', jsonParser, (req, res) => {
 });
 
 router.post('/login',jsonParser,(req, res) => {
+    console.log("login 01")
     passport.authenticate('local', function(err, user, info) {
         if (err) {
             //console.log(err)
+
             return res.status(500).json({message: 'Unknown Error'})
         }
         if(!user) //false or auth error
         {
+
             return res.status(422).json({message: info.message});
         }
         else
         {
+
             return res.status(200).json({user: user});
         }
     })(req, res);

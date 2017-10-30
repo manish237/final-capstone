@@ -8,6 +8,41 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
     .factory('_', function() {
         return window._; // assumes underscore has already been loaded on the page
     })
+    .factory('dataStorage', [function() {
+        var loginData = {};
+        var registerData = {};
+        var resetData = {};
+        var genData = {};
+
+        return {
+            setLoginData: function(data) {
+                loginData = data;
+            },
+            setRegisterData: function(data) {
+                registerData = data;
+            },
+            setResetData: function(data) {
+                resetData = data;
+            },
+            setGenData: function(data) {
+                genData = data;
+            },
+            getLoginData: function() {
+                return loginData;
+            },
+            getRegisterData: function() {
+                return registerData;
+            },
+            getResetData: function() {
+                return resetData;
+            },
+            getGenData: function() {
+                return genData;
+            }
+        };
+    }])
+
+
     .factory('providerList', ['$http','$cacheFactory', '$q','myCache', 'API_GET_PROVIDER_LIST', function($http, $cacheFactory,$q, myCache,API_GET_PROVIDER_LIST){
         return function(){
             //console.log("providerList")

@@ -1,0 +1,86 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Login</h3>
+    <button type="button" class="close" ng-click="$ctrl.cancel()">&times;</button>
+
+    <span>Form Submitted! {{inputForm.$submitted}}</span><br>
+    <span>Form $valid! {{inputForm.$valid}}</span><br>
+    <span>Form $invalid! {{inputForm.$invalid}}</span><br>
+    <span>Error username! {{inputForm.username.$error}}</span><br>
+    <span>Error username2! {{inputForm.username.$dirty}}</span><br>
+    <span>Error password! {{inputForm.password.$error}}</span><br>
+    <span>Error password! {{$ctrl.errorMessage}}</span><br>
+</div>
+<div class="modal-body" id="modal-body">
+
+<!--
+<span>Form Submitted! {{inputForm.$submitted}}</span><br>
+<span>Form $valid! {{inputForm.$valid}}</span><br>
+<span>Form $invalid! {{inputForm.$invalid}}</span><br>
+<span>Error username! {{inputForm.username.$error}}</span><br>
+<span>Error username2! {{inputForm.username.$dirty}}</span><br>
+<span>Error password! {{inputForm.password.$error}}</span><br>
+<span>Error password! {{$ctrl.errorMessage}}</span><br>
+-->
+
+    <div class="row" id="md-form-row">
+        <form id="form-input" name="inputForm" novalidate ng-submit="">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4"><label>Username</label></div>
+                <div class="col-md-4">
+                    <input type="email" class="form-control" ng-model="$ctrl.loginUname" id="username" name="username" required
+                           ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/"
+                           ng-minlength="5">
+                    <div ng-if="inputForm.$submitted" ng-messages="inputForm.username.$error">
+                        <span class="error" ng-message="required">Field is required!</span>
+                        <span class="error" ng-message="pattern">Please enter valid email address</span>
+                        <span class="error" ng-message="minlength">Minimum 5 characters expected</span>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4"><label for="password">Password</label></div>
+                <div class="col-md-4">
+                    <input type="password" class="form-control" ng-model="$ctrl.loginPwd" id="password" name="password" required
+                           ng-minlength="6">
+                    <div ng-if="inputForm.$submitted" ng-messages="inputForm.username.$error">
+                        <span class="error" ng-message="required">Field is required!</span>
+                        <span class="error" ng-message="minlength">Minimum 5 characters expected</span>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <!--<div class="row">
+                <div class="form-group">
+                    <div class="col-sm-6 text-center">
+                        <input type="submit" class="form-control" value="Login" id="btn-login-submit">
+                    </div>
+                    <div class="col-sm-6 text-center">
+                    <input type="button" class="form-control" ng-click="$ctrl.cancel()" value="Cancel" id="btn-login-cancel">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-sm-6 text-center">
+                        <input type="button" class="form-control" ng-click="$ctrl.registration()" value="Register">
+                    </div>
+                </div>
+                <div class="form-group">
+                <div class="col-sm-6 text-center">
+                    <input type="button" class="form-control" ng-click="$ctrl.reset()" value="Forgot Password">
+                </div>
+            </div>
+            </div>-->
+        </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <input type="submit" class="form-control" ng-click="$ctrl.loginSubmit(inputForm)" value="Login">
+    <input type="button" class="form-control" ng-click="$ctrl.cancel()" value="Cancel">
+    <input type="button" class="form-control" ng-click="$ctrl.registration()" value="Register">
+    <input type="button" class="form-control" ng-click="$ctrl.reset()" value="Forgot Password">
+</div>

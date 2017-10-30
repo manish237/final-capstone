@@ -1,9 +1,9 @@
 "use strict"
 
-angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-alt','ui.select', 'ngSanitize'])
+angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-alt','ui.select', 'ngSanitize','componentLibrary'])
 
 
-.controller('MainController',['$scope','$rootScope','$timeout','providerList','unameExists','registration','instantFood','login','commondata','consumerdata','providerdata','_','instantLoc','resetLogin','getLang','commondataUpd','consumerdataUpd','providerdataUpd','messagePost',function ($scope, $rootScope,$timeout,providerList,unameExists,registration,instantFood,login,commondata,consumerdata,providerdata,_,instantLoc,resetLogin,getLang,commondataUpd,consumerdataUpd,providerdataUpd,messagePost) {
+.controller('MainController',['$scope','$rootScope','$timeout','$location','providerList','unameExists','registration','instantFood','login','commondata','consumerdata','providerdata','_','instantLoc','resetLogin','getLang','commondataUpd','consumerdataUpd','providerdataUpd','messagePost','$uibModal','$log','dataStorage','localStorageService',function ($scope, $rootScope,$timeout,$location,providerList,unameExists,registration,instantFood,login,commondata,consumerdata,providerdata,_,instantLoc,resetLogin,getLang,commondataUpd,consumerdataUpd,providerdataUpd,messagePost,$uibModal,$log,dataStorage,localStorageService) {
     let ctrl = this;
     console.log("MainCtrl");
     $scope.test = "my test data"
@@ -533,6 +533,438 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
         }
     }
 
+    ctrl.openLoginModal = function (target) {
+        console.log("openLoginModal")
+        console.log(target)
+        var modalInstance = $uibModal.open({
+            animation: true,
+            component: 'loginForm',
+            resolve: {
+                items: function () {
+                    return;
+                }
+            }
+        });
 
+        modalInstance.result.then(function (selectedItem) {
+            console.log("result")
+            console.log(selectedItem)
+            dataStorage.setGenData(selectedItem);
+            localStorageService.set('genData',selectedItem)
+            if(target==='assessment')
+            {
+                $location.url('/HealthAssessment')
+            }
+            else if(target==='diet'){
+                $location.url('/Diet')
+            }
+            else if(target==='message'){
+                $location.url('/MessageCenter')
+            }
+            else if(target==='overview'){
+                $location.url('/Overview')
+            }
+            else {
+                $location.url('/Overview')
+            }
+            //redirect to home page
+        }, function () {
+            $log.info('modal-component dismissed at: ' + new Date());
+        });
+    };
+
+    ctrl.openRegisterModel = function (target) {
+        console.log("openRegisterModel")
+        console.log(target)
+        var modalInstance = $uibModal.open({
+            animation: true,
+            component: 'registerForm',
+            resolve: {
+                items: function () {
+                    return;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            console.log("result")
+            console.log(selectedItem)
+            dataStorage.setGenData(selectedItem);
+            localStorageService.set('genData',selectedItem)
+
+            if(target==='overview'){
+                $location.url('/Overview')
+            }
+            else {
+                $location.url('/Overview')
+            }
+            //redirect to home page
+        }, function () {
+            $log.info('modal-component dismissed at: ' + new Date());
+        });
+    };
 
 }])
+
+.controller('OverviewCtrl',['$scope','$rootScope','$location','dataStorage','localStorageService',function ($scope, $rootScope,$location,dataStorage,localStorageService) {
+    console.log("OverviewCtrl");
+    let oCtrl=this;
+
+    oCtrl.data = localStorageService.get('genData')
+    console.log(oCtrl.data)
+    // console.log(oCtrl.data.data[1][0])
+    // console.log(oCtrl.data.data[1][0].name)
+    oCtrl.name = oCtrl.data.data[1][0].name;
+    oCtrl.score = oCtrl.data.data[2][0].score;
+    oCtrl.logout = function (target) {
+        console.log("logout")
+        $location.url('/')
+    };
+
+}])
+.controller('ProfileCtrl',['$scope','$rootScope','$location',function ($scope, $rootScope,$location) {
+    console.log("ProfileCtrl");
+
+}])
+
+.controller('MessageCenterCtrl',['$scope','$rootScope','$location',function ($scope, $rootScope,$location) {
+    console.log("MessageCenterCtrl");
+
+}])
+
+.controller('DietManagerCtrl',['$scope','$rootScope','$location',function ($scope, $rootScope,$location) {
+    console.log("DietManagerCtrl");
+
+}])
+
+.controller('HealthAssessCtrl',['$scope','$rootScope','$location',function ($scope, $rootScope,$location) {
+    console.log("HealthAssessCtrl");
+
+}])
+
+
+/*
+.controller('LoginController',['login','commondata','consumerdata','providerdata','$uibModal','$log',function (login,commondata,consumerdata,providerdata,$uibModal,$log) {
+    var theResults = [];
+
+    console.log("loginctrl")
+    let $ctrl = this;
+    $ctrl.loginSubmit = function (form) {
+        console.log("close loginSubmit")
+
+        if(form.$valid==true)
+        {
+
+            $ctrl.validForm=true;
+
+            var reqBody = {
+                "username":$ctrl.loginUname,
+                "password":$ctrl.loginPwd,
+            }
+            //console.log(reqBody);
+            let commoninfo={};
+            login(reqBody)
+                .then(data => {
+                    if(data.error) {
+
+                        $ctrl.errorMessage = data.error;
+                        return Promise.reject({
+                            error: data.error
+                        });
+                        //throw new Error(data.error);
+
+                        //$q.reject(data.error)
+                        // return data;
+                    }
+                    else {
+
+                        //console.log("login")
+                        //console.log(data)
+                        theResults.push(data);
+                        return commondata($ctrl.loginUname)
+                    }
+                })
+                .then(dataCommon=>{
+                    if(dataCommon.error){
+
+                        $ctrl.errorMessage = dataCommon.error;
+                        return Promise.reject({
+                            error: dataCommon.error
+                        });
+                        //throw new Error(dataCommon.error);
+
+                        //$q.reject(dataCommon.error)
+                        //return dataCommon;
+                    }
+                    else {
+
+                        //console.log(dataCommon)
+                        commoninfo = dataCommon;
+                        //console.log(dataCommon[0].usertype)
+                        theResults.push(dataCommon);
+
+                        if (dataCommon[0].usertype === 'CONSUMER') {
+                            return consumerdata($ctrl.loginUname)
+                        }
+                        else if (dataCommon[0].usertype === 'PROVIDER') {
+                            return providerdata($ctrl.loginUname)
+                        }
+                    }
+                })
+                .then(dataAdditional=> {
+                    "use strict";
+                    if(dataAdditional.error){
+
+                        $ctrl.errorMessage = dataAdditional.error;
+
+                        return Promise.reject({
+                            error: dataAdditional.error
+                        });
+                        throw new Error(dataAdditional.error);
+
+                        //$q.reject(dataAdditional.error)
+                        //return dataAdditional;
+                    }
+                    else {
+                        //console.log(dataAdditional)
+                        theResults.push(dataAdditional);
+                        $ctrl.close({$value: {
+                            type:"login",
+                            data:theResults
+                        }});
+
+                    }
+
+                })
+                .catch(err => {
+                    $ctrl.errorMessage = err.error;
+                });
+            //console.log(theResults)
+        }
+
+
+    }
+    $ctrl.cancel = function () {
+        console.log("close login")
+
+        $ctrl.dismiss({$value: 'cancel'});
+    };
+
+    $ctrl.registration = function () {
+        console.log(" registration")
+        console.log($ctrl)
+        var parent = $ctrl;
+        var modalInstance = $uibModal.open({
+            animation: true,
+            component: 'registerForm',
+            // scope:$ctrl,
+            resolve: {
+                items: function () {
+                    return $ctrl;
+                }
+            }
+        });
+        $ctrl.cancel();
+        modalInstance.result.then(function (selectedItem) {
+            console.log("result2")
+            console.log(selectedItem)
+            parent.close({$value: selectedItem});
+            //redirect to home page
+        }, function () {
+            $log.info('modal-component 2 dismissed at: ' + new Date());
+            console.log($ctrl)
+            $ctrl.cancel();
+        });
+    }
+    $ctrl.reset = function () {
+        console.log(" reset")
+        console.log($ctrl)
+        var parent = $ctrl;
+        var modalInstance = $uibModal.open({
+            animation: true,
+            component: 'resetForm',
+            // scope:$ctrl,
+            resolve: {
+                items: function () {
+                    return $ctrl;
+                }
+            }
+        });
+        $ctrl.cancel();
+        modalInstance.result.then(function (selectedItem) {
+            console.log("result2")
+            console.log(selectedItem)
+            parent.close({$value: selectedItem});
+            //redirect to home page
+        }, function () {
+            $log.info('modal-component 2 dismissed at: ' + new Date());
+            console.log($ctrl)
+            $ctrl.cancel();
+        });
+    }
+}])
+
+.controller('RegisterController',['$scope','$rootScope','registration',function ($scope, $rootScope,registration) {
+    var theResults = [];
+
+    console.log("registerctrl")
+    console.log($ctrl)
+    var parent = $ctrl;
+    console.log(parent)
+
+    let $ctrl = this;
+
+    console.log($ctrl)
+
+    $ctrl.registerSubmit = function (form) {
+        console.log("registerSubmit")
+        $ctrl.validForm=true;
+
+        var reqBody = {
+            "username":$ctrl.uname,
+            "password":$ctrl.pwd,
+            "name":$ctrl.name,
+            "type":$ctrl.utype
+        }
+        //console.log(reqBody);
+        registration(reqBody)
+            .then(function (data) {
+                //console.log(data)
+                if(data.error) {
+
+                    $ctrl.errorMessage = data.error;
+                    return Promise.reject({
+                        error: data.error
+                    });
+                }
+                else
+                {
+                    console.log($ctrl)
+                    console.log("reg success")
+                    $ctrl.close({$value:{
+                        type:"register",
+                        data:data
+                    }});
+                }
+            })
+            .catch(err => {
+                $ctrl.errorMessage = err.error;
+            });
+    }
+
+    $ctrl.cancel = function () {
+        console.log("close register")
+
+        $ctrl.dismiss({$value: 'cancel'});
+        parent.dismiss({$value: 'cancel'})
+    };
+}])
+
+.controller('ResetController',['$scope','$rootScope','commondata','consumerdata','providerdata','resetLogin',function ($scope, $rootScope,commondata,consumerdata,providerdata,resetLogin) {
+    var theResults = [];
+
+    console.log("resetctrl")
+    console.log($ctrl)
+    var parent = $ctrl;
+    console.log(parent)
+
+    let $ctrl = this;
+
+    console.log($ctrl)
+
+    $ctrl.loginResetSubmit = function (form) {
+        console.log("loginResetSubmit")
+        $ctrl.validForm=true;
+
+        var reqBody = {
+            "username":$ctrl.resetUname,
+            "password":$ctrl.pwd,
+        }
+        //console.log(reqBody);
+        resetLogin(reqBody)
+            .then(data => {
+                if(data.error) {
+
+                    $ctrl.errorMessage = data.error;
+                    return Promise.reject({
+                        error: data.error
+                    });
+                    //throw new Error(data.error);
+
+                    //$q.reject(data.error)
+                    // return data;
+                }
+                else {
+
+                    //console.log("login")
+                    //console.log(data)
+                    theResults.push(data);
+                    return commondata($ctrl.resetUname)
+                }
+            })
+            .then(dataCommon=>{
+                if(dataCommon.error){
+
+                    $ctrl.errorMessage = dataCommon.error;
+                    return Promise.reject({
+                        error: dataCommon.error
+                    });
+                    //throw new Error(dataCommon.error);
+
+                    //$q.reject(dataCommon.error)
+                    //return dataCommon;
+                }
+                else {
+
+                    //console.log(dataCommon)
+                    commoninfo = dataCommon;
+                    console.log(dataCommon[0].usertype)
+                    theResults.push(dataCommon);
+
+                    if (dataCommon[0].usertype === 'CONSUMER') {
+                        return consumerdata($ctrl.resetUname)
+                    }
+                    else if (dataCommon[0].usertype === 'PROVIDER') {
+                        return providerdata($ctrl.resetUname)
+                    }
+                }
+            })
+            .then(dataAdditional=> {
+                "use strict";
+                if(dataAdditional.error){
+
+                    $ctrl.errorMessage = dataAdditional.error;
+
+                    return Promise.reject({
+                        error: dataAdditional.error
+                    });
+                    throw new Error(dataAdditional.error);
+
+                    //$q.reject(dataAdditional.error)
+                    //return dataAdditional;
+                }
+                else {
+                    // console.log(dataAdditional)
+                    theResults.push(dataAdditional);
+                    $ctrl.close({$value: {
+                        type:"reset",
+                        data:theResults
+                    }});
+
+                }
+
+            })
+            .catch(err => {
+                $ctrl.errorMessage = err.error;
+            });
+
+    }
+
+    $ctrl.cancel = function () {
+        console.log("close reset")
+
+        $ctrl.dismiss({$value: 'cancel'});
+        parent.dismiss({$value: 'cancel'})
+    };
+}])
+*/

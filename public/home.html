@@ -1,0 +1,73 @@
+<header>
+    <nav>
+        <div class="row">
+            <ul class="main-nav">
+                <li><a href="#/aboutus">About Us</a></li>
+                <li><a href="" ng-click="ctrl.openRegisterModel('overview')">Sign Up</a></li>
+                <li><a href="" ng-click="ctrl.openLoginModal('overview')">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="hero-text-box">
+        <h1>TheApp - Your personal dental health manager</h1>
+        <h2>Consult a Dentist,Get Dental Visit Alerts and get health information on your screen.</h2>
+    </div>
+
+</header>
+
+
+<section class="section-tabs" id="tabs">
+<div class="row">
+    <div class="col-lg-4">
+        <div class="tab-small tab-small-1">
+            <div>
+                <h3>Assess Your Oral Hygene</h3>
+            </div>
+            <div>
+                <ul>
+                    <li><i class="ion-ios-checkmark-empty icon-small"></i>Take our Oral Hygene Assessment</li>
+                    <li><i class="ion-ios-checkmark-empty icon-small"></i>Get Recommendations based on you score</li>
+                </ul>
+            </div>
+            <div>
+                <a href="#" class="btn btn-ghost" ng-click="ctrl.openLoginModal('assessment')">Take Assessment Now!!</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="tab-small tab-small-2">
+            <div>
+                <h3>Track your Diet</h3>
+            </div>
+            <div>
+                <ul>
+                    <li><i class="ion-ios-checkmark-empty icon-small"></i>Use out food tracker</li>
+                    <li><i class="ion-ios-checkmark-empty icon-small"></i>See nutrition information for the food you eat</li>
+                </ul>
+            </div>
+            <div>
+                <a href="#" class="btn btn-ghost" ng-click="ctrl.openLoginModal('diet')">Track your food.</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="tab-small  tab-small-3">
+            <div>
+                <h3>Consult with a Provider</h3>
+            </div>
+            <div>
+                <ul>
+                    <li><i class="ion-ios-checkmark-empty icon-small"></i>Consult with a Provider on our Panel</li>
+                    <li><i class="ion-ios-checkmark-empty icon-small"></i>Use available group chat to get help.</li>
+                </ul>
+            </div>
+            <div>
+                <a href="#" class="btn btn-ghost" ng-click="ctrl.openLoginModal('message')">Consult Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</section>
