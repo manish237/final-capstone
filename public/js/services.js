@@ -8,6 +8,7 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
     .factory('_', function() {
         return window._; // assumes underscore has already been loaded on the page
     })
+
     .factory('dataStorage', [function() {
         var loginData = {};
         var registerData = {};
@@ -42,10 +43,94 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
         };
     }])
 
+    .factory('refreshStorage', ['regdata','commondata','consumerdata','providerdata','localStorageService',function(regdata,commondata,consumerdata,providerdata,localStorageService) {
 
+
+        return {
+            refresh: function(uname,type) {
+                console.log(uname)
+                console.log(type)
+                var theResults = [];
+                regdata(uname)
+                    .then(data=>{
+                        console.log("refreshStorage 01")
+                        "use strict";
+                        if(data.error) {
+                            console.log("refreshStorage 02")
+                            theResults.push(data);
+                            return Promise.reject({
+                                error: data.error
+                            });
+                        }
+                        else
+                        {
+                            console.log("refreshStorage 03")
+                            theResults.push(data);
+                            return commondata(uname)
+                        }
+                    })
+                    .then(dataCommon=>{
+                        console.log("refreshStorage 04")
+
+                        if(dataCommon.error){
+                            console.log("refreshStorage 05")
+                            theResults.push(data);
+
+                            return Promise.reject({
+                                error: dataCommon.error
+                            });
+                        }
+                        else {
+                            console.log("refreshStorage 06")
+
+                            commoninfo = dataCommon;
+                            theResults.push(dataCommon);
+                            if (dataCommon[0].usertype === 'CONSUMER') {
+
+                                console.log("refreshStorage 06a")
+
+                                return consumerdata(uname)
+                            }
+                            else if (dataCommon[0].usertype === 'PROVIDER') {
+                                console.log("refreshStorage 06b")
+
+                                return providerdata(uname)
+                            }
+                        }
+                    })
+                    .then(dataAdditional=> {
+                        console.log("refreshStorage 07")
+
+                        "use strict";
+                        if(dataAdditional.error){
+                            console.log("refreshStorage 08")
+                            theResults.push(data);
+                            return Promise.reject({
+                                error: dataAdditional.error
+                            });
+                        }
+                        else {
+                            console.log("refreshStorage 09")
+
+                            theResults.push(dataAdditional);
+                            let ds = {
+                                type:type,
+                                username:uname,
+                                data:theResults
+                            }
+                            // console.log(ds)
+                            localStorageService.set('genData',ds)
+                        }
+                    })
+                    .catch(err => {
+                        theResults=[];
+                    });
+            }
+        };
+    }])
     .factory('providerList', ['$http','$cacheFactory', '$q','myCache', 'API_GET_PROVIDER_LIST', function($http, $cacheFactory,$q, myCache,API_GET_PROVIDER_LIST){
         return function(){
-            //console.log("providerList")
+            console.log("providerList")
             // console.log(params)
             //var reqParams = {"username": CAC_API_USER_NAME};
 
@@ -55,17 +140,59 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
             console.log(cacheData.get(API_GET_PROVIDER_LIST))
 
 
-            if(cacheData.get(API_GET_PROVIDER_LIST)) {
+            /*if(cacheData.get(API_GET_PROVIDER_LIST)) {
+                console.log("mycache hit")
+                console.log(cacheData.get(API_GET_PROVIDER_LIST))
+                return $q.when(cacheData.get(API_GET_PROVIDER_LIST)[1])
+            }
+            else {*/
+            console.log("service hit")
+            return $http({
+                method: 'GET',
+                url: API_GET_PROVIDER_LIST,
+                // params: reqParams,
+                cache:true
+            })
+            .then(
+                function (response) {
+                    console.log(response.data)
+                    //console.log("success list")
+                    // console.log(response.data.geonames)
+                    // myCache.put('myData', response.data.geonames);
+                    // console.log(myCache.get('myData'))
+                    return $q.when(response.data);
+                },
+                function (response) {
+                    // alert('error');
+                    console.log("fail")
+                    return $q.when({});
+                })
+            // }
+        };
+    }])
+    .factory('messageList', ['$http','$cacheFactory', '$q','myCache', 'API_GET_MESSAGE', function($http, $cacheFactory,$q, myCache,API_GET_MESSAGE){
+        return function(commtype,uname){
+            console.log("messageList " + commtype + " " + uname)
+            // console.log(params)
+            //var reqParams = {"username": CAC_API_USER_NAME};
+
+            //var cacheData = myCache.get('myData');
+            // console.log(cacheData)
+            var cacheData = $cacheFactory.get('$http');
+            console.log(cacheData.get(API_GET_MESSAGE))
+
+
+            /*if(cacheData.get(API_GET_MESSAGE)) {
                 console.log("mycache hit")
                 return $q.when(cacheData)
             }
-            else {
+            else {*/
                 console.log("service hit")
                 return $http({
                     method: 'GET',
-                    url: API_GET_PROVIDER_LIST,
+                    url: API_GET_MESSAGE+commtype+"/"+uname,
                     // params: reqParams,
-                    cache:true
+                    cache:false
                 })
                 .then(
                     function (response) {
@@ -80,8 +207,8 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
                         // alert('error');
                         console.log("fail")
                         return $q.when({});
-                })
-            }
+                    })
+            // }
         };
     }])
 
@@ -185,6 +312,37 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
 
         };
     }])
+    .factory('regdata', ['$http', '$q','API_GET_UNAME', function($http, $q, API_GET_UNAME){
+        return function(uname){
+            console.log("regdata--" + uname)
+            return $http({
+                method: 'GET',
+                url: API_GET_UNAME+uname
+            })
+            .then(
+                function (response) {
+                    console.log(response.data)
+                    console.log("success")
+                    // console.log(response.data.geonames)
+                    // myCache.put('myData', response.data.geonames);
+                    // console.log(myCache.get('myData'))
+                    // if(response.data.exists)
+                    //     return true;
+                    // else
+                    //     return false;
+                    return $q.when(response.data);
+                },
+                function (error, status) {
+                    // alert('error');
+                    console.log("fail")
+                    console.log(error.data.message)
+                    console.log(error.status)
+                    return $q.when({"error":error.data.message,"status":error.status});
+                    // return $q.reject({"error":"error"});
+                })
+
+        };
+    }])
     .factory('commondata', ['$http', '$q','API_GET_COMMON_PROFILE', function($http, $q, API_GET_COMMON_PROFILE){
         return function(uname){
             console.log("commondata--" + uname)
@@ -248,6 +406,37 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
                         // return $q.reject({"error":"error"});
                     })
 
+        };
+    }])
+    .factory('profiledetails', ['$http', '$q','API_GET_PROFILE_INFO', function($http, $q, API_GET_PROFILE_INFO){
+        return function(uname){
+            console.log("profiledetails--" + uname)
+            return $http({
+                method: 'GET',
+                url: API_GET_PROFILE_INFO+uname
+            })
+            .then(
+                function (response) {
+                    console.log(response.data)
+                    console.log("success")
+                    // console.log(response.data.geonames)
+                    // myCache.put('myData', response.data.geonames);
+                    // console.log(myCache.get('myData'))
+                    // if(response.data.exists)
+                    //     return true;
+                    // else
+                    //     return false;
+                    return $q.when(response.data);
+                },
+                function (error, status) {
+                    // alert('error');
+                    console.log("fail")
+                    console.log(error.data.message)
+                    console.log(error.status)
+                    return $q.when({"error":error.data.message,"status":error.status});
+                    // return $q.reject({"error":"error"});
+                })
+            
         };
     }])
     .factory('consumerdata', ['$http', '$q','API_GET_CONSUMER_PROFILE', function($http, $q, API_GET_CONSUMER_PROFILE){
@@ -442,8 +631,8 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
         };
     }])
     .factory('handleExists', ['$http', '$q','API_GET_CHAT_HANDLE_EXISTS', function($http, $q, API_GET_CHAT_HANDLE_EXISTS){
-        return function(uname){
-            console.log("handleExists--" + uname)
+        return function(uname,requestor){
+            console.log("handleExists--" + uname + " " + requestor)
             return $http({
                 method: 'GET',
                 url: API_GET_CHAT_HANDLE_EXISTS + uname
@@ -459,6 +648,15 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
                     //     return true;
                     // else
                     //     return false;
+                    if(response.data.data!==undefined && response.data.data.length===1)
+                    {
+                        if(response.data.data[0].username===requestor)
+                        {
+                            return $q.when(false);
+                        }
+                        else
+                            return $q.when(true);
+                    }
                     return $q.when(response.data.exists);
                 },
                 function () {
@@ -547,6 +745,92 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
                     console.log("fail")
                     return $q.when({});
                 })
+
+        };
+    }])
+    .factory('getQBank', ['$http', '$q', 'API_GET_QUES_BANK', function($http, $q,API_GET_QUES_BANK){
+        return function(cat){
+            console.log("getQBank--" + cat)
+            return $http({
+                method: 'GET',
+                url: API_GET_QUES_BANK+cat
+            })
+            .then(
+                function (response) {
+                    console.log("getQBank success")
+                    console.log(response.data)
+                    return $q.when(response.data);
+                },
+                function () {
+                    // alert('error');
+                    console.log("fail")
+                    return $q.when({});
+                })
+
+        };
+    }])
+    .factory('dietdata', ['$http', '$q','API_GET_USER_DIET', function($http, $q, API_GET_USER_DIET){
+        return function(uname){
+            console.log("dietdata--" + uname)
+            return $http({
+                method: 'GET',
+                url: API_GET_USER_DIET+uname
+            })
+            .then(
+                function (response) {
+                    console.log(response.data)
+                    console.log("success")
+                    // console.log(response.data.geonames)
+                    // myCache.put('myData', response.data.geonames);
+                    // console.log(myCache.get('myData'))
+                    // if(response.data.exists)
+                    //     return true;
+                    // else
+                    //     return false;
+                    return $q.when(response.data);
+                },
+                function (error, status) {
+                    // alert('error');
+                    console.log("fail")
+                    console.log(error.data.message)
+                    console.log(error.status)
+                    return $q.when({"error":error.data.message,"status":error.status});
+                    // return $q.reject({"error":"error"});
+                })
+
+        };
+    }])
+    .factory('dietdataUpd', ['$http', '$q','API_POST_USER_DIET', function($http, $q, API_POST_USER_DIET){
+        return function(params){
+            console.log("dietdataUpd--")
+            console.log(params)
+
+            return $http({
+                method: 'POST',
+                url: API_POST_USER_DIET,
+                data:params
+            })
+                .then(
+                    function (response) {
+                        console.log(response.data)
+                        console.log("success")
+                        // console.log(response.data.geonames)
+                        // myCache.put('myData', response.data.geonames);
+                        // console.log(myCache.get('myData'))
+                        // if(response.data.exists)
+                        //     return true;
+                        // else
+                        //     return false;
+                        return $q.when(response.data);
+                    },
+                    function (error, status) {
+                        // alert('error');
+                        console.log("fail")
+                        console.log(error.data.message)
+                        console.log(error.status)
+                        return $q.when({"error":error.data.message,"status":error.status});
+                        // return $q.reject({"error":"error"});
+                    })
 
         };
     }])

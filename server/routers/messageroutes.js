@@ -58,15 +58,15 @@ router.post('/', jsonParser, (req, res) => {
     }
 
     input.datecreated=req.body.datecreated || Date.now();
-
+    input.read=false;
     return CommunicationData
         .create(input)
         .then((preferenceData) => {
-            console.log("provider profile data post 07")
+            console.log("message data post 02")
             res.status(201).json(preferenceData.apiRepr());
         })
         .catch(err => {
-            console.log("provider profile data post 08")
+            console.log("message data post 03")
             console.error(err);
             if (err.name === 'InvalidUserError' || err.name === 'DuplicateChatHandleError') {
                 return res.status(422).json({message: err.message});
@@ -78,7 +78,7 @@ router.post('/', jsonParser, (req, res) => {
 
 //by username
 router.get('/:commtype/:uname', (req, res) => {
-    console.log("provider profile data get 01")
+    console.log("provider comm data get 01")
 
     let commtypes = config.commtype.split(' ');
     if(req.params.commtype!==undefined && req.params.commtype.length!==0) {
@@ -87,31 +87,85 @@ router.get('/:commtype/:uname', (req, res) => {
         }
     }
 
-    let filter = {};
-    if(req.params.commtype === 'MESSAGE')
-        filter = {fromusername : req.params.uname}
-    else  if(req.params.commtype === 'CHAT')
-        filter = {fromchathandle : req.params.uname}
+    let filter = "";
+    let filterto = "";
+    if(req.params.commtype === 'MESSAGE') {
+        return CommunicationData
+            .find(
+                    {
+                        $and: [
+                                {
+                                    commtype : req.params.commtype
+                                },
+                                {
+                                    $or : [
+                                        {
+                                            fromusername : req.params.uname
+                                        },
+                                        {
+                                            tousername : req.params.uname
+                                        }
+                                    ]
+                                }
+                            ]
+                    }
+            )
+            .then(data => {
+                console.log("provider comm data get 02")
+                console.log(data)
+                res.status(200).json(data)
+            })
+            .catch(
+                err => {
+                    console.log("provider comm data get 03")
 
-    return CommunicationData
-        .find({
-            $and : [ { commtype : req.params.commtype }, filter ]
-        }).sort( { datecreated: -1 } )
-
-        .then(data => {
-            console.log("provider profile data get 04")
-            //console.log(addressHistData)
-            res.status(200).json(data)
-        })
-        .catch(
-            err => {
-                console.log("provider profile data get 05")
-                //console.error(err);
-                if (err.name === 'InvalidUserError') {
-                    return res.status(422).json({message: err.message});
+                    //console.error(err);
+                    if (err.name === 'InvalidUserError') {
+                        return res.status(422).json({message: err.message});
+                    }
+                    res.status(500).json({message: 'Internal server error'});
+                });
+    }
+    else  if(req.params.commtype === 'CHAT') {
+        return CommunicationData
+            .find(
+                {
+                    $and: [
+                        {
+                            commtype : req.params.commtype
+                        },
+                        {
+                            $or : [
+                                {
+                                    fromchathandle : req.params.uname
+                                },
+                                {
+                                    tochathandle : req.params.uname
+                                }
+                            ]
+                        }
+                    ]
                 }
-                res.status(500).json({message: 'Internal server error'});
-        });
+            )
+            .then(data => {
+                console.log("provider comm data get 02")
+                console.log(data)
+                res.status(200).json(data)
+            })
+            .catch(
+                err => {
+                    console.log("provider comm data get 03")
+
+                    //console.error(err);
+                    if (err.name === 'InvalidUserError') {
+                        return res.status(422).json({message: err.message});
+                    }
+                    res.status(500).json({message: 'Internal server error'});
+                });
+    }
+    console.log(filterfrom)
+    console.log(filterto)
+
 });
 
 module.exports = router;

@@ -267,6 +267,29 @@ router.put('/reset/:uname', jsonParser, (req, res) => {
         });
 })
 
+router.get('/getuser/:uname', jsonParser, (req, res) => {
+    console.log("getuser 01 " + req.params.uname)
+
+    return AuthData
+        .find({username: req.params.uname})
+        .exec()
+        .then(data => {
+                console.log(data)
+                res.status(200).json(data[0].apiRepr())
+        })
+        .catch(
+            err => {
+                console.log("getuser 04")
+                console.error(err);
+                if (err.name === 'InvalidUserError') {
+                    return res.status(422).json({message: err.message});
+                }
+                res.status(500).json({message: 'User not found'});
+            });
+
+});
+
+
 router.get('/exists/:uname', jsonParser, (req, res) => {
     console.log("exists 01")
 

@@ -70,7 +70,9 @@ angular.module('dirLibrary', ['apiLibrary'])
             ngModel.$asyncValidators.uniqueChatHandle = function(modelValue , viewValue) {
                 //console.log("call- " +modelValue + " " + viewValue)
                 // var userInput= modelValue || viewValue;
-                return handleExists(modelValue||viewValue)
+                console.log(attributes.handleRequestor)
+
+                return handleExists(modelValue||viewValue,attributes.handleRequestor)
                     .then(function(response) {
                         //username exists, this means validation success
                         // console.log("call suuccess- ");

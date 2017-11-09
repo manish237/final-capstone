@@ -116,7 +116,7 @@ module.exports = function (socket) {
 
     // clean up when a user leaves, and broadcast it to other users
     socket.on('disconnect', function () {
-        console.log("disconnect ----"+socket.handshake.query.name);
+        console.log("disconnected ----"+socket.handshake.query.name);
         socket.broadcast.emit('user:left', {
             name: socket.handshake.query.name//name
         });

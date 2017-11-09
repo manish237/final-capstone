@@ -1,0 +1,39 @@
+<div class="modal-header">
+
+    <h3 class="modal-title" id="modal-title">Provider Details</h3>
+</div>
+<div class="modal-body" id="modal-body">
+    <div class="row">
+        <div class="col-md-3">Name</div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">{{$ctrl.details.common.name}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">Location</div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">{{$ctrl.details.common.location}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">Chat Handle</div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">{{$ctrl.details.common.chathandle}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">Languages Known</div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">{{$ctrl.details.common.languages}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">Expertise</div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">{{$ctrl.details.providerdata.expertise}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">Credentials</div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">{{$ctrl.details.providerdata.qualifications}}</div>
+    </div>
+</div>
+<div class="modal-footer">
+    <input type="button" class="form-control" ng-click="$ctrl.cancel()" value="Cancel">
+</div>

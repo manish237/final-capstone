@@ -8,6 +8,8 @@ const jsonParser = bodyParser.json();
 
 const {AuthData} = require('../models/authModel');
 const {CommonProfileData,ConsumerProfileData,ProviderProfileData} = require('../models/profileModel');
+const {UserDietSchema} = require('../models/dietModel');
+
 
 router.use(bodyParser.urlencoded({
     extended: true
@@ -58,6 +60,7 @@ router.post('/', jsonParser, (req, res) => {
 
 
     if(req.body.chathandle!==undefined && req.body.chathandle.length!==0) {
+        console.log("getting chathandle")
         input.chathandle = req.body.chathandle;
     }
 
@@ -73,7 +76,6 @@ router.post('/', jsonParser, (req, res) => {
         input.languages = [];
         for(let i = 0;i<req.body.languages.length;i++)
         {
-            console.log(req.body.languages[i])
             input.languages.push(req.body.languages[i])
         }
     }
@@ -104,16 +106,17 @@ router.post('/', jsonParser, (req, res) => {
         .then((countU)=>{
             console.log("common profile data post 04")
             countUser=countU;
-            if(input.chathandle.length!==0)
+            console.log(typeof input.chathandle)
+            if(typeof input.chathandle!=='undefined' && input.chathandle.length!==0)
                 return CommonProfileData
                     .find({chathandle:input.chathandle})
                     .exec()
+            else
+                return (undefined)
         })
         .then((chatData)=>{
             console.log("common profile data post 05")
-            console.log(chatData)
-            console.log(chatData.length)
-            if (chatData.length >1   ||  (chatData.length ===1 && chatData[0].username !== input.username)) {
+            if (chatData != undefined && (chatData.length >1   ||  (chatData.length ===1 && chatData[0].username !== input.username))) {
                 console.log("common profile data post 06")
                 return Promise.reject({
                     name: 'DuplicateChatHandleError',
@@ -341,6 +344,81 @@ router.get('/:uname', (req, res) => {
         });
 });
 
+
+router.get('/getdata/:uname', (req, res) => {
+    console.log("get details 01")
+    let detail = {}
+    return AuthData
+        .find({username: req.params.uname})
+        .count()
+        .exec()
+        .then(count => {
+            console.log("get details 02")
+    
+            if (count === 0) {
+                console.log("get details 03")
+                return Promise.reject({
+                    name: 'InvalidUserError',
+                    message: 'username not found'
+                });
+            }
+            else{
+                console.log("get details 04")
+    
+                return AuthData
+                    .find({username: req.params.uname})
+            }
+        })
+        .then((data)=>{
+            return data[0].apiRepr()
+        })
+        .then((data)=>{
+            console.log("get details 05")
+            if(data!==undefined)
+                detail.authdata = data;
+            return CommonProfileData
+                .find({username: req.params.uname})
+        })
+        .then(data => {
+            console.log("get details 06")
+            
+            if(data!==undefined)
+                detail.commondata = data[0];
+
+            if(data[0].usertype==='CONSUMER'){
+                console.log("get details 07")
+                return ConsumerProfileData
+                    .find({username: req.params.uname})
+            }
+            else if(data[0].usertype==='PROVIDER'){
+                console.log("get details 08")
+                return ProviderProfileData
+                    .find({username: req.params.uname})
+            }
+        })
+        .then((data)=>{
+            console.log("get details 09")
+            if(data!==undefined)
+                detail.additionaldata = data[0];
+            return UserDietSchema
+                .find({username:req.params.uname})
+        })
+        .then((data)=>{
+            console.log("get details 10")
+            if(data!==undefined)
+                detail.dietdata = data[0];
+            res.status(200).json(detail);
+        })
+        .catch(err => {
+                console.log("get details 11")
+                console.error(err);
+                if (err.name === 'InvalidUserError') {
+                    return res.status(422).json({message: err.message});
+                }
+                res.status(500).json({message: 'Internal server error'});
+        });
+});
+
 router.get('/chathandles/chat', (req, res) => {
     console.log("chat handle 01")
     return CommonProfileData
@@ -371,13 +449,17 @@ router.get('/chathandles/chatexists/:handle', (req, res) => {
         .then(count => {
             if (count > 0) {
                 console.log("chat handle exists 02")
-                res.status(200).json({exists:true})
+                return CommonProfileData.find({chathandle: req.params.handle})
             }
             else {
                 console.log("chat handle exists 03")
+                res.status(200).json({exists:false})
 
-                res.status(200).json({exists: false})
             }
+        })
+        .then(data=>{
+            console.log("chat handle exists 04")
+            res.status(200).json({exists:true,data:data})
         })
         .catch(
             err => {
@@ -414,11 +496,14 @@ router.get('/providers/list', (req, res) => {
         .find({usertype: 'PROVIDER'}).limit(4)
         .exec()
         .then(data => {
+            console.log("provider list get 01a")
+
+            console.log(data)
             if (data.length >= 0) {
                 console.log("provider list get 02")
                 commonData = data;
                 var result = data.map(item => item.username);
-                //console.log(result)
+                console.log(result)
                 return ProviderProfileData.find({"username":{$in : result}})
             }
             else {
@@ -427,11 +512,11 @@ router.get('/providers/list', (req, res) => {
         })
         .then(data=> {
             console.log("provider list get 03")
-            //console.log(data)
+            console.log(data)
             data = data.sort(config.compareProfileData)
             commonData = commonData.sort(config.compareProfileData)
 
-            if(data.length!==commonData.length)
+            if(data.length!=0 && data.length!==commonData.length)
             {
                 console.log("provider list get 04")
 

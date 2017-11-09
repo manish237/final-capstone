@@ -8,6 +8,7 @@ var statuses = config.accountstatus.split(' ');
 var genders = config.usergender.split(' ');
 var servicetypes = config.servicetype.split(' ');
 var standarddiagnosis = config.standarddiagnosis.split(' ');
+var examOutcomeType = config.examOutcomeTypes.split(' ');
 
 
 var commonProfileSchema = mongoose.Schema({
@@ -20,23 +21,45 @@ var commonProfileSchema = mongoose.Schema({
     location:{type: String},
     longitude:{type: String},
     latitude:{type: String},
-    languages:{type:String},
+    languages:[{type:String}],
     datecreated:{type: Date, required: true},
     dateupdated:{type: Date}
 });
 
 var surveySchema = mongoose.Schema({
     questionid: {type: String},
-    responseid: {type: String}
+    responseid: {type: String},
+    response:{type:String}
 });
+
+var historySchema = mongoose.Schema({
+    listPrescription: {type: String},
+    listNonPrescription: {type: String},
+    dateLastPhysical: {type: Date},
+    lastPhysicalType:{type:String,enum:examOutcomeType},
+    dateLastDental: {type: Date},
+    lastDentalType:{type:String,enum:examOutcomeType},
+
+    listOtherTest: {type: String},
+    listDrugAllergies: {type: String},
+
+    smoking: {type: Boolean},
+    alcohol: {type: Boolean},
+
+    stroke: {type: Boolean},
+    arthritis: {type: Boolean},
+    diabetes: {type: Boolean},
+    anemia: {type: Boolean},
+    asthma: {type: Boolean}
+});
+
 
 var consumerProfileSchema = mongoose.Schema({
     username: {type: String, required: true, index: true},
     preferredlanguage:{type:String},
     age:{type:Number},
-    medHistorylist: [{type: surveySchema}],
+    medHistorylist: {type: historySchema},
     oralassessment:[{type: surveySchema}],
-    medicationlist: [{type: String}],
     hygenescore:{type:Number},
     lastvisit:{type: Date},
     nextvisit:{type: Date},

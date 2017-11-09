@@ -5,7 +5,6 @@ const router = express.Router();
 const config = require('../../config')
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
-const deepcopy = require('deepcopy')
 
 const {UserDietSchema} = require('../models/dietModel');
 
@@ -27,7 +26,7 @@ router.post('/', jsonParser, (req, res) => {
         }
     }
 
-    //input = deepcopy(req.body)
+    var dietCategories = config.dietCategories.split(' ');
     input.username = req.body.username;
 
     if(req.body.grosscal!==undefined && req.body.grosscal.length!==0) {
@@ -44,75 +43,72 @@ router.post('/', jsonParser, (req, res) => {
         {
             console.log("outer loop")
 
-            let itemsObj = {};
-            if(req.body.items[i].dietcat!==undefined && req.body.items[i].dietcat!==0) {
+            // let itemsObj = {};
+            /*if(req.body.items[i].dietcat!==undefined && req.body.items[i].dietcat!==0) {
                 itemsObj.dietcat = req.body.items[i].dietcat
             }
 
             if(req.body.items[i].totcal!==undefined && req.body.items[i].totcal!==0) {
                 itemsObj.totcal = req.body.items[i].totcal
             }
-
-            if(req.body.items[i].dietitems!==undefined && req.body.items[i].dietitems.length!==0) {
-                itemsObj.dietitems=[]
-                for(let j = 0;j<req.body.items[i].dietitems.length;j++){
-                    let itemObj = {};
-                    console.log("inner loop")
-                    console.log(req.body.items[i].dietitems[j])
-                    if (req.body.items[i].dietitems[j].itemname !== undefined && req.body.items[i].dietitems[j].itemname !== 0) {
-                        itemObj.itemname = req.body.items[i].dietitems[j].itemname
-                    }
-
-                    if (req.body.items[i].dietitems[j].numcal !== undefined && req.body.items[i].dietitems[j].numcal !== 0) {
-                        itemObj.numcal = req.body.items[i].dietitems[j].numcal
-                    }
-                    console.log(itemObj)
-                    itemsObj.dietitems.push(itemObj)
-                    itemObj={};
-                }
-            }
-
-            console.log(itemsObj)
-            input.items.push(itemsObj)
-            // itemsObj={};
-        }
-    }
-
-
-
-
-    console.log("----------------")
-    console.log(input)
-
-    console.log(JSON.stringify(input))
-
-/*
-    if(req.body.items!==undefined && req.body.items.length!==0) {
-        input.items = [];
-        for(let i = 0;i<req.body.items.length;i++)
-        {
-            console.log("items loop")
-            console.log(req.body.items[i])
-            if(req.body.items[i].dietitems!==undefined && req.body.items[i].dietitems.length!==0)
-            {
-                let arr=[];
-                for(let j = 0;i<req.body.items[i].dietitems.length;j++)
-                    arr.push(req.body.items[i].dietitems[j])
-            }
-            input.items[i].dietitems = arr;
-            input.items.push(req.body.items[i])
-        }
-    }
 */
+            /*if(req.body.items[i].dietitems!==undefined && req.body.items[i].dietitems.length!==0) {
+                itemsObj.dietitems=[]
+                for(let j = 0;j<req.body.items[i].dietitems.length;j++){*/
+            let itemObj = {};
+            // console.log("inner loop")
+            // console.log(req.body.items[i].dietitems[j])
 
+            if(req.body.items[i].itemcat!==undefined && req.body.items[i].itemcat!==0) {
+                if (dietCategories.indexOf(req.body.items[i].itemcat) === -1) {
+                    return res.status(422).json({message: 'Invalid Meal Type'});
+                }
+                itemObj.itemcat = req.body.items[i].itemcat
+            }
 
+            if (req.body.items[i].itemname !== undefined && req.body.items[i].itemname.length !== 0) {
+                itemObj.itemname = req.body.items[i].itemname
+            }
 
+            if (req.body.items[i].numcal !== undefined && req.body.items[i].numcal !== 0) {
+                itemObj.numcal = req.body.items[i].numcal
+            }
 
-    let countUser=0;
+            if (req.body.items[i].serving_qty !== undefined && req.body.items[i].serving_qty !== 0) {
+                itemObj.serving_qty = req.body.items[i].serving_qty
+            }
 
+            if (req.body.items[i].serving_unit !== undefined && req.body.items[i].serving_unit.length !== 0) {
+                itemObj.serving_unit = req.body.items[i].serving_unit
+            }
+
+            if (req.body.items[i].serving_weight_grams !== undefined && req.body.items[i].serving_weight_grams !== 0) {
+                itemObj.serving_weight_grams = req.body.items[i].serving_weight_grams
+            }
+
+            if (req.body.items[i].brand_id !== undefined && req.body.items[i].brand_id.length !== 0) {
+                itemObj.brand_id = req.body.items[i].brand_id
+            }
+
+            if (req.body.items[i].item_id !== undefined && req.body.items[i].item_id.length !== 0) {
+                itemObj.item_id = req.body.items[i].item_id
+            }
+
+            // console.log(itemObj)
+            // itemsObj.dietitems.push(itemObj)
+/*                }
+            }*/
+
+            console.log(itemObj)
+            input.items.push(itemObj)
+            itemObj={};
+        }
+    }
+
+    console.log(input)
     // return res.status(500).json({message: 'Internal server error'});
     return UserDietSchema
-        .find({username:input.username})
+        .find({username:input.username,entrydate:input.entrydate})
         .count()
         .exec()
         .then(count => {

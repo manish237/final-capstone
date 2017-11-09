@@ -5,6 +5,7 @@ const config = require('../../config');
 
 
 var qbCategories = config.qbCategories.split(' ');
+var qbRespType = config.qbRespTypes.split(' ');
 
 
 var locationSchema = mongoose.Schema({
@@ -20,19 +21,22 @@ var languageSchema = mongoose.Schema({
 });
 
 var responseSchema = mongoose.Schema({
-    respId: {type: Number, index: true},
+    respId: {type: String, index: true},
+    respType:{type: String, enum:qbRespType},
+    respWeight:{type: Number},
     response: {type: String, index: true}
 });
 
 
 var questionBankSchema = mongoose.Schema({
     category:{type: String, enum: qbCategories},
+    quesId:{type: String, index: true},
     question: {type: String, index: true},
+    quesType:{type: String, enum:qbRespType},
     response1: {type: responseSchema},
     response2: {type: responseSchema},
     response3: {type: responseSchema},
-    response4: {type: responseSchema},
-    responsetxt: {type: String}
+    response4: {type: responseSchema}
 });
 
 locationSchema.methods.apiRepr = function() {
@@ -41,7 +45,7 @@ locationSchema.methods.apiRepr = function() {
         country: this.country,
         state:this.state,
         city: this.city
-    }
+    };
 };
 
 languageSchema.methods.apiRepr = function() {
@@ -50,31 +54,19 @@ languageSchema.methods.apiRepr = function() {
         code: this.code,
         name:this.name,
         nativeName: this.nativeName
-    }
+    };
 };
 
 questionBankSchema.methods.apiRepr = function() {
     return {
         id: this._id,
+        quesId:this.quesId,
         question: this.question,
-        response1:{
-            respId: this.respId,
-            response: this.response
-        },
-        response2:{
-            respId: this.respId,
-            response: this.response
-        },
-        response3:{
-            respId: this.respId,
-            response: this.response
-        },
-        response4:{
-            respId: this.respId,
-            response: this.response
-        },
-        responsetxt:this.responsetxt
-    }
+        response1:this.response1,
+        response2:this.response2,
+        response3:this.response3,
+        response4:this.response4
+    };
 };
 
 const LocationSchema = mongoose.model('LocationSchema',locationSchema);

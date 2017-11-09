@@ -16,3 +16,127 @@ body {
     overflow-x: hidden;
 }
 */
+header {
+    background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/vintage-concrete.png);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/vintage-concrete.png);
+    background-size: cover;
+    background-position: center;
+    height: 20vh;
+    background-attachment: fixed;
+}
+
+/* Main navi */
+.main-nav {
+    float: left;
+    list-style: none;
+    margin-top: 1vh;
+}
+
+
+h1 {
+    margin-top: 3vh;
+    margin-bottom: 0px;
+
+    color: #FFEEE4;
+    font-size: 150%;
+    word-spacing: 4px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+h2 {
+    color: #474747;
+    font-size: 180%;
+    word-spacing: 2px;
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+h5{
+    font-weight: 100;
+}
+.section-send-message,.section-group-chat{
+    margin:0px;
+    margin-top:1px;
+    padding: 0px;
+    height: 80vh;
+
+    /*margin-top: .5%;*/
+    /*    padding-left: 2%;
+        padding-right: 2%;*/
+    width: 100%;
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+.form-common-row{
+    background-color: #ffffff;
+    /*border-radius: 5px;*/
+    width: 100%;
+    /*margin-left: 4%;*/
+
+    /*box-shadow: 0 4px 4px #efefef;*/
+
+    margin: 0px;
+
+    /*position: relative;*/
+}
+
+.form>row{
+    margin-left: 14px;
+}
+
+.img-container,.gg-container,.ln-container,.info-container{
+    /*font-size: 90%;*/
+    /*margin-top: 25px;*/
+    /*display: block;*/
+    height: 100%;
+    line-height: 20vh;
+
+    text-align: center;
+    /*width: 100%;*/
+}
+img {
+    height: 15vh;
+    width: 15vh;
+    border-radius: 60%;
+    vertical-align: middle;
+
+    /*margin-right: 10px;*/
+    /*vertical-align: middle;
+    display: inline-block;*/
+}
+
+.row-1{
+    height: 75%;
+    padding-top:15px;
+    /*line-height: 10vh;*/
+}
+.row-2{
+    height: 25%;
+}
+.gauge {
+    height: 100%;
+    width: 100%;
+    /*vertical-align: middle;*/
+
+}
+
+.info{
+    /*padding-top: 25%;*/
+
+}
+
+table{
+    border-collapse: collapse
+}
+table, th, td {
+    border: 1px solid black;
+    padding:1px;
+}
+
+th{
+    background-color:green;
+    color: white;
+}

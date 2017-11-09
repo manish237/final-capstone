@@ -49,11 +49,77 @@ router.post('/', jsonParser, (req, res) => {
     }
 
     if(req.body.medHistorylist!==undefined && req.body.medHistorylist.length!==0) {
-        input.medHistorylist = [];
-        for(let i = 0;i<req.body.medHistorylist.length;i++)
-        {
-            input.medHistorylist.push(req.body.medHistorylist[i])
+        let historyresp = {}
+        let inp = req.body.medHistorylist;
+
+        var examOutcomeType = config.examOutcomeTypes.split(' ');
+
+
+        if(inp.listPrescription!==undefined &&inp.listPrescription.length!=0){
+            historyresp.listPrescription = inp.listPrescription;
         }
+        if(inp.listNonPrescription!==undefined &&inp.listNonPrescription.length!=0){
+            historyresp.listNonPrescription = inp.listNonPrescription;
+        }
+        if(inp.listOtherTest!==undefined &&inp.listOtherTest.length!=0){
+            historyresp.listOtherTest = inp.listOtherTest;
+        }
+        if(inp.listDrugAllergies!==undefined &&inp.listDrugAllergies.length!=0){
+            historyresp.listPrescription = inp.listPrescription;
+        }
+
+        if(inp.dateLastPhysical!==undefined &&inp.dateLastPhysical.length!=0){
+            historyresp.dateLastPhysical = inp.dateLastPhysical;
+        }
+        if(inp.dateLastDental!==undefined &&inp.dateLastDental.length!=0){
+            historyresp.dateLastDental = inp.dateLastDental;
+        }
+
+        if(inp.lastPhysicalType!==undefined &&inp.lastPhysicalType.length!=0){
+            if (examOutcomeType.indexOf(inp.lastPhysicalType) === -1) {
+                return res.status(422).json({message: 'Invalid Outcome Type'});
+            }
+            historyresp.lastPhysicalType = inp.lastPhysicalType;
+        }
+
+        if(inp.lastDentalType!==undefined &&inp.lastDentalType.length!=0){
+            if (examOutcomeType.indexOf(inp.lastDentalType) === -1) {
+                return res.status(422).json({message: 'Invalid Outcome Type'});
+            }
+            historyresp.lastDentalType = inp.lastDentalType;
+        }
+
+        if(inp.smoking!==undefined)
+            historyresp.smoking = inp.smoking;
+        else
+            historyresp.smoking = false;
+
+        if(inp.alcohol!==undefined)
+            historyresp.alcohol = inp.alcohol;
+        else
+            historyresp.alcohol = false;
+
+        if(inp.stroke!==undefined)
+            historyresp.stroke = inp.stroke;
+        else
+            historyresp.stroke = false;
+
+        if(inp.arthritis!==undefined)
+            historyresp.arthritis = inp.arthritis;
+        else
+            historyresp.arthritis = false;
+
+        if(inp.diabetes!==undefined)
+            historyresp.diabetes = inp.diabetes;
+        else
+            historyresp.diabetes = false;
+
+        if(inp.anemia!==undefined)
+            historyresp.anemia = inp.anemia;
+        else
+            historyresp.anemia = false;
+
+        input.medHistorylist = historyresp;
     }
 
     if(req.body.oralassessment!==undefined && req.body.oralassessment.length!==0) {
@@ -61,13 +127,6 @@ router.post('/', jsonParser, (req, res) => {
         for(let i = 0;i<req.body.oralassessment.length;i++)
         {
             input.oralassessment.push(req.body.oralassessment[i])
-        }
-    }
-    if(req.body.medicationlist!==undefined && req.body.medicationlist.length!==0) {
-        input.medicationlist = [];
-        for(let i = 0;i<req.body.medicationlist.length;i++)
-        {
-            input.medicationlist.push(req.body.medicationlist[i])
         }
     }
 
@@ -84,6 +143,7 @@ router.post('/', jsonParser, (req, res) => {
         }
     }
 
+    console.log(input)
     return AuthData
         .find({username:input.username})
         .count()
@@ -145,7 +205,7 @@ router.post('/', jsonParser, (req, res) => {
         });
 });
 
-router.put('/:uname', jsonParser, (req, res) => {
+/*router.put('/:uname', jsonParser, (req, res) => {
     console.log("consumer profile data put 01")
     let input = {};
 
@@ -263,7 +323,7 @@ router.put('/:uname', jsonParser, (req, res) => {
             res.status(500).json({message: 'Internal server error'})
         });
 
-});
+});*/
 
 
 //by username
@@ -300,7 +360,7 @@ router.get('/:uname', (req, res) => {
                     return res.status(422).json({message: err.message});
                 }
                 res.status(500).json({message: 'Internal server error'});
-            });
+        });
 });
 
 

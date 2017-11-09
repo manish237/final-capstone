@@ -11,6 +11,7 @@ var communicationSchema = mongoose.Schema({
     fromchathandle: {type: String, index: true},
     tochathandle: {type: String, index: true},
     message: {type: String},
+    read:{type:Boolean},
     commtype: {type: String, enum: commtypes},
     datecreated:{type: Date, required: true}
 });
@@ -24,6 +25,7 @@ communicationSchema.methods.apiRepr = function() {
         tochathandle: this.tochathandle,
         message:this.message,
         commtype:this.commtype,
+        read:this.read,
         datecreated: this.datecreated
     }
 };

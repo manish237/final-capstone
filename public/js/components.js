@@ -6,7 +6,7 @@ angular.module('componentLibrary', [])
             close: '&',
             dismiss: '&'
         },
-        controller: function(login,commondata,consumerdata,providerdata,$uibModal,$log) {
+        controller: function(login,commondata,consumerdata,providerdata,$uibModal,$log,$location,localStorageService) {
             var theResults = [];
 
             console.log("loginctrl")
@@ -28,7 +28,7 @@ angular.module('componentLibrary', [])
                     login(reqBody)
                         .then(data => {
                             if(data.error) {
-
+                                theResults.push({});
                                 $ctrl.errorMessage = data.error;
                                 return Promise.reject({
                                     error: data.error
@@ -50,6 +50,7 @@ angular.module('componentLibrary', [])
                             if(dataCommon.error){
 
                                 $ctrl.errorMessage = dataCommon.error;
+                                theResults.push({});
                                 return Promise.reject({
                                     error: dataCommon.error
                                 });
@@ -78,6 +79,7 @@ angular.module('componentLibrary', [])
                             if(dataAdditional.error){
 
                                 $ctrl.errorMessage = dataAdditional.error;
+                                theResults.push({});
 
                                 return Promise.reject({
                                     error: dataAdditional.error
@@ -92,6 +94,7 @@ angular.module('componentLibrary', [])
                                 theResults.push(dataAdditional);
                                 $ctrl.close({$value: {
                                     type:"login",
+                                    username:$ctrl.loginUname,
                                     data:theResults
                                 }});
 
@@ -130,7 +133,11 @@ angular.module('componentLibrary', [])
                 modalInstance.result.then(function (selectedItem) {
                     console.log("result2")
                     console.log(selectedItem)
+                    console.log(parent)
+                    localStorageService.set('genData',selectedItem)
+                    $location.url('/Overview')
                     parent.close({$value: selectedItem});
+
                     //redirect to home page
                 }, function () {
                     $log.info('modal-component 2 dismissed at: ' + new Date());
@@ -156,6 +163,9 @@ angular.module('componentLibrary', [])
                 modalInstance.result.then(function (selectedItem) {
                     console.log("result2")
                     console.log(selectedItem)
+                    console.log(parent)
+                    localStorageService.set('genData',selectedItem)
+                    $location.url('/Overview')
                     parent.close({$value: selectedItem});
                     //redirect to home page
                 }, function () {
@@ -177,9 +187,13 @@ angular.module('componentLibrary', [])
             var theResults = [];
 
             console.log("registerctrl")
-            console.log($ctrl)
-            var parent = $ctrl;
-            console.log(parent)
+            var parent;
+            // console.log($ctrl===null)
+            if((typeof $ctrl)!=='undefined'){
+                console.log($ctrl)
+                parent = $ctrl;
+                console.log(parent)
+            }
 
             $ctrl = this;
 
@@ -200,7 +214,7 @@ angular.module('componentLibrary', [])
                     .then(function (data) {
                     //console.log(data)
                         if(data.error) {
-
+                            theResults.push({});
                             $ctrl.errorMessage = data.error;
                             return Promise.reject({
                                 error: data.error
@@ -210,9 +224,11 @@ angular.module('componentLibrary', [])
                         {
                             console.log($ctrl)
                             console.log("reg success")
+                            theResults.push(data)
                             $ctrl.close({$value:{
                                 type:"register",
-                                data:data
+                                username:$ctrl.uname,
+                                data:theResults
                             }});
                         }
                     })
@@ -225,7 +241,9 @@ angular.module('componentLibrary', [])
                 console.log("close register")
 
                 $ctrl.dismiss({$value: 'cancel'});
-                parent.dismiss({$value: 'cancel'})
+                if((typeof parent)!=='undefined') {
+                    parent.dismiss({$value: 'cancel'})
+                }
             };
         }
     })
@@ -260,7 +278,7 @@ angular.module('componentLibrary', [])
                 resetLogin(reqBody)
                     .then(data => {
                         if(data.error) {
-
+                            theResults.push({});
                             $ctrl.errorMessage = data.error;
                             return Promise.reject({
                                 error: data.error
@@ -282,6 +300,7 @@ angular.module('componentLibrary', [])
                         if(dataCommon.error){
 
                             $ctrl.errorMessage = dataCommon.error;
+                            theResults.push({});
                             return Promise.reject({
                                 error: dataCommon.error
                             });
@@ -308,7 +327,7 @@ angular.module('componentLibrary', [])
                     .then(dataAdditional=> {
                         "use strict";
                         if(dataAdditional.error){
-
+                            theResults.push({});
                             $ctrl.errorMessage = dataAdditional.error;
 
                             return Promise.reject({
@@ -324,6 +343,7 @@ angular.module('componentLibrary', [])
                             theResults.push(dataAdditional);
                             $ctrl.close({$value: {
                                 type:"reset",
+                                username:$ctrl.resetUname,
                                 data:theResults
                             }});
 
@@ -340,6 +360,31 @@ angular.module('componentLibrary', [])
 
                 $ctrl.dismiss({$value: 'cancel'});
                 parent.dismiss({$value: 'cancel'})
+            };
+        }
+
+    })
+
+
+    .component('providerDetails', {
+        templateUrl: '../providerdetails.html',
+        bindings: {
+            resolve: '<',
+            close: '&',
+            dismiss: '&'
+        },
+        controller: function() {
+            var $ctrl = this;
+
+            $ctrl.$onInit = function () {
+                $ctrl.details = $ctrl.resolve.items;
+                console.log($ctrl.resolve.items)
+            };
+
+            $ctrl.cancel = function () {
+                console.log("close reset")
+
+                $ctrl.close();
             };
         }
 

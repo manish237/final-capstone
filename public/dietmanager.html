@@ -7,11 +7,54 @@
                 <li><a href="#/Diet">Manage Diet</a></li>
                 <li><a href="#/MessageCenter">Message Center</a></li>
                 <li><a href="#/Profile">Profile</a></li>
-                <li><a href="" ng-click="oCtrl.logout()">LogOut</a></li>
+                <li><a href="" ng-click="dmCtrl.logout()">LogOut</a></li>
             </ul>
         </div>
     </nav>
-    <div class="hero-text-box">
+<!--    <div class="hero-text-box">
         <h1>TheApp - Your personal dental health manager</h1>
-    </div>
+    </div>-->
 </header>
+<section class="section-send-message">
+    <div class="row form-common-row">
+        <span>Form Submitted! {{inputMsgForm.$submitted}}</span>|
+        <span>Form $valid! {{inputMsgForm.$valid}}</span>|
+        <span>Error chathandle! {{inputMsgForm.chathandle.$error}}</span>|
+        <span>Error name! {{inputMsgForm.name.$error}}</span>|
+        <span>Error gender! {{inputMsgForm.gender.$error}}</span>|
+        <span>Error location! {{inputMsgForm.location.$error}}</span>|
+        <span>Error errorMessage! {{$scope.errorMessage}}</span>
+        <span>Error errorMessage! {{$scope}}</span>
+        <form id="form-input" name="inputMsgForm" novalidate ng-submit="submitSendMessage(inputMsgForm)">
+            <div class="row"><div class="col-md-12">Personal Info</div></div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4"><label>To Username</label></div>
+                <div class="col-md-4"></div>
+                    <md-datepicker ng-model="dmCtrl.myDate" md-placeholder="Enter date" md-open-on-focus=""></md-datepicker>
+                <div class="col-md-2"></div>
+                <md-button class="md-primary md-raised" ng-click="dmCtrl.showPrompt($event)">
+                    Prompt Dialog
+                </md-button>
+
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4"><label>Message</label></div>
+                <div class="col-md-4">
+                    <md-button class="md-primary md-raised" ng-click="dmCtrl.showTabDialog($event)" flex="100" flex-gt-md="auto">
+                        Tab Dialog
+                    </md-button>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+
+            <div class="row">
+                {{dmCtrl.status}}
+                <div class="col-sm-12"><input type="submit" class="form-control" value="Submit" id="btn-submit">
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+

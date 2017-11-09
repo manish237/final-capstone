@@ -9,7 +9,13 @@ var dietCategories = config.dietCategories.split(' ');
 
 var dietItemDetailSchema = mongoose.Schema({
     itemname: {type: String},
-    numcal: {type: Number}
+    itemcat: {type: String,enum:dietCategories},
+    numcal: {type: Number},
+    serving_qty: {type: Number},
+    serving_unit: {type: String},
+    serving_weight_grams: {type: Number},
+    brand_id:{type:String},
+    item_id:{type:String}
 });
 
 var dietItemSchema = mongoose.Schema({
@@ -20,7 +26,7 @@ var dietItemSchema = mongoose.Schema({
 
 var userDietSchema = mongoose.Schema({
     username: {type: String},
-    items: [{type: dietItemSchema}],
+    items: [{type: dietItemDetailSchema}],
     grosscal:{type: Number},
     entrydate:{type: Date},
     datecreated:{type: Date, required: true},

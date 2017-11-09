@@ -1,0 +1,91 @@
+<md-dialog aria-label="Mango (Fruit)">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Mango (Fruit)</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="dmCtrl.cancel()">
+                    <md-icon md-svg-src="images/close.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content style="max-width:800px;max-height:810px; ">
+            <md-tabs md-dynamic-height md-border-bottom md-selected="dmCtrl.selectedIndex">
+                <md-tab ng-repeat="ques in dmCtrl.qbank track by $index" label="{{$index}}">
+                    <md-content class="md-padding">
+                        <h5 class="md-display-2">{{ques.question}}{{dmCtrl.radio}}</h5>
+
+                        <md-radio-group ng-if="ques.response1!==undefined"
+                                        ng-model = "dmCtrl.radio" class = "md-primary"
+                                        ng-change="dmCtrl.saveOption(ques.quesId)">
+
+                            <md-radio-button  ng-value = "ques.response1.respId"
+                                             ng-class = "{'md-align-top-left': $index==1}" >
+                                {{ ques.response1.response }}
+                            </md-radio-button>
+
+                        </md-radio-group>
+
+
+                        <md-radio-group ng-if="ques.response2!==undefined"
+                                        ng-model = "dmCtrl.radio" class = "md-primary"
+                                        ng-change="dmCtrl.saveOption(ques.quesId)">
+
+                            <md-radio-button  ng-value = "ques.response2.respId"
+                                              ng-class = "{'md-align-top-left': $index==1}" >
+                                {{ ques.response2.response }}
+                            </md-radio-button>
+
+                        </md-radio-group>
+
+                        <md-radio-group ng-if="ques.response3!==undefined"
+                                        ng-model = "dmCtrl.radio" class = "md-primary"
+                                        ng-change="dmCtrl.saveOption(ques.quesId)">
+
+                            <md-radio-button  ng-value = "ques.response3.respId"
+                                              ng-class = "{'md-align-top-left': $index==1}" >
+                                {{ ques.response3.response }}
+                            </md-radio-button>
+
+                        </md-radio-group>
+
+                        <md-radio-group ng-if="ques.response4!==undefined"
+                                        ng-model = "dmCtrl.radio" class = "md-primary"
+                                        ng-change="dmCtrl.saveOption(ques.quesId)">
+
+                            <md-radio-button  ng-value = "ques.response4.respId"
+                                              ng-class = "{'md-align-top-left': $index==1}" >
+                                {{ ques.response4.response }}
+                            </md-radio-button>
+
+                        </md-radio-group>
+
+                        <md-button ng-show="dmCtrl.selectedIndex>0" class="md-raised md-primary" ng-click="dmCtrl.prevTab(ques.quesId)">Back</md-button>
+                        <md-button ng-show="dmCtrl.selectedIndex<dmCtrl.max-1" class="md-raised md-primary" ng-click="dmCtrl.nextTab(ques.quesId)">Next</md-button>
+                    </md-content>
+                </md-tab>
+
+            </md-tabs>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="dmCtrl.cancel()" >
+                Cancel
+            </md-button>
+            <md-button ng-click="dmCtrl.save()" style="margin-right:20px;" >
+                Save
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+
+<!--
+<md-radio-group ng-model = "dmCtrl.group" class = "md-primary">
+    <md-radio-button ng-value = "ques.response1.respId"
+                     ng-disabled = " d.isDisabled "
+                     ng-class = "{'md-align-top-left': $index==1}" >
+        {{ d.label }}<br/>
+    </md-radio-button>
+</md-radio-group>
+-->

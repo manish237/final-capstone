@@ -28,7 +28,9 @@ config.servicetype = 'CONTENT CONSULTATION BOTH'
 config.commtype = 'MESSAGE CHAT'
 config.standarddiagnosis = 'CAVITIES CARIES DIABETES'
 config.qbCategories = 'HISTORY HYGENE'
-config.dietCategories = 'BREAKFAST LUNCH DINNER OTHER'
+config.qbRespTypes = 'RADIO TEXT DATE CHECKBOX'
+config.dietCategories = 'BREAKFAST LUNCH DINNER SNACKS'
+config.examOutcomeTypes = 'NORMAL ABNORMAL NEVER NOREMEMBER'
 
 
 module.exports = config;

@@ -31,8 +31,20 @@ $(document).ready(function() {
     angular.element($('.section-tabs')).scope()
     console.log(angular.element($('.section-tabs')).scope())
     let ctrl = angular.element($('.section-tabs')).scope();
-    console.log(ctrl.oCtrl.data.data[2][0].hygenescore)
-    $('.gauge').attr('data-value',ctrl.oCtrl.data.data[2][0].hygenescore);
+    console.log(ctrl)
+    if(ctrl.oCtrl.data.type === 'register')
+    {
+        //we just have name ... no score
+        $('.gauge').attr('data-value',0)
+    }
+    else if(ctrl.oCtrl.data.type === 'login' || ctrl.oCtrl.data.type === 'reset'){
+        if(ctrl.oCtrl.data.data[2]!==undefined && ctrl.oCtrl.data.data[2][0]!==undefined && ctrl.oCtrl.data.data[2][0].hygenescore !==undefined)
+            $('.gauge').attr('data-value',ctrl.oCtrl.data.data[2][0].hygenescore)
+        else
+            $('.gauge').attr('data-value',0)
+    }
+
+
     var gg2 = new JustGage({
         id: 'gg2',
         title: 'Hygene Score',
