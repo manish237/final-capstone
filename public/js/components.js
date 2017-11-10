@@ -6,8 +6,8 @@ angular.module('componentLibrary', [])
             close: '&',
             dismiss: '&'
         },
-        controller: function(login,commondata,consumerdata,providerdata,$uibModal,$log,$location,localStorageService) {
-            var theResults = [];
+        controller: function(login,commondata,consumerdata,providerdata,$uibModal,$log,$location,localStorageService,profiledetails) {
+            var theResults = {};
 
             console.log("loginctrl")
             $ctrl = this;
@@ -16,9 +16,7 @@ angular.module('componentLibrary', [])
 
                 if(form.$valid==true)
                 {
-
                     $ctrl.validForm=true;
-
                     var reqBody = {
                         "username":$ctrl.loginUname,
                         "password":$ctrl.loginPwd,
@@ -28,86 +26,35 @@ angular.module('componentLibrary', [])
                     login(reqBody)
                         .then(data => {
                             if(data.error) {
-                                theResults.push({});
                                 $ctrl.errorMessage = data.error;
                                 return Promise.reject({
                                     error: data.error
                                 });
-                                //throw new Error(data.error);
-
-                                //$q.reject(data.error)
-                                // return data;
                             }
                             else {
-
-                                //console.log("login")
-                                //console.log(data)
-                                theResults.push(data);
-                                return commondata($ctrl.loginUname)
+                                return profiledetails($ctrl.loginUname)
                             }
                         })
-                        .then(dataCommon=>{
-                            if(dataCommon.error){
-
-                                $ctrl.errorMessage = dataCommon.error;
-                                theResults.push({});
+                        .then(data=>{
+                            if(data.error){
+                                $ctrl.errorMessage = data.error;
                                 return Promise.reject({
-                                    error: dataCommon.error
+                                    error: data.error
                                 });
-                                //throw new Error(dataCommon.error);
-
-                                //$q.reject(dataCommon.error)
-                                //return dataCommon;
                             }
                             else {
-
-                                //console.log(dataCommon)
-                                commoninfo = dataCommon;
-                                //console.log(dataCommon[0].usertype)
-                                theResults.push(dataCommon);
-
-                                if (dataCommon[0].usertype === 'CONSUMER') {
-                                    return consumerdata($ctrl.loginUname)
-                                }
-                                else if (dataCommon[0].usertype === 'PROVIDER') {
-                                    return providerdata($ctrl.loginUname)
-                                }
-                            }
-                        })
-                        .then(dataAdditional=> {
-                            "use strict";
-                            if(dataAdditional.error){
-
-                                $ctrl.errorMessage = dataAdditional.error;
-                                theResults.push({});
-
-                                return Promise.reject({
-                                    error: dataAdditional.error
-                                });
-                                throw new Error(dataAdditional.error);
-
-                                //$q.reject(dataAdditional.error)
-                                //return dataAdditional;
-                            }
-                            else {
-                                //console.log(dataAdditional)
-                                theResults.push(dataAdditional);
+                                theResults = data;
                                 $ctrl.close({$value: {
                                     type:"login",
                                     username:$ctrl.loginUname,
                                     data:theResults
                                 }});
-
                             }
-
                         })
                         .catch(err => {
                             $ctrl.errorMessage = err.error;
                         });
-                    //console.log(theResults)
                 }
-
-
             }
             $ctrl.cancel = function () {
                 console.log("close login")
@@ -137,8 +84,6 @@ angular.module('componentLibrary', [])
                     localStorageService.set('genData',selectedItem)
                     $location.url('/Overview')
                     parent.close({$value: selectedItem});
-
-                    //redirect to home page
                 }, function () {
                     $log.info('modal-component 2 dismissed at: ' + new Date());
                     console.log($ctrl)
@@ -184,7 +129,7 @@ angular.module('componentLibrary', [])
             dismiss: '&'
         },
         controller: function(registration) {
-            var theResults = [];
+            var theResults = {};
 
             console.log("registerctrl")
             var parent;
@@ -214,7 +159,6 @@ angular.module('componentLibrary', [])
                     .then(function (data) {
                     //console.log(data)
                         if(data.error) {
-                            theResults.push({});
                             $ctrl.errorMessage = data.error;
                             return Promise.reject({
                                 error: data.error
@@ -222,10 +166,19 @@ angular.module('componentLibrary', [])
                         }
                         else
                         {
-                            console.log($ctrl)
-                            console.log("reg success")
-                            theResults.push(data)
-                            $ctrl.close({$value:{
+                            return profiledetails($ctrl.uname)
+                        }
+                    })
+                    .then(data=>{
+                        if(data.error){
+                            $ctrl.errorMessage = data.error;
+                            return Promise.reject({
+                                error: data.error
+                            });
+                        }
+                        else {
+                            theResults = data;
+                            $ctrl.close({$value: {
                                 type:"register",
                                 username:$ctrl.uname,
                                 data:theResults
@@ -254,8 +207,8 @@ angular.module('componentLibrary', [])
             close: '&',
             dismiss: '&'
         },
-        controller: function(resetLogin,commondata,consumerdata,providerdata) {
-            var theResults = [];
+        controller: function(resetLogin,commondata,consumerdata,providerdata,profiledetails) {
+            var theResults = {};
 
             console.log("resetctrl")
             console.log($ctrl)
@@ -278,77 +231,30 @@ angular.module('componentLibrary', [])
                 resetLogin(reqBody)
                     .then(data => {
                         if(data.error) {
-                            theResults.push({});
                             $ctrl.errorMessage = data.error;
                             return Promise.reject({
                                 error: data.error
                             });
-                            //throw new Error(data.error);
-
-                            //$q.reject(data.error)
-                            // return data;
                         }
                         else {
-
-                            //console.log("login")
-                            //console.log(data)
-                            theResults.push(data);
-                            return commondata($ctrl.resetUname)
+                            return profiledetails($ctrl.resetUname)
                         }
                     })
-                    .then(dataCommon=>{
-                        if(dataCommon.error){
-
-                            $ctrl.errorMessage = dataCommon.error;
-                            theResults.push({});
+                    .then(data=>{
+                        if(data.error){
+                            $ctrl.errorMessage = data.error;
                             return Promise.reject({
-                                error: dataCommon.error
+                                error: data.error
                             });
-                            //throw new Error(dataCommon.error);
-
-                            //$q.reject(dataCommon.error)
-                            //return dataCommon;
                         }
                         else {
-
-                            //console.log(dataCommon)
-                            commoninfo = dataCommon;
-                            console.log(dataCommon[0].usertype)
-                            theResults.push(dataCommon);
-
-                            if (dataCommon[0].usertype === 'CONSUMER') {
-                                return consumerdata($ctrl.resetUname)
-                            }
-                            else if (dataCommon[0].usertype === 'PROVIDER') {
-                                return providerdata($ctrl.resetUname)
-                            }
-                        }
-                    })
-                    .then(dataAdditional=> {
-                        "use strict";
-                        if(dataAdditional.error){
-                            theResults.push({});
-                            $ctrl.errorMessage = dataAdditional.error;
-
-                            return Promise.reject({
-                                error: dataAdditional.error
-                            });
-                            throw new Error(dataAdditional.error);
-
-                            //$q.reject(dataAdditional.error)
-                            //return dataAdditional;
-                        }
-                        else {
-                            // console.log(dataAdditional)
-                            theResults.push(dataAdditional);
+                            theResults=data;
                             $ctrl.close({$value: {
                                 type:"reset",
                                 username:$ctrl.resetUname,
                                 data:theResults
                             }});
-
                         }
-
                     })
                     .catch(err => {
                         $ctrl.errorMessage = err.error;

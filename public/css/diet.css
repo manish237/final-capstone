@@ -56,7 +56,7 @@ h2 {
 h5{
     font-weight: 100;
 }
-.section-send-message,.section-group-chat{
+.section-common,.section-group-chat{
     margin:0px;
     margin-top:1px;
     padding: 0px;
@@ -139,4 +139,12 @@ table, th, td {
 th{
     background-color:green;
     color: white;
+}
+.angucomplete-dropdown{
+    overflow-y: scroll;
+    max-height: 500px;
+}
+
+.highlight {
+    color: #ff0000;
 }

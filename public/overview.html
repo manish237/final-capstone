@@ -3,7 +3,6 @@
         <div class="row">
             <ul class="main-nav">
                 <li><a href="#/Overview" ng-class="{active:oCtrl.overview===true}">Home</a></li>
-                <li><a href="#/HealthAssessment" ng-class="{active:ctrl.health===true}">Health Assessment</a></li>
                 <li><a href="#/Diet" ng-class="{active:dmCtrl.diet===true}">Manage Diet</a></li>
                 <li><a href="#/MessageCenter" ng-class="{active:mcCtrl.message===true}">Message Center</a></li>
                 <li><a href="#/Profile" ng-class="{active:pCtrl.overview===true}">Profile</a></li>
@@ -33,7 +32,7 @@
 
         <div class="col-md-2 gg-container">
             <div class="row row-1"><div id="gg2" class="gauge"></div></div>
-            <div class="row row-2"><h5><a href="#/HealthAssessment">Update Score Now</a></h5></div>
+            <div class="row row-2"><h5><a ng-click="oCtrl.showTabDialog($event)">Update Score Now</a></h5></div>
         </div>
     </div>
 </section>

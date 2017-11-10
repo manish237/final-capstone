@@ -38,8 +38,8 @@ $(document).ready(function() {
         $('.gauge').attr('data-value',0)
     }
     else if(ctrl.oCtrl.data.type === 'login' || ctrl.oCtrl.data.type === 'reset'){
-        if(ctrl.oCtrl.data.data[2]!==undefined && ctrl.oCtrl.data.data[2][0]!==undefined && ctrl.oCtrl.data.data[2][0].hygenescore !==undefined)
-            $('.gauge').attr('data-value',ctrl.oCtrl.data.data[2][0].hygenescore)
+        if(ctrl.oCtrl.data.data.additionaldata!==undefined && ctrl.oCtrl.data.data.additionaldata.hygenescore !==undefined)
+            $('.gauge').attr('data-value',ctrl.oCtrl.data.data.additionaldata.hygenescore)
         else
             $('.gauge').attr('data-value',0)
     }

@@ -406,7 +406,7 @@ router.get('/getdata/:uname', (req, res) => {
         .then((data)=>{
             console.log("get details 10")
             if(data!==undefined)
-                detail.dietdata = data[0];
+                detail.dietdata = data;
             res.status(200).json(detail);
         })
         .catch(err => {

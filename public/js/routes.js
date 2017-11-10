@@ -37,12 +37,6 @@ angular.module('routeLibrary',['ngRoute'])
                 css:'css/diet.css'
 
             })
-            .when('/HealthAssessment',{
-                templateUrl: './HealthAssess.html',
-                controller : 'HealthAssessCtrl',
-                controllerAs: 'haCtrl',
-                css:'css/health.css'
-            })
             .when('/error', {
                 template : '<p>Error Page Not Found</p>'
             })

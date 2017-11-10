@@ -43,21 +43,18 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
         };
     }])
 
-    .factory('refreshStorage', ['regdata','commondata','consumerdata','providerdata','localStorageService',function(regdata,commondata,consumerdata,providerdata,localStorageService) {
-
-
+    .factory('refreshStorage', ['regdata','commondata','consumerdata','providerdata','localStorageService','profiledetails',function(regdata,commondata,consumerdata,providerdata,localStorageService,profiledetails) {
         return {
             refresh: function(uname,type) {
                 console.log(uname)
                 console.log(type)
-                var theResults = [];
-                regdata(uname)
+                var theResults = {};
+                profiledetails(uname)
                     .then(data=>{
                         console.log("refreshStorage 01")
                         "use strict";
                         if(data.error) {
                             console.log("refreshStorage 02")
-                            theResults.push(data);
                             return Promise.reject({
                                 error: data.error
                             });
@@ -65,65 +62,19 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
                         else
                         {
                             console.log("refreshStorage 03")
-                            theResults.push(data);
-                            return commondata(uname)
-                        }
-                    })
-                    .then(dataCommon=>{
-                        console.log("refreshStorage 04")
+                            theResults=data;
 
-                        if(dataCommon.error){
-                            console.log("refreshStorage 05")
-                            theResults.push(data);
-
-                            return Promise.reject({
-                                error: dataCommon.error
-                            });
-                        }
-                        else {
-                            console.log("refreshStorage 06")
-
-                            commoninfo = dataCommon;
-                            theResults.push(dataCommon);
-                            if (dataCommon[0].usertype === 'CONSUMER') {
-
-                                console.log("refreshStorage 06a")
-
-                                return consumerdata(uname)
-                            }
-                            else if (dataCommon[0].usertype === 'PROVIDER') {
-                                console.log("refreshStorage 06b")
-
-                                return providerdata(uname)
-                            }
-                        }
-                    })
-                    .then(dataAdditional=> {
-                        console.log("refreshStorage 07")
-
-                        "use strict";
-                        if(dataAdditional.error){
-                            console.log("refreshStorage 08")
-                            theResults.push(data);
-                            return Promise.reject({
-                                error: dataAdditional.error
-                            });
-                        }
-                        else {
-                            console.log("refreshStorage 09")
-
-                            theResults.push(dataAdditional);
                             let ds = {
                                 type:type,
                                 username:uname,
                                 data:theResults
                             }
-                            // console.log(ds)
+                            console.log(ds)
                             localStorageService.set('genData',ds)
                         }
                     })
                     .catch(err => {
-                        theResults=[];
+                        theResults={};
                     });
             }
         };
