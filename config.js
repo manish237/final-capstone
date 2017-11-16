@@ -4,8 +4,11 @@ let config = {};
 
 config.mongoURI = {
     development: process.env.DATABASE_URL ||
-                global.DATABASE_URL ||
-                'mongodb://localhost/final-capstone',
+        global.DATABASE_URL ||
+        'mongodb://localhost/final-capstone',
+    production: process.env.DATABASE_URL ||
+        global.DATABASE_URL ||
+        'mongodb://localhost/final-capstone',
     test:   process.env.TEST_DATABASE_URL ||
             "mongodb://localhost/test-final-capstone"
 };
