@@ -25,6 +25,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 // *** mongoose *** ///
 console.log(config.mongoURI[app.settings.env])
+console.log(app.settings.env)
 mongoose.connect(config.mongoURI[app.settings.env], {
                 useMongoClient: true
                 },function(err, res) {
