@@ -3,3 +3,6 @@ public/bower_components
 # Dependency directories
 node_modules/
 extras/
+.idea/
+package-lock.json
+npm-debug.log.*
