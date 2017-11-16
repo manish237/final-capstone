@@ -66,7 +66,7 @@ let io = require('socket.io').listen(server);
 app.use('/static', express.static('node_modules'));
 
 
-server.listen(8080, function() {
+server.listen(process.env.PORT||8080, function() {
     console.log("Node server running on http://localhost:8080");
 });
 
