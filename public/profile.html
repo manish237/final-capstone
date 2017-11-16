@@ -1,373 +1,394 @@
+<link rel="stylesheet" href="./css/profile.css">
 <header>
     <nav>
         <div class="row">
             <ul class="main-nav">
-                <li><a href="#/Overview">Home</a></li>
-                <li><a href="#/Diet">Manage Diet</a></li>
-                <li><a href="#/MessageCenter">Message Center</a></li>
-                <li><a href="#/Profile">Profile</a></li>
+                <li><a href="#/Overview" ng-class="{active:oCtrl.overview}">Home</a></li>
+                <li><a ng-if="pCtrl.data.usertype==='CONSUMER'" href="#/Diet" ng-class="{active:dmCtrl.diet}">Manage Diet</a></li>
+                <li><a href="#/MessageCenter" ng-class="{active:mcCtrl.mcenter}">Message Center</a></li>
+                <li><a href="#/Profile" ng-class="{active:pCtrl.profile}">Profile</a></li>
                 <li><a href="" ng-click="pCtrl.logout()">LogOut</a></li>
             </ul>
         </div>
     </nav>
     <div class="hero-text-box">
-        <h1>TheApp - Your personal dental health manager</h1>
+        <h1>HealthBasics - Your personal dental health manager</h1>
     </div>
 </header>
+<div class="alert-container" ng-if="pCtrl.savesuccess===true" >
+    <div ng-if="pCtrl.savesuccess===true" class="alert alert-success" ng-class="{fade:pCtrl.doFade}" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Saved Success!</strong>
+    </div>
+</div>
 <section class="section-common">
-{{pCtrl.usertype}}
     <div class="row form-common-row">
-        <span>Form Submitted! {{inputCommonForm.$submitted}}</span>|
-        <span>Form $valid! {{inputCommonForm.$valid}}</span>|
-        <span>Form $invalid! {{inputCommonForm.$invalid}}</span>|
-        <span>Error chathandle! {{inputCommonForm.chathandle.$error}}</span>|
-        <span>Error name! {{inputCommonForm.name.$error}}</span>|
-        <span>Error gender! {{inputCommonForm.gender.$error}}</span>|
-        <span>Error location! {{inputCommonForm.location.$error}}</span>|
-        <span>Error errorMessage! {{pCtrl.errorMessage}}</span>
-        <form id="form-input" name="inputCommonForm" novalidate ng-submit="pCtrl.submitCommonProfile(inputCommonForm)">
-            <div class="row"><div class="col-md-12">Personal Info</div></div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label>Chat Handle(upto 20 characters)</label></div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control" placeholder="pCtrl.chathandle" ng-model="pCtrl.chathandle" id="chathandle" name="chathandle" handle-requestor="{{pCtrl.username}}"
-                           chat-handle-validator
-                           ng-pattern="/^[A-Za-z0-9_]{2,20}$/"
-                           ng-minlength="5"
-                           ng-model-options="{ debounce: 1000 }">
-                    <div ng-if="inputCommonForm.$submitted" ng-messages="inputCommonForm.chathandle.$error">
-                        <span class="error" ng-message="pattern">Only Aphanumeric allowed with (_)</span>
-                        <span class="error" ng-message="minlength">Minimum 5 characters expected</span>
-                        <span class="error" ng-message="uniqueChatHandle">Chat handle already taken!!</span>
+        <div class="col-md-12 col-xs-12 form-common-col">
+            <form class="form-common" id="form-input" name="inputCommonForm" novalidate ng-submit="pCtrl.submitCommonProfile(inputCommonForm)">
+                <div class="row form-common-title-row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-11 col-xs-11 form-common-title-col">
+                        <h3 class="form-common-title">Personal Info</h3>
                     </div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label for="name">Name</label></div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control" placeholder="pCtrl.name" ng-model="pCtrl.name" id="name" name="name" required ng-minlength="6" ng-pattern="/^[a-zA-Z ]*$/">
-                    <div ng-if="inputForm.$submitted" ng-messages="inputForm.name.$error">
-                        <span class="error" ng-message="required">Field is required!</span>
-                        <span class="error" ng-message="minlength">Minimum 5 characters expected</span>
-                        <span class="error" ng-message="pattern">Numbers not allowed</span>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-common-field">Chat Handle(upto 20 characters)</div>
+                    <div class="col-md-4 col-xs-6 form-common-input">
+                        <input type="text" class="form-control" placeholder="pCtrl.chathandle" ng-model="pCtrl.chathandle" id="chathandle" name="chathandle" handle-requestor="{{pCtrl.username}}"
+                               chat-handle-validator
+                               ng-pattern="/^[A-Za-z0-9_]{2,20}$/"
+                               ng-minlength="5"
+                               ng-model-options="{ debounce: 1000 }">
+                        <div ng-if="inputCommonForm.$submitted" ng-messages="inputCommonForm.chathandle.$error">
+                            <span class="error" ng-message="pattern">Only Aphanumeric allowed with (_)</span>
+                            <span class="error" ng-message="minlength">Minimum 5 characters expected</span>
+                            <span class="error" ng-message="uniqueChatHandle">Chat handle already taken!!</span>
+                        </div>
                     </div>
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label for="gender">Gender</label></div>
-                <div class="col-md-4">
-                    <select ng-model="pCtrl.gender" id="gender" name="gender">
-                        <option value = "MALE" ng-selected="pCtrl.gender==='MALE'">MALE</option>
-                        <option value = "FEMALE" ng-selected="pCtrl.gender==='FEMALE'">FEMALE</option>
-                        <option value = "OTHER" ng-selected="pCtrl.gender==='OTHER'">OTHER</option>
-                    </select>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-common-field">Name</div>
+                    <div class="col-md-4 col-xs-6 form-common-input">
+                        <input type="text" class="form-control" placeholder="pCtrl.name!==undefined?pCtrl.name:''" ng-model="pCtrl.name" id="name" name="name" required ng-minlength="6" ng-pattern="/^[a-zA-Z ]*$/">
+                        <div ng-if="inputForm.$submitted" ng-messages="inputForm.name.$error">
+                            <span class="error" ng-message="required">Field is required!</span>
+                            <span class="error" ng-message="minlength">Minimum 5 characters expected</span>
+                            <span class="error" ng-message="pattern">Numbers not allowed</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label for="location">Current Location</label></div>
-                <div class="col-md-4">
-                    <input name="location" id="location" ng-model="pCtrl.chosenPlace" details="pCtrl.chosenPlaceDetails"
-                           test="pCtrl.testText" googleplace placeholder="Type to edit"/> <span>{{pCtrl.location}}</span>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-common-field">Gender</div>
+                    <div class="col-md-4 col-xs-6 form-common-input">
+                        <select ng-model="pCtrl.gender" id="gender" name="gender">
+                            <option value = "MALE" ng-selected="pCtrl.gender==='MALE'">MALE</option>
+                            <option value = "FEMALE" ng-selected="pCtrl.gender==='FEMALE'">FEMALE</option>
+                            <option value = "OTHER" ng-selected="pCtrl.gender==='OTHER'">OTHER</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4">Languages Known</label></div>
-                <div class="col-md-4">
-                    <ui-select
-                            multiple
-                            ng-model="pCtrl.selectedLangs"
-                            theme="bootstrap"
-                            ng-disabled="false"
-                            sortable="true"
-                            close-on-select="false"
-                            style="width: 800px;">
-                        <ui-select-match placeholder="Select known languages...">
-                            {{$item.name}}
-                        </ui-select-match>
-                        <ui-select-choices repeat="lang in pCtrl.metalanguages | propsFilter: {name: $select.search, code: $select.search}">
-                            <div ng-bind-html="lang.name | highlight: $select.search"></div>
-                            <small>
-                                native: {{lang.nativeName}}
-                                &lt;!&ndash;code: <span ng-bind-html="''+lang.code | highlight: $select.search"></span>&ndash;&gt;
-                            </small>
-                        </ui-select-choices>
-                    </ui-select>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-common-field">Current Location</div>
+                    <div class="col-md-4 col-xs-6 form-common-input">
+                        <input name="location" id="location" ng-model="pCtrl.chosenPlace" details="pCtrl.chosenPlaceDetails"
+                               test="pCtrl.testText" googleplace placeholder="Type to edit"/> <span class="curr-loc">{{pCtrl.location}}</span>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-common-field">Languages Known</div>
+                    <div class="col-md-4 col-xs-6 form-common-input">
+                        <ui-select
+                                multiple
+                                ng-model="pCtrl.selectedLangs"
+                                theme="bootstrap"
+                                ng-disabled="false"
+                                sortable="true"
+                                close-on-select="false">
+                            <ui-select-match placeholder="Select known languages...">
+                                {{$item.name}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="lang in pCtrl.metalanguages | propsFilter: {name: $select.search, code: $select.search}">
+                                <div ng-bind-html="lang.name | highlight: $select.search"></div>
+                                <small>
+                                    native: {{lang.nativeName}}
+                                    &lt;!&ndash;code: <span ng-bind-html="''+lang.code | highlight: $select.search"></span>&ndash;&gt;
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
 
 
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12"><input type="submit" class="form-control" value="Submit" id="btn-submit">
+                <div class="row">
+                    <div class="col-md-4 col-xs-2"></div>
+                    <div class="col-sm-4 col-xs-6 form-common-btn"><input type="submit" class="btn btn-primary" value="Save">
+                    </div>
+                    <div class="col-md-4"></div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </section>
 <section ng-show="pCtrl.usertype==='CONSUMER'" class="section-consumer">
     <div class="row form-consumer-row">
-        <span>Form Submitted! {{inputCommonForm.$submitted}}</span>|
-        <span>Form $valid! {{inputCommonForm.$valid}}</span>|
-        <span>Form $invalid! {{inputCommonForm.$invalid}}</span>|
-        <span>Error age! {{inputConsumerForm.age.$error}}</span>|
-        <span>Error errorMessage! {{pCtrl.errorMessage}}</span>
-        <form id="form-input-1" name="inputConsumerForm" novalidate ng-submit="pCtrl.submitConsumerProfile(inputCommonForm)">
-            <div class="row"><div class="col-md-12">Additional Info</div></div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label for="age">Age</label></div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control" ng-model="pCtrl.age" id="age" name="age"
-                           placeholder="pCtrl.age" ng-minlength="2" ng-pattern="/^[0-9]{2,3}$/">
-
-                    <div ng-if="inputForm.$submitted" ng-messages="inputForm.name.$error">
-                        <span class="error" ng-message="minlength">Minimum 2 characters expected</span>
-                        <span class="error" ng-message="pattern">Only numbers allowed</span>
+        <div class="col-md-12 col-xs-12 form-consumer-col">
+            <form class="form-consumer" id="form-input-1" name="inputConsumerForm" novalidate ng-submit="pCtrl.submitConsumerProfile(inputCommonForm)">
+                <div class="row form-consumer-title-row">
+                    <div class="col-md-1 col-xs-1"></div>
+                    <div class="col-md-11 col-xs-11 form-consumer-title-col">
+                        <h3 class="form-consumer-title-addinfo">Additional Info</h3>
                     </div>
-
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label>Preferred Language-{{pCtrl.selectedPrefLang}}</label></div>
-                <div class="col-md-4">
-                    <ui-select
-                            ng-model="pCtrl.selectedPrefLang"
-                            theme="bootstrap"
-                            ng-disabled="false"
-                            sortable="true"
-                            close-on-select="true"
-                            style="width: 800px;">
-                        <ui-select-match placeholder="Select known languages...">
-                            {{$select.selected.name}}
-                        </ui-select-match>
-                        <ui-select-choices repeat="lang in pCtrl.metalanguages | propsFilter: {name: $select.search, code: $select.search}">
-                            <div ng-bind-html="lang.name | highlight: $select.search"></div>
-                            <small>
-                                native: {{lang.nativeName}}
-                                &lt;!&ndash;code: <span ng-bind-html="''+lang.code | highlight: $select.search"></span>&ndash;&gt;
-                            </small>
-                        </ui-select-choices>
-                    </ui-select>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-consumer-field">Age</div>
+                    <div class="col-md-4 col-xs-6 form-consumer-input">
+                        <input type="text" class="form-control" ng-model="pCtrl.age" id="age" name="age"
+                               placeholder="{{pCtrl.age!==undefined?pCtrl.age:''}}" ng-minlength="2" ng-pattern="/^[0-9]{2,3}$/">
 
+                        <div ng-if="inputForm.$submitted" ng-messages="inputForm.name.$error">
+                            <span class="error" ng-message="minlength">Minimum 2 characters expected</span>
+                            <span class="error" ng-message="pattern">Only numbers allowed</span>
+                        </div>
+
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row"><div class="col-md-12">Medical History</div></div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label for="listPrescription">List any prescription medications you are now taking</label></div>
-                <div class="col-md-4">
-                    <textarea class="form-control" rows="5" ng-model="pCtrl.listPrescription" id="listPrescription" name="listPrescription"
-                              placeholder="pCtrl.listPrescription"></textarea>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-consumer-field">Preferred Language</div>
+                    <div class="col-md-4 col-xs-6 form-consumer-input">
+                        <ui-select
+                                ng-model="pCtrl.selectedPrefLang"
+                                theme="bootstrap"
+                                ng-disabled="false"
+                                sortable="true"
+                                close-on-select="true">
+                            <ui-select-match placeholder="Select known languages...">
+                                {{$select.selected.name}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="lang in pCtrl.metalanguages | propsFilter: {name: $select.search, code: $select.search}">
+                                <div ng-bind-html="lang.name | highlight: $select.search"></div>
+                                <small>
+                                    native: {{lang.nativeName}}
+                                    &lt;!&ndash;code: <span ng-bind-html="''+lang.code | highlight: $select.search"></span>&ndash;&gt;
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label for="listNonPrescription">List any self-prescribed medications, dietary supplements, or vitamins you are now taking</label></div>
-                <div class="col-md-4">
-                    <textarea class="form-control" rows="5" ng-model="pCtrl.listNonPrescription" id="listNonPrescription" name="listNonPrescription"
-                              placeholder="pCtrl.listNonPrescription"></textarea>
+                <div class="row form-consumer-title-row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-10 form-consumer-title-col">
+                        <h4 class="form-consumer-title-medhist-main">Medical History</h4>
+                    </div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label for="listOtherTest">List any other medical or diagnostic test you have had in the past two years</label></div>
-                <div class="col-md-4">
-                    <textarea class="form-control" rows="5" ng-model="pCtrl.listOtherTest" id="listOtherTest" name="listOtherTest"
-                    placeholder="pCtrl.listOtherTest"></textarea>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-consumer-field">List any prescription medications you are now taking</div>
+                    <div class="col-md-4 col-xs-6 form-consumer-input">
+                        <textarea class="form-control" rows="5" ng-model="pCtrl.listPrescription" id="listPrescription" name="listPrescription"
+                                  placeholder="{{pCtrl.listPrescription!==undefined?pCtrl.listPrescription:''}}"></textarea>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label for="listDrugAllergies">List any drug allergies</label></div>
-                <div class="col-md-4">
-                    <textarea class="form-control" rows="5" ng-model="pCtrl.listDrugAllergies" id="listDrugAllergies" name="listDrugAllergies"
-                              placeholder="pCtrl.listDrugAllergies"></textarea>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-consumer-field">List any self-prescribed medications, dietary supplements, or vitamins you are now taking</div>
+                    <div class="col-md-4 col-xs-6 form-consumer-input">
+                        <textarea class="form-control" rows="5" ng-model="pCtrl.listNonPrescription" id="listNonPrescription" name="listNonPrescription"
+                                  placeholder="{{pCtrl.listNonPrescription!==undefined?pCtrl.listNonPrescription:''}}"></textarea>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-            {{pCtrl.dateLastPhysical}}{{pCtrl.dateLastDental}}
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label for="listDrugAllergies">Date of last complete physical examination</label></div>
-                <div class="col-md-4">
-                    <p class="input-group">
-                        <input type="text" class="form-control" uib-datepicker-popup="{{pCtrl.format}}" ng-model="pCtrl.dateLastPhysical" is-open="pCtrl.popup1.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="pCtrl.open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
-                    </p>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-consumer-field">List any other medical or diagnostic test you have had in the past two years</div>
+                    <div class="col-md-4 col-xs-6 form-consumer-input">
+                        <textarea class="form-control" rows="5" ng-model="pCtrl.listOtherTest" id="listOtherTest" name="listOtherTest"
+                        placeholder="{{pCtrl.listOtherTest!==undefined?pCtrl.listOtherTest:''}}"></textarea>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label for="listDrugAllergies">Date of last dental check up</label></div>
-                <div class="col-md-4">
-                    <p class="input-group">
-                        <input type="text" class="form-control" uib-datepicker-popup="{{pCtrl.format}}" ng-model="pCtrl.dateLastDental" is-open="pCtrl.popup2.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="pCtrl.open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
-                    </p>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-consumer-field">List any drug allergies</div>
+                    <div class="col-md-4 col-xs-6 form-consumer-input">
+                        <textarea class="form-control" rows="5" ng-model="pCtrl.listDrugAllergies" id="listDrugAllergies" name="listDrugAllergies"
+                                  placeholder="{{pCtrl.listDrugAllergies!==undefined?pCtrl.listDrugAllergies:''}}"></textarea>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-
-            <div class="row"><div class="col-md-12">Past Medical History</div></div>
-
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4">
-
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-consumer-field">Date of last complete physical examination</div>
+                    <div class="col-md-4 col-xs-6 form-consumer-input">
+                        <p class="input-group">
+                            <input type="text" class="form-control" uib-datepicker-popup="{{pCtrl.format}}" ng-model="pCtrl.dateLastPhysical" is-open="pCtrl.popup1.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="pCtrl.open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-4"><label><input type="checkbox" ng-model="pCtrl.stroke" name="stroke"
-                                                    placeholder="pCtrl.stroke" ng-checked="pCtrl.stroke===true">Stroke</label></div>
 
-                <div class="col-md-2"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4">
-
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-consumer-field">Date of last dental check up</div>
+                    <div class="col-md-4 col-xs-6 form-consumer-input">
+                        <p class="input-group">
+                            <input type="text" class="form-control" uib-datepicker-popup="{{pCtrl.format}}" ng-model="pCtrl.dateLastDental" is-open="pCtrl.popup2.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="pCtrl.open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-4"><label><input type="checkbox" ng-model="pCtrl.arthritis" name="arthritis"
-                                                    placeholder="pCtrl.arthritis" ng-checked="pCtrl.arthritis===true">Arthritis</label></div>
 
-                <div class="col-md-2"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4">
-
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-10">
+                        <h4 class="form-consumer-title-medhist">Diagnostic History</h4>
+                    </div>
                 </div>
-                <div class="col-md-4"><label><input type="checkbox" ng-model="pCtrl.diabetes" name="diabetes"
-                                                    placeholder="pCtrl.diabetes" ng-checked="pCtrl.diabetes===true">Diabetes</label></div>
 
-                <div class="col-md-2"></div>
-            </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-2">
 
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4 col-xs-6 form-consumer-input"><input type="checkbox" ng-model="pCtrl.stroke" name="stroke" placeholder="pCtrl.stroke" ng-checked="pCtrl.stroke===true">Stroke</div>
 
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-4"><label><input type="checkbox" ng-model="pCtrl.anemia" name="anemia"
-                                                    placeholder="pCtrl.anemia" ng-checked="pCtrl.anemia===true">Anemia</label></div>
 
-                <div class="col-md-2"></div>
-            </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-2">
 
-            <div class="row"><div class="col-md-12">Smoking</div></div>
+                    </div>
+                    <div class="col-md-4 col-xs-6 form-consumer-input"><input type="checkbox" ng-model="pCtrl.arthritis" name="arthritis" placeholder="pCtrl.arthritis" ng-checked="pCtrl.arthritis===true">Arthritis</div>
 
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label>Have you ever smoked cigarettes, cigars or a pipe</label></div>
-                <div class="col-md-4">
-                    <label class="radio-inline"><input type="radio" name="smoking" ng-model="pCtrl.smoking" value="true">Yes</label>
-                    <label class="radio-inline"><input type="radio" name="smoking" ng-model="pCtrl.smoking" value="false">No</label>
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label>Do you ever drink alcoholic beverages?</label></div>
-                <div class="col-md-4">
-                    <label class="radio-inline"><input type="radio" name="alcohol" ng-model="pCtrl.alcohol" value="true">Yes</label>
-                    <label class="radio-inline"><input type="radio" name="alcohol" ng-model="pCtrl.alcohol" value="false">No</label>
-                </div>
-                <div class="col-md-2"></div>
-            </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-2">
 
-            <div class="row">
-                <div class="col-sm-12"><input type="submit" class="form-control" value="Submit">
+                    </div>
+                    <div class="col-md-4 col-xs-6 form-consumer-input"><input type="checkbox" ng-model="pCtrl.diabetes" name="diabetes" placeholder="pCtrl.diabetes" ng-checked="pCtrl.diabetes===true">Diabetes</div>
+
+                    <div class="col-md-2"></div>
                 </div>
-            </div>
-        </form>
+
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-2">
+
+                    </div>
+                    <div class="col-md-4 col-xs-6 form-consumer-input"><input type="checkbox" ng-model="pCtrl.anemia" name="anemia"
+                                                        placeholder="pCtrl.anemia" ng-checked="pCtrl.anemia===true">Anemia</div>
+
+                    <div class="col-md-2"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-10">
+                        <h4 class="form-consumer-title-medhist-sm">Smoking/Alcohol</h4>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-6 form-consumer-field">Have you ever smoked cigarettes, cigars or a pipe</div>
+                    <div class="col-md-4 col-xs-6 form-consumer-input">
+                        <label class="radio-inline"><input type="radio" name="smoking" ng-model="pCtrl.smoking" value="true">Yes</label>
+                        <label class="radio-inline"><input type="radio" name="smoking" ng-model="pCtrl.smoking" value="false">No</label>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-6 form-consumer-field">Do you ever drink alcoholic beverages?</div>
+                    <div class="col-md-4 col-xs-6 form-consumer-input">
+                        <label class="radio-inline"><input type="radio" name="alcohol" ng-model="pCtrl.alcohol" value="true">Yes</label>
+                        <label class="radio-inline"><input type="radio" name="alcohol" ng-model="pCtrl.alcohol" value="false">No</label>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-xs-2"></div>
+                    <div class="col-sm-4 col-xs-4 form-consumer-btn"><input type="submit" class="btn btn-primary" value="Save">
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </form>
+        </div>
     </div>
 </section>
 <section ng-show="pCtrl.usertype==='PROVIDER'" class="section-provider">
+    <div  class="row form-provider-row">
+        <div class="col-md-12 col-xs-12 form-provider-col">
+            <form class="form-provider" id="form-input-3" name="inputProviderForm" novalidate ng-submit="pCtrl.submitProviderProfile(inputCommonForm)">
+                <div class="row form-provider-title-row">
+                    <div class="col-md-1  col-xs-1"></div>
 
-    <div  class="row form-consumer-row">
-        <span>Form Submitted! {{inputProviderForm.$submitted}}</span>|
-        <span>Form $valid! {{inputProviderForm.$valid}}</span>|
-        <span>Form $invalid! {{inputProviderForm.$invalid}}</span>|
-        <span>Error age! {{inputProviderForm.qual.$error}}</span>|
-        <span>Error age! {{inputProviderForm.expert.$error}}</span>|
-        <span>Error age! {{inputProviderForm.qual.$error}}</span>|
-        <span>Error errorMessage! {{pCtrl.errorMessage}}</span>
-        <form id="form-input-3" name="inputProviderForm" novalidate ng-submit="pCtrl.submitProviderProfile(inputCommonForm)">
-            <div class="row"><div class="col-md-12">Additional Info</div></div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label for="qual">Qualifications</label></div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control" ng-model="pCtrl.qual" id="qual" name="qual"
-                           ng-pattern="/^[A-Za-z0-9_,]*/">
-                    <div ng-if="inputProviderForm.$submitted" ng-messages="inputProviderForm.qual.$error">
-                        <span class="error" ng-message="pattern">Spl Characters not allowed</span>
+                    <div class="col-md-11 col-xs-11 form-provider-title-col">
+                        <h3 class="form-provider-title">Additional Info</h3>
                     </div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label for="expert">Expertise</label></div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control" ng-model="pCtrl.expert" id="expert" name="expert"
-                           ng-pattern="/^[A-Za-z0-9_]*/">
-                    <div ng-if="inputProviderForm.$submitted" ng-messages="inputProviderForm.expert.$error">
-                        <span class="error" ng-message="pattern">Spl Characters not allowed</span>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-provider-field">Qualifications</div>
+                    <div class="col-md-4 col-xs-4 form-provider-input">
+                        <input type="text" class="form-control" ng-model="pCtrl.qual" id="qual" name="qual"
+                               ng-pattern="/^[A-Za-z0-9_,]*/">
+                        <div ng-if="inputProviderForm.$submitted" ng-messages="inputProviderForm.qual.$error">
+                            <span class="error" ng-message="pattern">Spl Characters not allowed</span>
+                        </div>
                     </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-provider-field">Expertise</div>
+                    <div class="col-md-4 col-xs-4 form-provider-input">
+                        <input type="text" class="form-control" ng-model="pCtrl.expert" id="expert" name="expert"
+                               ng-pattern="/^[A-Za-z0-9_]*/">
+                        <div ng-if="inputProviderForm.$submitted" ng-messages="inputProviderForm.expert.$error">
+                            <span class="error" ng-message="pattern">Spl Characters not allowed</span>
+                        </div>
 
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label for="servicetype">Service Type</label></div>
-                <div class="col-md-4">
-                    <select ng-model="pCtrl.servicetype" id="servicetype" name="servicetype">
-                        <option value = "CONTENT" ng-selected="pCtrl.servicetype==='CONTENT'">CONTENT</option>
-                        <option value = "CONSULTATION" ng-selected="pCtrl.servicetype==='CONSULTATION'">CONSULTATION</option>
-                        <option value = "BOTH" ng-selected="pCtrl.servicetype==='BOTH'">BOTH</option>
-                    </select>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-provider-field">Service Type</div>
+                    <div class="col-md-4 col-xs-4 form-provider-input">
+                        <select ng-model="pCtrl.servicetype" id="servicetype" name="servicetype">
+                            <option value = "CONTENT" ng-selected="pCtrl.servicetype==='CONTENT'">CONTENT</option>
+                            <option value = "CONSULTATION" ng-selected="pCtrl.servicetype==='CONSULTATION'">CONSULTATION</option>
+                            <option value = "BOTH" ng-selected="pCtrl.servicetype==='BOTH'">BOTH</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label for="chatavail">Available for Chat?</label></div>
-                <div class="col-md-4">
-                    <select ng-model="pCtrl.chatavail" id="chatavail" name="chatavail">
-                        <option value = "YES"  ng-selected="pCtrl.chatavail==='YES'">YES</option>
-                        <option value = "NO"  ng-selected="pCtrl.chatavail==='NO'">NO</option>
-                    </select>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4 form-provider-field">Available for Chat?</div>
+                    <div class="col-md-4 col-xs-4 form-provider-input">
+                        <select ng-model="pCtrl.chatavail" id="chatavail" name="chatavail">
+                            <option value = "YES"  ng-selected="pCtrl.chatavail==='YES'">YES</option>
+                            <option value = "NO"  ng-selected="pCtrl.chatavail==='NO'">NO</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2"></div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12"><input type="submit" class="form-control" value="Submit">
+                <div class="row">
+                    <div class="col-md-4 col-xs-2"></div>
+                    <div class="col-sm-4 col-xs-4 form-provider-btn"><input type="submit" class="btn btn-primary" value="Save">
+                    </div>
+                    <div class="col-md-4"></div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </section>

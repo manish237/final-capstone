@@ -8,7 +8,9 @@ and (min-width:720px ) and (max-width:991px );
 and (min-width:690px ) and (max-width:719px );
 @import url("./mcenter-media/mcenter-min-1340.css") only screen
 and (min-width:300px ) and (max-width:689px );
-
+.active{
+    font-weight: bold;
+}
 /*
 @import url("./dietmanager-media/dietmanager-min-660.css") only screen
 and (min-width:660px ) and (max-width:991px );

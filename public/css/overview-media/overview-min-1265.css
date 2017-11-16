@@ -31,6 +31,7 @@ header {
 .main-nav li {
     display: inline-block;
     margin-left: 40px;
+
 }
 
 .main-nav li a:link,
@@ -240,3 +241,5 @@ Feed Section
 .section-feeds a:active {
     color: #CE6D39;
 }
+
+

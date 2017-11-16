@@ -83,6 +83,7 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
 .controller('OverviewCtrl',['$http','$scope','$rootScope','$location','$route','localStorageService','$mdDialog','getQBank','consumerdataUpd','refreshStorage','getFeeds',function ($http,$scope, $rootScope,$location,$route,localStorageService,$mdDialog,getQBank,consumerdataUpd,refreshStorage,getFeeds) {
     console.log("OverviewCtrl");
     let oCtrl=this;
+    oCtrl.overview=true;
     console.log($route)
     //loading user data from storage
     oCtrl.data = localStorageService.get('genData')
@@ -366,8 +367,9 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
         dmCtrl.popup1 = {
             opened: false
         };
-        
-        dmCtrl.choices =[]
+    dmCtrl.diet=true;
+    
+    dmCtrl.choices =[]
         
         console.log(dmCtrl.data)
         dmCtrl.hideForm=false;
@@ -613,6 +615,7 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
 .controller('MessageCenterCtrl',['$scope','$rootScope','$location','localStorageService','providerList','messageList','messagePost','$uibModal','$log',function ($scope, $rootScope,$location,localStorageService,providerList,messageList,messagePost,$uibModal,$log) {
         console.log("MessageCenterCtrl");
         let mcCtrl=this;
+        mcCtrl.mcenter=true;
         mcCtrl.data = localStorageService.get('genData')
         mcCtrl.username = mcCtrl.data.username;
         mcCtrl.showdetails = false;
@@ -659,29 +662,35 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
 
                 if(data!==undefined && data.length!==0)
                 {
-                    proList.then(
-                        function(data2)
-                        {
-                            arr = [];
-                            let item={};
-                            console.log(data2)
-                            console.log(data)
-                            for(var i=0;i<data.length;i++){
-                                item = data[i];
-                                if(item.tousername !== mcCtrl.data.username)
-                                    item.tousername = data2.filter(o=>o.common.username===item.tousername)[0];
-                                else
-                                    item.tousername ="";
-                                if(item.fromusername !== mcCtrl.data.username)
-                                    item.fromusername = data2.filter(o=>o.common.username===item.fromusername)[0];
-                                else
-                                    item.fromusername ="";
-                                arr.push(item);
-                                item={};
+                    if(mcCtrl.data.usertype==='CONSUMER'){
+                        proList.then(
+                            function(data2)
+                            {
+                                arr = [];
+                                let item={};
+                                console.log(data2)
+                                console.log(data)
+                                for(var i=0;i<data.length;i++){
+                                    item = data[i];
+                                    if(item.tousername !== mcCtrl.data.username)
+                                        item.tousername = data2.filter(o=>o.common.username===item.tousername)[0];
+                                    else
+                                        item.tousername ="";
+                                    if(item.fromusername !== mcCtrl.data.username)
+                                        item.fromusername = data2.filter(o=>o.common.username===item.fromusername)[0];
+                                    else
+                                        item.fromusername ="";
+                                    arr.push(item);
+                                    item={};
+                                }
+                                mcCtrl.formmessages = arr;
                             }
-                            mcCtrl.formmessages = arr;
-                        }
-                    )
+                        )
+                    }
+                    else if(mcCtrl.data.usertype==='PROVIDER'){
+                        console.log(data)
+                        mcCtrl.formmessages = data;
+                    }
                     
                 }
         })
@@ -748,7 +757,7 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
                         // mcCtrl.messages = data;
                     })
                     .catch(err => {
-                        mcCtrl.formmessages = data;;
+                        // mcCtrl.formmessages = data;;
                     });
             }
         }
@@ -891,11 +900,13 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
     
     }])
 
-.controller('ProfileCtrl',['$scope','$rootScope','$location','localStorageService','getLang','refreshStorage','commondataUpd','consumerdataUpd','providerdataUpd','uibDateParser',function ($scope, $rootScope,$location,localStorageService,getLang,refreshStorage,commondataUpd,consumerdataUpd,providerdataUpd,uibDateParser) {
+.controller('ProfileCtrl',['$scope','$rootScope','$location','localStorageService','getLang','refreshStorage','commondataUpd','consumerdataUpd','providerdataUpd','uibDateParser','$timeout',function ($scope, $rootScope,$location,localStorageService,getLang,refreshStorage,commondataUpd,consumerdataUpd,providerdataUpd,uibDateParser,$timeout) {
     console.log("ProfileCtrl");
     let pCtrl=this;
+    pCtrl.profile=true;
     pCtrl.data = localStorageService.get('genData')
-
+    pCtrl.savesuccess = false;
+    pCtrl.doFade=false;
     pCtrl.gPlace;
 
     pCtrl.format = 'dd-MMMM-yyyy';
@@ -905,7 +916,7 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
     pCtrl.popup2 = {
         opened: false
     };
-
+    console.log($(".alert"))
     pCtrl.open1 = function() {
         pCtrl.popup1.opened = true;
     };
@@ -1119,6 +1130,13 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
                         pCtrl.errorMessage = data.error;
                     else {
                         console.log(data)
+                        pCtrl.savesuccess = true;
+                        pCtrl.doFade=false;
+                        $timeout( function(){
+                            pCtrl.savesuccess = false;
+                            pCtrl.doFade=true;
+                        }, 2000 );
+                        
                         refreshStorage.refresh(pCtrl.data.username,pCtrl.data.type)
                     }
                 })
@@ -1175,6 +1193,12 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
                         pCtrl.errorMessage = data.error;
                     else {
                         console.log(data)
+                        pCtrl.savesuccess = true;
+                        pCtrl.doFade=false;
+                        $timeout( function(){
+                            pCtrl.savesuccess = false;
+                            pCtrl.doFade=true;
+                        }, 2000 );
                         refreshStorage.refresh(pCtrl.data.username,pCtrl.data.type)
                     }
                 })
@@ -1220,6 +1244,12 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
                     if(data.error)
                         pCtrl.errorMessage = data.error;
                     else {
+                        pCtrl.savesuccess = true;
+                        pCtrl.doFade=false;
+                        $timeout( function(){
+                            pCtrl.savesuccess = false;
+                            pCtrl.doFade=true;
+                        }, 2000 );
                         refreshStorage.refresh(pCtrl.data.username,pCtrl.data.type)
                     }
                 })

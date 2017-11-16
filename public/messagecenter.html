@@ -4,16 +4,16 @@
     <nav>
         <div class="row">
             <ul class="main-nav">
-                <li><a href="#/Overview">Home</a></li>
-                <li><a href="#/Diet">Manage Diet</a></li>
-                <li><a href="#/MessageCenter">Message Center</a></li>
-                <li><a href="#/Profile">Profile</a></li>
+                <li><a href="#/Overview" ng-class="{active:oCtrl.overview}">Home</a></li>
+                <li><a ng-if="mcCtrl.data.usertype==='CONSUMER'" href="#/Diet" ng-class="{active:dmCtrl.diet}">Manage Diet</a></li>
+                <li><a href="#/MessageCenter" ng-class="{active:mcCtrl.mcenter}">Message Center</a></li>
+                <li><a href="#/Profile" ng-class="{active:pCtrl.profile}">Profile</a></li>
                 <li><a href="" ng-click="mcCtrl.logout()">LogOut</a></li>
             </ul>
         </div>
     </nav>
     <div class="hero-text-box">
-        <h1>TheApp - Your personal dental health manager</h1>
+        <h1>HealthBasics - Your personal dental health manager</h1>
     </div>
 </header>
 
@@ -32,10 +32,16 @@
                 <div class="col-md-3 col-xs-3  data-tab-head-col">Message To</div>
                 <div class="col-md-3 col-xs-3  data-tab-head-col">Message</div>
             </div>
-            <div class="row data-tab-item row-eq-height" ng-repeat="message in mcCtrl.formmessages">
+            <div ng-if="mcCtrl.data.usertype==='CONSUMER'" class="row data-tab-item row-eq-height" ng-repeat="message in mcCtrl.formmessages">
                 <div class="col-md-3 col-xs-3  data-tab-item-col">{{message.datecreated | date:'shortDate'}}</div>
                 <div class="col-md-3 col-xs-3  data-tab-item-col">{{message.fromusername.common.name!==undefined?message.fromusername.common.name:"-"}}</div>
                 <div class="col-md-3 col-xs-3  data-tab-item-col"><a href="" ng-click="mcCtrl.openProviderDetails(message.tousername)">{{message.tousername.common.name!==undefined?message.tousername.common.name:""}}</a></div>
+                <div class="col-md-3 col-xs-3  data-tab-item-col">{{message.message}}</div>
+            </div>
+            <div ng-if="mcCtrl.data.usertype==='PROVIDER'" class="row data-tab-item row-eq-height" ng-repeat="message in mcCtrl.formmessages">
+                <div class="col-md-3 col-xs-3  data-tab-item-col">{{message.datecreated | date:'shortDate'}}</div>
+                <div class="col-md-3 col-xs-3  data-tab-item-col">{{message.fromusername!==undefined?message.fromusername:"-"}}</div>
+                <div class="col-md-3 col-xs-3  data-tab-item-col">{{message.tousername!==undefined?message.tousername:""}}</div>
                 <div class="col-md-3 col-xs-3  data-tab-item-col">{{message.message}}</div>
             </div>
         </div>
@@ -48,7 +54,7 @@
            <span>Form $invalid! {{inputMsgForm.$invalid}}</span><br>
            <span>Error username! {{inputMsgForm.tousername.$error}}</span><br>
            <span>Error password! {{inputMsgForm.formmessage.$error}}</span><br>-->
-        <div ng-if="mcCtrl.providers.length!==0" class="col-md-12 form-col">
+        <div ng-if="mcCtrl.data.usertype==='CONSUMER' && mcCtrl.providers.length!==0" class="col-md-12 form-col">
             <form id="form-input" name="inputMsgForm" novalidate ng-submit="mcCtrl.submitSendMessage(inputMsgForm)">
                 <div class="row">
                     <div class="col-md-4"></div>

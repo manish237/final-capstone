@@ -1,0 +1,126 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html,
+body {
+    background-color: #474747;
+    color: black;/*#474747;*/
+    font-family: 'Roboto', 'Arial', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+}
+
+header {
+    background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/vintage-concrete.png);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/vintage-concrete.png);
+    background-size: cover;
+    background-position: center;
+    height: 35vh;
+    background-attachment: fixed;
+}
+
+.main-nav {
+    list-style: none;
+    margin-top: 5vh;
+}
+
+.main-nav li {
+    display: inline-block;
+    margin-left: 40px;
+}
+
+.main-nav li a:link,
+.main-nav li a:visited {
+    padding: 8px 0;
+    color: #FFEEE4;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 90%;
+    border-bottom: 2px solid transparent;
+    -webkit-transition: border-bottom 0.2s;
+    transition: border-bottom 0.2s;
+}
+
+.main-nav li a:hover,
+.main-nav li a:active {
+    border-bottom: 2px solid #CE6D39;
+}
+
+
+h1 {
+    font-weight: 300;
+    text-transform: uppercase;
+
+    margin-top: 10vh;
+    margin-bottom: 20px;
+
+    color: #FFEEE4;
+    font-size: 240%;
+    word-spacing: 4px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+h2 {
+    font-weight: 300;
+    text-transform: uppercase;
+
+    color: #CE6D39;
+    font-size: 180%;
+    word-spacing: 2px;
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+h3 {
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 120%;
+    word-spacing: 2px;
+    letter-spacing: 1px;
+}
+
+.section-common{
+    background-color: #FCAD84;
+    margin-top:5px;
+}
+
+.section-consumer,.section-provider{
+    background-color: #8ACBC7;
+    margin-top:5px;
+
+}
+
+.form-common-col .row, .form-consumer-col .row ,.form-provider-col .row{
+    margin-top:5px;
+    padding:5px;
+    font-weight: 300;
+    font-size: 80%;
+}
+
+.form-common-field{
+     padding-left: 5%;
+ }
+
+
+.form-common-btn,.form-consumer-btn,.form-provider-btn{
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.form-common-btn .btn,.form-consumer-btn .btn,.form-provider-btn .btn{
+    width: 100px;
+}
+
+.form-consumer-title-col h4{
+    margin-top:100px;
+}
+
+.curr-loc{
+    font-size: 70%;
+}

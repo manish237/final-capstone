@@ -12,3 +12,6 @@ and (min-width:300px ) and (max-width:659px );
 and (min-width:992px ) and (max-width:1264px );
 
 */
+.active{
+    font-weight: bold;
+}

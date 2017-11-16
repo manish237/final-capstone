@@ -1,5 +1,10 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+@import url("./profile-media/profile-min-1016.css") only screen
+and (min-width:1016px );
+@import url("./profile-media/profile-min-620.css") only screen
+and (min-width:620px ) and (max-width:1015px );
+@import url("./profile-media/profile-min-1340.css") only screen
+and (min-width:300px ) and (max-width:619px );
+
+.active{
+    font-weight: bold;
 }
