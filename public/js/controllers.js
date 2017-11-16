@@ -64,7 +64,7 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
         modalInstance.result.then(function (selectedItem) {
             console.log("result")
             console.log(selectedItem)
-            dataStorage.setGenData(selectedItem);
+            // dataStorage.setGenData(selectedItem);
             localStorageService.set('genData',selectedItem)
 
             if(target==='overview'){

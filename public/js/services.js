@@ -9,7 +9,7 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
         return window._; // assumes underscore has already been loaded on the page
     })
 
-    .factory('dataStorage', [function() {
+    /*.factory('dataStorage', [function() {
         var loginData = {};
         var registerData = {};
         var resetData = {};
@@ -41,7 +41,7 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
                 return genData;
             }
         };
-    }])
+    }])*/
 
     .factory('refreshStorage', ['regdata','commondata','consumerdata','providerdata','localStorageService','profiledetails',function(regdata,commondata,consumerdata,providerdata,localStorageService,profiledetails) {
         return {
