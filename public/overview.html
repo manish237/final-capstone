@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="./css/overview.css">
+
 <header>
     <nav>
         <div class="row">
@@ -11,7 +13,7 @@
         </div>
     </nav>
     <div class="hero-text-box">
-        <h1>TheApp - Your personal dental health manager</h1>
+            <h1>TheApp - Your personal dental health manager</h1>
     </div>
 </header>
 <section class="section-tabs" id="tabs">
@@ -32,8 +34,38 @@
 
         <div class="col-md-2 gg-container">
             <div class="row row-1"><div id="gg2" class="gauge"></div></div>
-            <div class="row row-2"><h5><a ng-click="oCtrl.showTabDialog($event)">Update Score Now</a></h5></div>
+            <div class="row row-2"><a href="" ng-click="oCtrl.showTabDialog($event)"><h5>Update Score Now</h5></a></div>
         </div>
     </div>
 </section>
+
+
+<section class="section-feeds" id="feeds">
+    <div ng-if="oCtrl.feeds.item!==undefined && oCtrl.feeds.item.length!==0" class="row section-head">
+        <div class="col-md-12 feed-sec-title">
+            <h3>Related Articles</h3>
+        </div>
+    </div>
+    <div class="feed-container">
+        <div ng-repeat="item in oCtrl.feeds.item" class="row  item-row">
+            <div class="col-md-12 item-container-col">
+                <div class="row">
+                    <div class="col-md-12 feed-title">
+                        <h4><a target="_blank" ng-href="{{item.link}}">{{item.title}}</a></h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="feed-desc" ng-bind-html="item.description"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
 <script src="./js/overview.js" type="text/javascript"></script>

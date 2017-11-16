@@ -24,34 +24,14 @@ angular.module('dirLibrary', ['apiLibrary'])
         restrict: 'A',
         require : 'ngModel',
         link : function($scope, element, attributes, ngModel) {
-
-/*            var x = unameExists;
-            console.log(x)*/
-            // ngModel.$asyncValidators.unique = function(modelValue , viewValue) {
-
-            /*ngModel.$asyncValidators.uniqueUsername = function(modelValue, viewValue) {
-                console.log("call- " +modelValue + " " + viewValue)
-                return $http.get('/auth/exists/'+modelValue||viewValue).then(
-                    function(response) {
-                        console.log("call - ");
-                        console.log(response.data)
-                        if (response.data.exists) {
-                            return $q.reject("error!!!!!");
-                        }
-                        return true;
-                    }
-                );
-            };*/
-
-
             ngModel.$asyncValidators.uniqueUsername = function(modelValue , viewValue) {
                 console.log("call- " +modelValue + " " + viewValue)
                 // var userInput= modelValue || viewValue;
                 return unameExists(modelValue||viewValue)
                     .then(function(response) {
                         //username exists, this means validation success
-                        // console.log("call suuccess- ");
-                        // console.log(response)
+                        console.log("call suuccess- ");
+                        console.log(response)
                         if (response) {
                             return $q.reject("error!!!!!");
                         }

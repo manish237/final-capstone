@@ -1,0 +1,18 @@
+@import url("./home-media/home-min-1500.css") only screen
+and (min-width:1500px );
+
+@import url("./home-media/home-min-1200.css") only screen
+and (min-width:1200px ) and (max-width:1499px );
+
+@import url("./home-media/home-min-992.css") only screen
+and (min-width:992px ) and (max-width:1199px );
+
+@import url("./home-media/home-min-700.css") only screen
+and (min-width:700px ) and (max-width:991px );
+
+@import url("./home-media/home-min-375.css") only screen
+and (min-width:375px ) and (max-width:699px );
+
+@import url("./home-media/home-min-1340.css") only screen
+and (max-width:374px );
+

@@ -5,9 +5,9 @@ angular.module('routeLibrary',['ngRoute'])
         $routeProvider
             .when('/',{
                 templateUrl: './home.html',
-                controller : 'MainController',
-                controllerAs: 'ctrl',
-                css:'css/index.css'
+                controller : 'HomeController',
+                controllerAs: 'hCtrl',
+                css:'css/home.css'
             })
             .when('/Overview',{
                 templateUrl: './overview.html',
@@ -34,7 +34,7 @@ angular.module('routeLibrary',['ngRoute'])
                 templateUrl: './dietmanager.html',
                 controller : 'DietManagerCtrl',
                 controllerAs: 'dmCtrl',
-                css:'css/diet.css'
+                css:'css/dietmanager.css'
 
             })
             .when('/error', {

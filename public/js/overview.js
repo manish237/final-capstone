@@ -47,7 +47,9 @@ $(document).ready(function() {
 
     var gg2 = new JustGage({
         id: 'gg2',
-        title: 'Hygene Score',
+        title: 'Your Hygene Score',
+        titleFontColor:'#CE6D39',
+        titleFontSize: 10,
         defaults: dflt
     });
 });

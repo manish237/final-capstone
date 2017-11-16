@@ -9,6 +9,7 @@ const queryParser = bodyParser.urlencoded({ extended: true });
 
 const request = require('request-promise')
 const sc = require('spotcrime')
+var Feed = require('rss-to-json');
 
 router.get('/nutritionix', (req, res) => {
     // console.log(req.query.longitude)
@@ -51,5 +52,32 @@ router.get('/nutritionix', (req, res) => {
         })
 });
 
+router.get('/feeds', (req, res) => {
+    // console.log(req.query.longitude)
+    // console.log(req.query.latitude)
+    // console.log(req.query.sort_by)
+    // console.log(req.query.radius)
+    console.log("feeds 01");
 
+    options = {
+        method: 'GET',
+        uri: "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20xml%20where%20url%3D'" + "http://thedistracteddentist.com/?feed=rss" + "'&format=json",
+        json: true
+    }
+    request(options)
+        .then(response => {
+            console.log(response)
+            console.log("feeds 03");
+
+            res.json(response);
+        })
+        .catch((err) => {
+            console.log("feeds 04");
+            console.log(err)
+            res.status(500).json({
+                message: "Internal server error"})
+        })
+    
+
+});
 module.exports = router;

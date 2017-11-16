@@ -39,7 +39,10 @@ angular.module('apiLibraryConstants', [])
 
 
 
-.constant('API_GET_EXT_NUTRITIONIX_INSTANT', '/ext/nutritionix/')
+    .constant('API_GET_EXT_NUTRITIONIX_INSTANT', '/ext/nutritionix/')
+    .constant('API_GET_FEEDS', '/ext/feeds/')
+
+
 
 /*
 

@@ -8,11 +8,9 @@ angular.module('componentLibrary', [])
         },
         controller: function(login,commondata,consumerdata,providerdata,$uibModal,$log,$location,localStorageService,profiledetails) {
             var theResults = {};
-
-            console.log("loginctrl")
             $ctrl = this;
             $ctrl.loginSubmit = function (form) {
-                console.log("close loginSubmit")
+                console.log("loginSubmit");
 
                 if(form.$valid==true)
                 {
@@ -26,7 +24,9 @@ angular.module('componentLibrary', [])
                     login(reqBody)
                         .then(data => {
                             if(data.error) {
+                                console.log(data.error)
                                 $ctrl.errorMessage = data.error;
+                                
                                 return Promise.reject({
                                     error: data.error
                                 });
@@ -44,9 +44,12 @@ angular.module('componentLibrary', [])
                             }
                             else {
                                 theResults = data;
+                                // console.log(data)
+                                // console.log(theResults.commondata.usertype)
                                 $ctrl.close({$value: {
                                     type:"login",
                                     username:$ctrl.loginUname,
+                                    usertype:theResults.commondata.usertype,
                                     data:theResults
                                 }});
                             }
@@ -128,7 +131,7 @@ angular.module('componentLibrary', [])
             close: '&',
             dismiss: '&'
         },
-        controller: function(registration) {
+        controller: function(registration,profiledetails) {
             var theResults = {};
 
             console.log("registerctrl")
@@ -157,8 +160,10 @@ angular.module('componentLibrary', [])
                 //console.log(reqBody);
                 registration(reqBody)
                     .then(function (data) {
-                    //console.log(data)
+
+                        console.log(data)
                         if(data.error) {
+
                             $ctrl.errorMessage = data.error;
                             return Promise.reject({
                                 error: data.error
@@ -166,10 +171,12 @@ angular.module('componentLibrary', [])
                         }
                         else
                         {
+
                             return profiledetails($ctrl.uname)
                         }
                     })
                     .then(data=>{
+
                         if(data.error){
                             $ctrl.errorMessage = data.error;
                             return Promise.reject({
@@ -177,10 +184,13 @@ angular.module('componentLibrary', [])
                             });
                         }
                         else {
+                            console.log(data)
+
                             theResults = data;
                             $ctrl.close({$value: {
                                 type:"register",
                                 username:$ctrl.uname,
+                                usertype:theResults.commondata.usertype,
                                 data:theResults
                             }});
                         }
@@ -252,6 +262,7 @@ angular.module('componentLibrary', [])
                             $ctrl.close({$value: {
                                 type:"reset",
                                 username:$ctrl.resetUname,
+                                usertype:theResults.commondata.usertype,
                                 data:theResults
                             }});
                         }

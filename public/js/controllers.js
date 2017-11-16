@@ -1,13 +1,15 @@
 "use strict"
 
 angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-alt','ui.select', 'ngSanitize','componentLibrary'])
+.config(function($httpProvider) {
+    $httpProvider.defaults.useXDomain = true;
+})
 
-
-.controller('MainController',['$scope','$rootScope','$location','$uibModal','$log','localStorageService',function ($scope, $rootScope,$location,$uibModal,$log,localStorageService) {
-    let ctrl = this;
+.controller('HomeController',['$scope','$rootScope','$location','$uibModal','$log','localStorageService',function ($scope, $rootScope,$location,$uibModal,$log,localStorageService) {
+    let hCtrl = this;
     console.log("MainCtrl");
-
-    ctrl.openLoginModal = function (target) {
+    
+    hCtrl.openLoginModal = function (target) {
         console.log("openLoginModal")
         console.log(target)
         var modalInstance = $uibModal.open({
@@ -45,8 +47,8 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
             $log.info('modal-component dismissed at: ' + new Date());
         });
     };
-
-    ctrl.openRegisterModel = function (target) {
+    
+    hCtrl.openRegisterModel = function (target) {
         console.log("openRegisterModel")
         console.log(target)
         var modalInstance = $uibModal.open({
@@ -78,7 +80,7 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
     };
 }])
 
-.controller('OverviewCtrl',['$scope','$rootScope','$location','$route','dataStorage','localStorageService','$mdDialog','getQBank','consumerdataUpd','refreshStorage',function ($scope, $rootScope,$location,$route,dataStorage,localStorageService,$mdDialog,getQBank,consumerdataUpd,refreshStorage) {
+.controller('OverviewCtrl',['$http','$scope','$rootScope','$location','$route','dataStorage','localStorageService','$mdDialog','getQBank','consumerdataUpd','refreshStorage','getFeeds',function ($http,$scope, $rootScope,$location,$route,dataStorage,localStorageService,$mdDialog,getQBank,consumerdataUpd,refreshStorage,getFeeds) {
     console.log("OverviewCtrl");
     let oCtrl=this;
     console.log($route)
@@ -93,9 +95,20 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
     oCtrl.track = {};
     oCtrl.selectedIndex = 0;
     oCtrl.radio = oCtrl.track[oCtrl.selectedIndex];
-    
+
+
+
+
     //data load
-    
+
+    getFeeds().then(function (data) {
+        // console.log(data)
+        if(data.query!==undefined && data.query.results!=undefined && data.query.results.rss!=undefined && data.query.results.rss.channel!=undefined)
+            oCtrl.feeds = data.query.results.rss.channel;
+        console.log(oCtrl.feeds)
+        return data;
+    })
+
     var qbank = getQBank('HISTORY').then(function (data) {
         console.log(data)
         oCtrl.qbank = data;
@@ -114,13 +127,22 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
         }
         return data;
     })
-    
-    
+
+
+
+
+
+
+
+
+
     //For name and hygene score
     if(oCtrl.data.type === 'register'){
         //we just have name ... no score
-        console.log(oCtrl.data.data.name)
-        oCtrl.name = oCtrl.data.data.name;
+        if(oCtrl.data.data!==undefined && oCtrl.data.data.commondata!==undefined && oCtrl.data.data.commondata.name !==undefined)
+            oCtrl.name = oCtrl.data.data.commondata.name;
+
+
         oCtrl.hygenescore = 0;
     }
     else if(oCtrl.data.type === 'login' || oCtrl.data.type === 'reset'){
@@ -153,7 +175,7 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
                 templateUrl: 'tabDialog.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
-                clickOutsideToClose:false
+                clickOutsideToClose:true
             })
             .then(function(answer) {
                 oCtrl.status = 'You said the information was "' + answer + '".';
@@ -595,7 +617,7 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
         mcCtrl.username = mcCtrl.data.username;
         mcCtrl.showdetails = false;
         mcCtrl.enableChatWindow = false;
-    
+        mcCtrl.formmessages =[]
         console.log(mcCtrl.data)
     
         /*Provider List*/
@@ -630,14 +652,17 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
             .then(mcCtrl.delay(1000))
             .then(function (data) {
                 console.log(data)
-                var arr = [];
+                console.log(data.length)
+                var arr;
                 let item={};
+                mcCtrl.formmessages = data;
+
                 if(data!==undefined && data.length!==0)
                 {
                     proList.then(
                         function(data2)
                         {
-                            var arr = [];
+                            arr = [];
                             let item={};
                             console.log(data2)
                             console.log(data)
@@ -654,27 +679,28 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
                                 arr.push(item);
                                 item={};
                             }
-                            mcCtrl.messages = arr;
+                            mcCtrl.formmessages = arr;
                         }
                     )
                     
                 }
-                //mcCtrl.messages = data;
         })
     
     
         /*Message Send*/
         mcCtrl.submitSendMessage = function(form){
-            //console.log(form.$valid)
+            console.log("Message Submit")
+            console.log(form.$valid)
             if(form.$valid==true)
             {
                 mcCtrl.validForm=true;
+                form.$submitted = false;
                 
                 var reqBody = {
                     "commtype":"MESSAGE",
                     "fromusername":mcCtrl.data.username,
                     "tousername":mcCtrl.tousername,
-                    "message":mcCtrl.message
+                    "message":mcCtrl.formmessage
                 }
                 console.log(reqBody);
                 messagePost(reqBody)
@@ -684,7 +710,8 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
                         else {
                             //console.log("login")
                             console.log(data)
-                            
+                            mcCtrl.formmessage="";
+                            mcCtrl.tousername="";
                             return messageList("MESSAGE",mcCtrl.data.username);
                         }
                     })
@@ -713,7 +740,7 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
                                     arr.push(item);
                                     item={};
                                 }
-                                mcCtrl.messages = arr;
+                                mcCtrl.formmessages = arr;
                             }
                         )
                         
@@ -721,7 +748,7 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
                         // mcCtrl.messages = data;
                     })
                     .catch(err => {
-                        mcCtrl.errormessage = data;;
+                        mcCtrl.formmessages = data;;
                     });
             }
         }

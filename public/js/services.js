@@ -67,6 +67,7 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
                             let ds = {
                                 type:type,
                                 username:uname,
+                                usertype:theResults.commondata.usertype,
                                 data:theResults
                             }
                             console.log(ds)
@@ -199,7 +200,8 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
 
 	.factory('login', ['$http', '$q','API_POST_LOGIN', function($http, $q, API_POST_LOGIN){
         return function(params){
-            console.log("login--" + params)
+            console.log("login--")
+            console.log(params)
             return $http({
                 method: 'POST',
                 url: API_POST_LOGIN,
@@ -648,7 +650,34 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
 
         };
     }])
+    .factory('getFeeds', ['$http', '$q','API_GET_FEEDS', function($http, $q, API_GET_FEEDS){
+        return function(){
+            console.log("getFeeds--")
+            return $http({
+                method: 'GET',
+                url: API_GET_FEEDS
+            })
+            .then(
+                function (response) {
+                    console.log(response.data)
+                    console.log("success")
+                    // console.log(response.data.geonames)
+                    // myCache.put('myData', response.data.geonames);
+                    // console.log(myCache.get('myData'))
+                    // if(response.data.exists)
+                    //     return true;
+                    // else
+                    //     return false;
+                    return $q.when(response.data);
+                },
+                function () {
+                    // alert('error');
+                    console.log("fail")
+                    return $q.when({});
+                })
 
+        };
+    }])
     .factory('instantLoc', ['$http', '$q','API_GET_META_LOC', function($http, $q, API_GET_META_LOC){
         return function(query){
             console.log("Loc--" + query)

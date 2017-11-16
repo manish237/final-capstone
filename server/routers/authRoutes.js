@@ -186,16 +186,18 @@ router.post('/login',jsonParser,(req, res) => {
     passport.authenticate('local', function(err, user, info) {
         if (err) {
             //console.log(err)
-
+            console.log("login 02")
+    
             return res.status(500).json({message: 'Unknown Error'})
         }
         if(!user) //false or auth error
         {
-
+            console.log("login 03")
             return res.status(422).json({message: info.message});
         }
         else
         {
+            console.log("login 04")
 
             return res.status(200).json({user: user});
         }

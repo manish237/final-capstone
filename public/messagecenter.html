@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="./css/mcenter.css">
+
 <header>
     <nav>
         <div class="row">
@@ -14,106 +16,130 @@
         <h1>TheApp - Your personal dental health manager</h1>
     </div>
 </header>
+
 <section class="section-messages">
-    <div ng-if="mcCtrl.messages.length===0"  class="row form-common-row">
-        <div class="col-md-12">No Messages</div>
+    <div ng-if="mcCtrl.formmessages.length!==0"  class="row message-list-title">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 list-title"><h3>Message History</h3></div>
+        <div class="col-md-4"></div>
     </div>
-    <div ng-if="mcCtrl.messages.length!==0"  class="row form-common-row">
-        <table>
-            <tr>
-                <th>Date</th>
-                <th>Message From</th>
-                <th>Message To</th>
-                <th>Message</th>
-            </tr>
-            <tr ng-repeat="message in mcCtrl.messages">
-                <td>{{message.datecreated}}</td>
-                <td>{{message.fromusername.common.name!==undefined?message.fromusername.common.name:""}}</td>
-                <td><a ng-click="mcCtrl.openProviderDetails(message.tousername)">{{message.tousername.common.name!==undefined?message.tousername.common.name:""}}</a></td>
-                <td>{{message.message}}</td>
-            </tr>
-        </table>
+
+    <div ng-if="mcCtrl.formmessages.length!==0"  class="row message-list-row">
+        <div class="col-sm-12 data-col">
+            <div class="row data-tab row-eq-height">
+                <div class="col-md-3 col-xs-3  data-tab-head-col">Date</div>
+                <div class="col-md-3 col-xs-3  data-tab-head-col">Message From</div>
+                <div class="col-md-3 col-xs-3  data-tab-head-col">Message To</div>
+                <div class="col-md-3 col-xs-3  data-tab-head-col">Message</div>
+            </div>
+            <div class="row data-tab-item row-eq-height" ng-repeat="message in mcCtrl.formmessages">
+                <div class="col-md-3 col-xs-3  data-tab-item-col">{{message.datecreated | date:'shortDate'}}</div>
+                <div class="col-md-3 col-xs-3  data-tab-item-col">{{message.fromusername.common.name!==undefined?message.fromusername.common.name:"-"}}</div>
+                <div class="col-md-3 col-xs-3  data-tab-item-col"><a href="" ng-click="mcCtrl.openProviderDetails(message.tousername)">{{message.tousername.common.name!==undefined?message.tousername.common.name:""}}</a></div>
+                <div class="col-md-3 col-xs-3  data-tab-item-col">{{message.message}}</div>
+            </div>
+        </div>
     </div>
 </section>
 <section class="section-send-message">
-    <div class="row form-common-row">
-        <span>Form Submitted! {{inputMsgForm.$submitted}}</span>|
-        <span>Form $valid! {{inputMsgForm.$valid}}</span>|
-        <span>Error chathandle! {{inputMsgForm.chathandle.$error}}</span>|
-        <span>Error name! {{inputMsgForm.name.$error}}</span>|
-        <span>Error gender! {{inputMsgForm.gender.$error}}</span>|
-        <span>Error location! {{inputMsgForm.location.$error}}</span>|
-        <span>Error errorMessage! {{mcCtrl.errorMessage}}</span>
-        <form id="form-input" name="inputMsgForm" novalidate ng-submit="mcCtrl.submitSendMessage(inputMsgForm)">
-            <div class="row"><div class="col-md-12">Personal Info</div></div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label>To Username</label></div>
-                <div class="col-md-4">
-                    <select ng-model="mcCtrl.tousername" id="tousername" name="tousername" ng-change="mcCtrl.getdetails(mcCtrl.tousername)">
-                        <option ng-repeat="provider in mcCtrl.providers" value="{{provider.common.username}}">
-                            {{provider.common.name}}
-                        </option>
-                    </select>
-                    <div ng-if="mcCtrl.showdetails===true">
-                        Expertise : {{mcCtrl.pDetails.providerdata.expertise}}
+    <div class="row form-common-row form-row">
+<!--         <span>Form Submitted! {{inputMsgForm.$submitted}}</span><br>
+           <span>Form $valid! {{inputMsgForm.$valid}}</span><br>
+           <span>Form $invalid! {{inputMsgForm.$invalid}}</span><br>
+           <span>Error username! {{inputMsgForm.tousername.$error}}</span><br>
+           <span>Error password! {{inputMsgForm.formmessage.$error}}</span><br>-->
+        <div ng-if="mcCtrl.providers.length!==0" class="col-md-12 form-col">
+            <form id="form-input" name="inputMsgForm" novalidate ng-submit="mcCtrl.submitSendMessage(inputMsgForm)">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4 form-title"><h3>Send Message to a Provider</h3></div>
+                    <div class="col-md-4"></div>
+                </div>
+                <div class="row row-field">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4  col-head">Provider</div>
+                    <div class="col-md-4 col-xs-8  col-field">
+                        <select ng-model="mcCtrl.tousername" id="tousername" name="tousername" ng-change="mcCtrl.getdetails(mcCtrl.tousername)" required>
+                            <option ng-repeat="provider in mcCtrl.providers" value="{{provider.common.username}}">
+                                {{provider.common.name}}
+                            </option>
+                        </select>
+                        <div ng-if="inputMsgForm.$submitted" ng-messages="inputMsgForm.tousername.$error">
+                            <span class="error" ng-message="required">Select a Provider</span>
+                        </div>
+                        <div ng-if="mcCtrl.showdetails===true && mcCtrl.pDetails.providerdata.expertise!==undefined">
+                            Expertise : {{mcCtrl.pDetails.providerdata.expertise}}
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="row row-field">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4 col-xs-4  col-head">Message</div>
+                    <div class="col-md-4 col-xs-8 col-field">
+                        <textarea class="form-control" ng-model="mcCtrl.formmessage" id="formmessage" name="formmessage" required></textarea>
+                        <div ng-if="inputMsgForm.$submitted" ng-messages="inputMsgForm.formmessage.$error">
+                            <span class="error" ng-message="required">Message is Required</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="row  row-btn">
+                    <div class="col-sm-12 col-btn"><input type="submit" class="btn form-control" value="Submit" id="btn-submit">
                     </div>
                 </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-4"><label>Message</label></div>
-                <div class="col-md-4">
-                    <textarea class="form-control" ng-model="mcCtrl.message" id="message" name="message" required></textarea>
-                </div>
-                <div class="col-md-2"></div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12"><input type="submit" class="form-control" value="Submit" id="btn-submit">
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
+        <div ng-if="mcCtrl.providers.length===0" class="col-md-12 no-provider-col">
+            No Providers Registered
+        </div>
+
     </div>
 </section>
 <section class="section-group-chat">
     <div ng-if="mcCtrl.enableChatWindow===false" class="row">
         <form name="inputForm" novalidate ng-submit="mcCtrl.connectToChat()">
-            <div class="row">
+            <div class="row join-chat-btn-row">
                 <div class="col-sm-12">
-                    <input type="submit" class="form-control" value="Join Group Chat">
+                    <input type="submit" class="btn form-control" value="Join Group Chat">
                 </div>
             </div>
         </form>
     </div>
-    <div ng-if="mcCtrl.showCreateChatHandle===true" class="row">
+    <div ng-if="mcCtrl.showCreateChatHandle===true" class="row create-chat-uname-row">
         <div class="col-md-12">Chat Handle not created. <a href="#/Profile">Create Here</a></div>
     </div>
-    <div ng-if="mcCtrl.enableChatWindow===true" class="row form-group-chat">
-        <div class="col-md-8">
+    <div ng-if="mcCtrl.enableChatWindow===true" class="row form-group-chat row-eq-height">
+        <div class="col-md-8 col-xs-8 message-log">
             <div class="row">
+                <h3>Message Log</h3>
                 <div class="col-md-12">
-                    <h3>Messages</h3>
-                    <p ng-repeat="message in mcCtrl.messages" ng-class="{alert: message.user == &quot;chatroom&quot;}">{{message.user}}: {{message.text}}</p>
+                    <p ng-repeat="message in mcCtrl.messages" ng-class="{alert: message.user == &quot;chatroom&quot;}">
+                        <span class="msg-chat-handle">{{message.user}}:</span>
+                        <span class="msg-msg">{{message.text}}</span></p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div ng-if="mcCtrl.typing===true">someone is typing...</div>
-
-                    <form ng-submit="mcCtrl.sendChatMessage()" name="msgForm">Message:
-                        <input size="60" ng-model="mcCtrl.message" ng-keypress="mcCtrl.notifyTyping()"/>
-                        <input type="submit" value="Send"/>
-                    </form>
-                </div>
+        </div>
+        <div class="col-md-4 col-xs-4 message-user-list">
+            <h3>Online Users</h3>
+            <div class="overflowable message-users">
+                <p ng-repeat="user in mcCtrl.users">
+                    <b ng-if="user===mcCtrl.data.data.commondata.chathandle">{{user}}</b>
+                    <span ng-if="user!==mcCtrl.data.data.commondata.chathandle">{{user}}</span>
+                </p>
             </div>
+        </div>
+    </div>
+    <div ng-if="mcCtrl.enableChatWindow===true" class="row form-send-message row-eq-height">
+        <div class="col-md-8 col-xs-8 message-form">
+            <form ng-submit="mcCtrl.sendChatMessage()" name="msgForm">
+                <div ng-if="mcCtrl.typing===true"><span>someone is typing...</span></div>
+                <div class="col-md-2 col-xs-3 send-msg-label">Message</div>
+                <div class="col-md-4 col-xs-5 send-msg-input"><input type="text" ng-model="mcCtrl.message" ng-keypress="mcCtrl.notifyTyping()"/></div>
+                <div class="col-md-2 col-xs-3 send-msg-btn"><input type="submit" class="btn" value="Send"/></div>
+            </form>
         </div>
         <div class="col-md-4">
-            <h3>Users</h3>
-            <div class="overflowable">
-                <p ng-repeat="user in mcCtrl.users">{{user}}</p>
-            </div>
         </div>
-
     </div>
 </section>
