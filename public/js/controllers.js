@@ -80,7 +80,7 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
     };
 }])
 
-.controller('OverviewCtrl',['$http','$scope','$rootScope','$location','$route','dataStorage','localStorageService','$mdDialog','getQBank','consumerdataUpd','refreshStorage','getFeeds',function ($http,$scope, $rootScope,$location,$route,dataStorage,localStorageService,$mdDialog,getQBank,consumerdataUpd,refreshStorage,getFeeds) {
+.controller('OverviewCtrl',['$http','$scope','$rootScope','$location','$route','localStorageService','$mdDialog','getQBank','consumerdataUpd','refreshStorage','getFeeds',function ($http,$scope, $rootScope,$location,$route,localStorageService,$mdDialog,getQBank,consumerdataUpd,refreshStorage,getFeeds) {
     console.log("OverviewCtrl");
     let oCtrl=this;
     console.log($route)
