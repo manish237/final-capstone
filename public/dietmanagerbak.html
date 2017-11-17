@@ -18,10 +18,10 @@
 </header>
 <section class="section-input">
     <!-- {{dmCtrl.errorMessage.length!==0}}-{{inputDietForm.$submitted}} -->
-<!--    <span>Form Submitted! {{inputDietForm.$submitted}}</span><br>
+    <span>Form Submitted! {{inputDietForm.$submitted}}</span><br>
     <span>Form $valid! {{inputDietForm.$valid}}</span><br>
     <span>Form $invalid! {{inputDietForm.$invalid}}</span><br>
-    {{dmCtrl.disableButton}}-->
+    {{dmCtrl.disableButton}}
     <div class="row dateselect">
         <div class="col-md-3 cols"></div>
         <div class="col-md-6  cols text-center">
@@ -71,23 +71,23 @@
                     </div>
                     <div ng-repeat="choice in dmCtrl.choices track by $index" class="row food-row-item food-row">
                         <div class="col-xs-2 col-md-2 food-col-item">
-                            <select ng-disabled="choice.disableInput" ng-class={disabledSelect:choice.disableInput} ng-model="choice.timeofday"  name="timeofday" required>
-                                <option value="BREAKFAST" ng-selected="choice.timeofday==='BREAKFAST'">BREAKFAST</option>
-                                <option value="LUNCH"     ng-selected="choice.timeofday==='LUNCH'">LUNCH</option>
-                                <option value="DINNER"    ng-selected="choice.timeofday==='DINNER'">DINNER</option>
-                                <option value="SNACKS"    ng-selected="choice.timeofday==='SNACKS'">SNACKS</option>
+                            <select ng-model="dmCtrl.choices[$index].timeofday"  name="timeofday" required>
+                                <option value="BREAKFAST" ng-selected="dmCtrl.choices[$index].timeofday==='BREAKFAST'">BREAKFAST</option>
+                                <option value="LUNCH"     ng-selected="dmCtrl.choices[$index].timeofday==='LUNCH'">LUNCH</option>
+                                <option value="DINNER"    ng-selected="dmCtrl.choices[$index].timeofday==='DINNER'">DINNER</option>
+                                <option value="SNACKS"    ng-selected="dmCtrl.choices[$index].timeofday==='SNACKS'">SNACKS</option>
                             </select>
                             <div ng-if="inputDietForm.$submitted" ng-messages="inputDietForm.timeofday.$error">
                                 <span class="error" ng-message="required">Field is required!</span>
                             </div>
                         </div>
+                        <!--placeholder="{{choice.selectedfood.food_name}}"-->
                         <div class="col-xs-2 col-md-3 food-col-item">
                             <div angucomplete-alt
                                  id="food_dropdown"
-                                 disable-input="choice.disableInput"
                                  pause="1000"
-                                 initial-value="choice.selectedfood.food_name"
-                                 selected-object="choice.selectedfood"
+                                 initial-value="dmCtrl.choices[$index].selectedfood.food_name"
+                                 selected-object="dmCtrl.choices[$index].selectedfood"
                                  remote-api-handler="dmCtrl.getFood"
                                  title-field="food_name"
                                  description-field="description"
@@ -97,37 +97,41 @@
                                  field-required="true"
                                  input-name="fautocomplete">
                             </div>
-                            <span ng-if="choice.selectedfood!==undefined">{{choice.selectedfood.description}}
+                            <span ng-if="dmCtrl.choices[$index].selectedfood!==undefined">{{dmCtrl.choices[$index].selectedfood.description}}
+                                 <!-- -{{choice.selectedfood.originalObject.details.serving_unit}}-{{choice.selectedfood.originalObject.details.serving_qty}}-{{choice.selectedfood.originalObject.details.nf_calories}}-{{choice.selectedfoodqty}}-{{choice.selectedfood.originalObject.details.serving_qty}}- -->{{dmCtrl.choices[$index]}}
                             </span>
                             <div ng-if="inputDietForm.$invalid" ng-messages="inputDietForm.fautocomplete.$error">
                                 <span class="error" ng-message="pattern">Select an item from the list</span>
                             </div>
                         </div>
+                        <!--ng-value="choice.selectedfoodqty||choice.selectedfood.originalObject.details.serving_qty"-->
                         <div class="col-xs-2 col-md-3 food-col-item">
-                            <input type="text" name="selectedfoodqty" ng-model="choice.selectedfoodqty"
-                                   placeholder="{{choice.selectedfoodqty}}"
-                                   ng-class={disabledText:choice.disableInput}
-                                   ng-disabled="choice.disableInput"
-                                   ng-pattern="/^\d*\.?\d*$/"/> <span ng-if="choice.selectedfood!==undefined">({{choice.selectedfood.originalObject.details.serving_unit}})</span>
+                            <input type="text" name="selectedfoodqty" ng-model="dmCtrl.choices[$index].selectedfoodqty"
+                                   placeholder="{{dmCtrl.choices[$index].selectedfoodqty}}"
+
+
+                                   ng-pattern="/^\d*\.?\d*$/"/> <span ng-if="dmCtrl.choices[$index].selectedfood!==undefined">({{dmCtrl.choices[$index].selectedfood.originalObject.details.serving_unit}})</span>
                             <div ng-if="inputDietForm.$submitted" ng-messages="inputDietForm.selectedfoodqty.$error">
                                 <span class="error" ng-message="pattern">Only numbers allowed</span>
                             </div>
                         </div>
+                        <!--ng-value="choice.selectedfoodcal||choice.selectedfood.originalObject.details.nf_calories"-->
+                        <!--placeholder="{{dmCtrl.choices[$index].selectedfoodqty!==undefined?(dmCtrl.choices[$index].selectedfoodqty/dmCtrl.choices[$index].selectedfood.originalObject.details.serving_qty)*dmCtrl.choices[$index].selectedfood.originalObject.details.nf_calories:0}}"-->
                         <div class="col-xs-3 col-md-2 food-col-item">
                             <input type="text" name="selectedfoodcal"
-                                   placeholder="{{choice.selectedfoodqty!==undefined?(choice.selectedfoodqty/choice.selectedfood.originalObject.details.serving_qty)*choice.selectedfood.originalObject.details.nf_calories:0}}"
-                                   ng-disabled="choice.disableInput"
-                                   ng-model="choice.selectedfoodcal"
-                                   ng-class={disabledText:choice.disableInput}
+                                   ng-value="dmCtrl.choices[$index].selectedfoodqty!==undefined?(dmCtrl.choices[$index].selectedfoodqty/dmCtrl.choices[$index].selectedfood.originalObject.details.serving_qty)*dmCtrl.choices[$index].selectedfood.originalObject.details.nf_calories:0"
+                                   ng-model="dmCtrl.choices[$index].selectedfoodcal"
                                    ng-pattern="/^\d*\.?\d*$/"
                             />
+                            {{dmCtrl.choices[$index].selectedfoodqty}}-{{dmCtrl.choices[$index].selectedfood.originalObject.details.serving_qty}}-{{dmCtrl.choices[$index].selectedfood.originalObject.details.nf_calories}}-{{dmCtrl.choices[$index].selectedfoodcal}}
                             <div ng-if="inputDietForm.$submitted" ng-messages="inputDietForm.selectedfoodcal.$error">
                                 <span class="error" ng-message="pattern">Only numbers allowed</span>
 
                             </div>
                         </div>
                         <div class="col-xs-2 col-md-2 food-col-item">
-                            <button type="button" class="btn btn-default" ng-click="dmCtrl.removeChoice(choice.id)"><i class="glyphicon glyphicon-remove"></i></button>
+                            <!--<input type="text" placeholder="Serving Quantity" ng-model="choice.selectedfoodqty"/> (of {{dmCtrl.selectefood.originalObject.details.serving_unit}})-->
+                            <button type="button" class="btn btn-default" ng-click="dmCtrl.removeChoice(dmCtrl.choices[$index].id)"><i class="glyphicon glyphicon-remove"></i></button>
                         </div>
                     </div>
 
@@ -144,8 +148,43 @@
     </div>
 </section>
 <section class="section-details">
+
     <div  class="row detail-summ-row">
-        <div class="col-xs-12  col-md-12 detail-summ-col"><h4>Recorded Calories:{{dmCtrl.userdiet.grosscal||0| number:0}} Cals</h4></div>
+        <div class="col-xs-4  col-md-3 detail-summ-col">Date</div><div class="col-md-3 detail-summ-col">{{dmCtrl.userdiet.entrydate | date:'shortDate'}}</div>
     </div>
+    <div  class="row detail-summ-row">
+        <div class="col-xs-4  col-md-3 detail-summ-col">Calories on the Day</div><div class="col-md-3 detail-summ-col">{{dmCtrl.userdiet.grosscal| number:0}} Cals</div>
+    </div>
+    <div  class="row detail-tab-head-row" >
+        <div class="col-xs-2 col-md-3 detail-tab-head-col">
+            Meal Type
+        </div>
+        <div class="col-xs-2 col-md-3 detail-tab-head-col">
+            Food Name
+        </div>
+        <div class="col-xs-2 col-md-3 detail-tab-head-col">
+            Quantity-Unit
+        </div>
+        <div class="col-xs-2 col-md-2 detail-tab-head-col">
+            Calories
+        </div>
+    </div>
+    <div class="row detail-tab-item-row" ng-repeat="item in dmCtrl.userdiet.items">
+        <div class="col-xs-2 col-md-3 detail-tab-item-col">{{item.itemcat}}
+
+        </div>
+        <div class="col-xs-2 col-md-3 detail-tab-item-col">{{item.itemname}}
+        </div>
+        <div class="col-xs-2 col-md-3 detail-tab-item-col">
+            {{item.serving_qty!==undefined?item.serving_qty+" "+item.serving_unit:""}}
+        </div>
+        <div class="col-xs-2 col-md-2">
+            {{item.numcal| number:0}}
+        </div>
+    </div>
+    <div class="row detail-btn-row">
+        <button class="btn" ng-click="dmCtrl.hideForm=false">Enter Again for {{dmCtrl.userdiet.entrydate| date:'shortDate'}}</button>
+    </div>
+
 </section>
 

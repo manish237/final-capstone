@@ -8,14 +8,18 @@ var dietCategories = config.dietCategories.split(' ');
 
 
 var dietItemDetailSchema = mongoose.Schema({
-    itemname: {type: String},
-    itemcat: {type: String,enum:dietCategories},
-    numcal: {type: Number},
-    serving_qty: {type: Number},
-    serving_unit: {type: String},
+    itemname: {type: String},//external as well
+    itemcat: {type: String,enum:dietCategories}, //user input
+    numcal: {type: Number}, //user input
+    nf_calories: {type: Number},
+    serving_qty: {type: Number}, //User input
+    nf_qty: {type: Number},
+    serving_unit: {type: String}, //external as well
     serving_weight_grams: {type: Number},
-    brand_id:{type:String},
-    item_id:{type:String}
+    nf_desc:{type:String}, //external as well
+    brand_id:{type:String}, //external as well
+    item_id:{type:String} //external as well
+    
 });
 
 var dietItemSchema = mongoose.Schema({

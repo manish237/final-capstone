@@ -15,3 +15,13 @@ and (min-width:992px ) and (max-width:1264px );
 .active{
     font-weight: bold;
 }
+.disabledSelect{
+    color:grey;
+
+}
+.disabledText{
+    /*color: red;*/
+    color:grey;
+    background: #dddddd;
+
+}

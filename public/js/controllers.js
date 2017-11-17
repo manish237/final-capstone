@@ -354,263 +354,422 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
 }])
 
 .controller('DietManagerCtrl',['$scope','$rootScope','$location','localStorageService','providerList','messageList','messagePost','$uibModal','$log','getQBank','$mdDialog','consumerdataUpd','refreshStorage','uibDateParser','dietdataUpd','instantFood',function ($scope, $rootScope,$location,localStorageService,providerList,messageList,messagePost,$uibModal,$log,getQBank,$mdDialog,consumerdataUpd,refreshStorage,uibDateParser,dietdataUpd,instantFood) {
-        console.log("DietManagerCtrl");
-        let dmCtrl=this;
-        dmCtrl.data = localStorageService.get('genData')
-        dmCtrl.username = dmCtrl.data.username;
-        
-        let currDate = new Date();
-        dmCtrl.entryDate = currDate.getFullYear() + "-" + (currDate.getMonth()+1) + "-" + currDate.getDate();
-        dmCtrl.dateEntryCurr = uibDateParser.parse(new Date(dmCtrl.entryDate),dmCtrl.format)  ;
-        
-        dmCtrl.format = 'dd-MMMM-yyyy';
-        dmCtrl.popup1 = {
-            opened: false
-        };
+    console.log("DietManagerCtrl");
+    let dmCtrl=this;
+    dmCtrl.data = localStorageService.get('genData')
+    dmCtrl.username = dmCtrl.data.username;
+
+    let currDate = new Date();
+    dmCtrl.entryDate = currDate.getFullYear() + "-" + (currDate.getMonth()+1) + "-" + currDate.getDate();
+    dmCtrl.dateEntryCurr = uibDateParser.parse(new Date(dmCtrl.entryDate),dmCtrl.format)  ;
+
+    dmCtrl.format = 'dd-MMMM-yyyy';
+    dmCtrl.popup1 = {
+        opened: false
+    };
+    console.log(dmCtrl)
+
+
     dmCtrl.diet=true;
-    
+    dmCtrl.generateChoice = function () {
+        console.log("generateChoice")
+        console.log(dmCtrl.choices)
+        var len = dmCtrl.choices.length;
+
+        var newItemNo = dmCtrl.choices[0]!==undefined? parseInt(dmCtrl.choices[len-1].id)+1:1;
+
+        return {'id':newItemNo,'disableInput':false};
+    }
     dmCtrl.choices =[]
-        
-        console.log(dmCtrl.data)
-        dmCtrl.hideForm=false;
-        
-        if(dmCtrl.data.data!==undefined && dmCtrl.data.data.dietdata!==undefined){
-            dmCtrl.dietdata = dmCtrl.data.data.dietdata;
+    dmCtrl.newdata=false;
+    dmCtrl.existingChoices = [];
+    dmCtrl.disableButton=true;
+
+    
+    dmCtrl.processDiet = function (diet) {
+        console.log(diet)
+        console.log(diet.entrydate)
+        console.log(diet.grosscal)
+        dmCtrl.choices =[];
+        if (diet !== undefined) {
+            dmCtrl.hideForm = false;
+            dmCtrl.hasData=true;
+            dmCtrl.disableButton=false;
+            var choice = {};
+
+            for (var i = 0; i < diet.items.length; i++) {
+                choice = dmCtrl.generateChoice();
+                choice.disableInput=true;
+                if (diet.grosscal !== undefined)
+                    choice.grosscal = diet.grosscal;
+                if (diet.entrydate !== undefined)
+                    choice.entrydate = diet.entrydate;
+                if (diet.items[i].itemcat !== undefined)
+                    choice.timeofday = diet.items[i].itemcat;
+                if (diet.items[i].serving_qty !== undefined)
+                    choice.selectedfoodqty = diet.items[i].serving_qty;
+  /*              else
+                    choice.selectedfoodqty = diet.items[i].nf_qty !== undefined?diet.items[i].nf_qty:0;
+  */
+                if (diet.items[i].numcal !== undefined)
+                    choice.selectedfoodcal = diet.items[i].numcal;
+                /*else
+                    choice.selectedfoodcal = diet.items[i].nf_calories !== undefined?diet.items[i].nf_calories:0;
+*/
+
+                choice.selectedfood = {};
+                choice.selectedfood.originalObject = {};
+                choice.selectedfood.originalObject.details = {};
+                if (diet.items[i].item_id !== undefined)
+                    choice.selectedfood.originalObject.details.nix_item_id = diet.items[i].item_id;
+                if (diet.items[i].brand_id !== undefined)
+                    choice.selectedfood.originalObject.details.nix_brand_id = diet.items[i].brand_id;
+                if (diet.items[i].serving_unit !== undefined)
+                    choice.selectedfood.originalObject.details.serving_unit = diet.items[i].serving_unit;
+                if (diet.items[i].nf_qty !== undefined)
+                    choice.selectedfood.originalObject.details.serving_qty = diet.items[i].nf_qty;
+                if (diet.items[i].nf_calories !== undefined)
+                    choice.selectedfood.originalObject.details.nf_calories = diet.items[i].nf_calories;
+
+                if (diet.items[i].nf_desc !== undefined) {
+                    choice.selectedfood.originalObject.details.description = diet.items[i].nf_desc;
+                    choice.selectedfood.description = diet.items[i].nf_desc;
+                }
+
+                if (diet.items[i].itemname !== undefined) {
+                    choice.selectedfood.originalObject.details.food_name = diet.items[i].itemname;
+                    choice.selectedfood.originalObject.food_name = diet.items[i].itemname;
+                    choice.selectedfood.food_name = diet.items[i].itemname;
+                    choice.selectedfood.title = diet.items[i].itemname;
+                }
+
+                dmCtrl.choices.push(choice)
+            }
+            console.log(dmCtrl.choices)
+            /*for(var ii=0; ii<dmCtrl.choices.length; ii++) {
+                console.log("ewatcher")
+                $scope.$watch('dmCtrl.choices['+ii+']', function(newval,oldval) {
+                    console.log(newval)
+                    console.log(oldval)
+                    dmCtrl.choices[ii]=newval;
+                }, true);
+            }*/
+            dmCtrl.existingChoices = dmCtrl.choices.map(item=>{
+                // console.log(item)
+                                return {id:item.id,entryDate:item.entrydate}
+            })
+            console.log(dmCtrl.existingChoices)
+        }
+        else
+            dmCtrl.hideForm = false;
+    }
+
+
+
+    console.log(dmCtrl.data)
+    dmCtrl.hideForm=false;
+
+
+
+    if(dmCtrl.data.data!==undefined && dmCtrl.data.data.dietdata!==undefined) {
+        dmCtrl.dietdata = dmCtrl.data.data.dietdata;
+        dmCtrl.userdiet = dmCtrl.dietdata.filter(item => {
+            new Date(dmCtrl.entryDate).toString() === new Date(item.entrydate).toString()
+        })[0];
+
+        console.log(dmCtrl.userdiet)
+        //update the choices array
+        if (dmCtrl.userdiet !== undefined) {
+            dmCtrl.processDiet(dmCtrl.userdiet)
+            console.log(dmCtrl.choices)
+        }
+        else
+            dmCtrl.hideForm = true;
+
+    }
+
+
+
+    dmCtrl.addNewChoice = function() {
+        console.log("addNewChoice")
+
+
+        dmCtrl.disableButton=true;//disable button
+
+
+        console.log("Adding choices")
+        console.log(dmCtrl.choices)
+        console.log("Adding existingChoices")
+        console.log(dmCtrl.existingChoices)
+
+        // console.log($rootScope)
+        // console.log($scope)
+        var len = dmCtrl.choices.length;
+
+        var newItemNo = dmCtrl.choices[0]!==undefined? parseInt(dmCtrl.choices[len-1].id)+1:1;
+        dmCtrl.choices.push({'id':newItemNo,'disableInput':false});
+
+
+        console.log("Added choices")
+        console.log(dmCtrl.choices)
+        console.log("Added existingChoices")
+        console.log(dmCtrl.existingChoices)
+
+    };
+
+    dmCtrl.removeChoice = function(choiceid) {
+        console.log("removeChoice")
+        console.log(dmCtrl.choiceid)
+
+        // var lastItem = dmCtrl.choices.length-1;
+        console.log("removing choices")
+        console.log(dmCtrl.choices)
+        console.log("removing existingChoices")
+        console.log(dmCtrl.existingChoices)
+
+        if(dmCtrl.existingChoices!==undefined && dmCtrl.existingChoices.length!==0 && dmCtrl.existingChoices.filter((item)=>item.id===choiceid).length>0){
+            dmCtrl.existingChoices = dmCtrl.existingChoices.filter((item)=>{
+                console.log(item)
+                console.log(choiceid)
+                console.log(dmCtrl.entryDate)
+                console.log(new Date(dmCtrl.entryDate).toString() === new Date(item.entryDate).toString())
+                console.log(item.id!==choiceid)
+
+                if(new Date(dmCtrl.entryDate).toString() === new Date(item.entryDate).toString() && item.id!==choiceid)
+                    return item;
+            });
+        }
+
+
+        dmCtrl.choices = dmCtrl.choices.filter((item)=>item.id!==choiceid);
+        if(dmCtrl.existingChoices!==undefined && dmCtrl.existingChoices.length!==0 && dmCtrl.choices.length===dmCtrl.existingChoices.length)
+            dmCtrl.disableButton=false;
+
+        console.log("removed choices")
+        console.log(dmCtrl.choices)
+        console.log("removed existingChoices")
+        console.log(dmCtrl.existingChoices)
+        // dmCtrl.choices.splice(lastItem);
+    };
+
+    dmCtrl.open1 = function() {
+        dmCtrl.popup1.opened = true;
+    };
+
+    dmCtrl.dayminusone =function() {
+        var startDate = new Date(dmCtrl.dateEntryCurr);
+        var day = 60 * 60 * 24 * 1000;
+        var endDate = new Date(startDate.getTime() - day);
+        dmCtrl.choices =[]
+    
+        dmCtrl.entryDate = endDate.getFullYear() + "-" + (endDate.getMonth()+1) + "-" + endDate.getDate();
+        dmCtrl.dateEntryCurr = uibDateParser.parse(new Date(endDate),dmCtrl.format)  ;
+
+        if(dmCtrl.dietdata!==undefined){
             dmCtrl.userdiet = dmCtrl.dietdata.filter(item => new Date(dmCtrl.entryDate).toString()===new Date(item.entrydate).toString())[0];
-            if(dmCtrl.userdiet!==undefined)
-                dmCtrl.hideForm=true;
+            if (dmCtrl.userdiet !== undefined) {
+                dmCtrl.processDiet(dmCtrl.userdiet)
+                console.log(dmCtrl.choices)
+            }
             else
-                dmCtrl.hideForm=false;
-            console.log(dmCtrl.userdiet)
+                dmCtrl.hideForm = true;
         }
-        
-        
-        
-        dmCtrl.addNewChoice = function() {
-            console.log("addNewChoice")
-            console.log(dmCtrl.choices)
-            var newItemNo = dmCtrl.choices.length+1;
-            dmCtrl.choices.push({'id':'choice'+newItemNo});
-            console.log(dmCtrl.choices)
-            
-            
-        };
-        
-        dmCtrl.removeChoice = function(choiceid) {
-            console.log("removeChoice")
-            console.log(dmCtrl.choices)
-            dmCtrl.choices = dmCtrl.choices.filter((item)=>item.id!==choiceid);
-            
-            // var lastItem = dmCtrl.choices.length-1;
-            console.log(dmCtrl.choices)
-            
-            
-            // dmCtrl.choices.splice(lastItem);
-        };
-        
-        dmCtrl.open1 = function() {
-            dmCtrl.popup1.opened = true;
-        };
-        
-        dmCtrl.dayminusone =function() {
-            var startDate = new Date(dmCtrl.dateEntryCurr);
-            var day = 60 * 60 * 24 * 1000;
-            var endDate = new Date(startDate.getTime() - day);
-            
-            dmCtrl.entryDate = endDate.getFullYear() + "-" + (endDate.getMonth()+1) + "-" + endDate.getDate();
-            dmCtrl.dateEntryCurr = uibDateParser.parse(new Date(endDate),dmCtrl.format)  ;
-            
-            if(dmCtrl.dietdata!==undefined){
-                dmCtrl.userdiet = dmCtrl.dietdata.filter(item => new Date(dmCtrl.entryDate).toString()===new Date(item.entrydate).toString())[0];
-                if(dmCtrl.userdiet!==undefined)
-                    dmCtrl.hideForm=true;
-                else
-                    dmCtrl.hideForm=false;
+
+    }
+
+    dmCtrl.dayplusone =function() {
+        var startDate = new Date(dmCtrl.dateEntryCurr);
+        var day = 60 * 60 * 24 * 1000;
+        var endDate = new Date(startDate.getTime() + day);
+        dmCtrl.choices =[]
+
+        dmCtrl.entryDate = endDate.getFullYear() + "-" + (endDate.getMonth()+1) + "-" + endDate.getDate();
+        dmCtrl.dateEntryCurr = uibDateParser.parse(new Date(endDate),dmCtrl.format)  ;
+
+        if(dmCtrl.dietdata!==undefined) {
+            dmCtrl.userdiet = dmCtrl.dietdata.filter(item => new Date(dmCtrl.entryDate).toString() === new Date(item.entrydate).toString())[0];
+            if (dmCtrl.userdiet !== undefined) {
+                dmCtrl.processDiet(dmCtrl.userdiet)
+                console.log(dmCtrl.choices)
             }
-            
+            else
+                dmCtrl.hideForm = true;
         }
-        
-        dmCtrl.dayplusone =function() {
-            var startDate = new Date(dmCtrl.dateEntryCurr);
-            var day = 60 * 60 * 24 * 1000;
-            var endDate = new Date(startDate.getTime() + day);
-            
-            dmCtrl.entryDate = endDate.getFullYear() + "-" + (endDate.getMonth()+1) + "-" + endDate.getDate();
-            dmCtrl.dateEntryCurr = uibDateParser.parse(new Date(endDate),dmCtrl.format)  ;
-            
-            if(dmCtrl.dietdata!==undefined) {
-                dmCtrl.userdiet = dmCtrl.dietdata.filter(item => new Date(dmCtrl.entryDate).toString() === new Date(item.entrydate).toString())[0];
-                if(dmCtrl.userdiet!==undefined)
-                    dmCtrl.hideForm=true;
-                else
-                    dmCtrl.hideForm=false;
-            }
-        }
-        
-        dmCtrl.saveFood=function () {
-            console.log("save")
-            
-            console.log(dmCtrl.choices)
-            if(dmCtrl.choices!==undefined && dmCtrl.choices.length>0){
-                
-                let grosscal=0;
-                let req = {
-                
-                };
-                req.username = dmCtrl.username;
-                req.entrydate = dmCtrl.entryDate;
-                
-                let item={},selecteditem={}
-                req.items=[];
-                for(var i=0;i<dmCtrl.choices.length;i++){
-                    item = {};
-                    selecteditem = dmCtrl.choices[i].selectedfood!==undefined?dmCtrl.choices[i].selectedfood:{};
-                    console.log(selecteditem)
-                    
-                    if(selecteditem.originalObject!==undefined && selecteditem.originalObject.food_name!==undefined){
-                        item.itemname=selecteditem.originalObject.food_name;
-                    }
-                    
-                    if(dmCtrl.choices[i].timeofday!==undefined && dmCtrl.choices[i].timeofday.length!==0)
-                        item.itemcat=dmCtrl.choices[i].timeofday;
-                    
-                    if(dmCtrl.choices[i].selectedfoodcal!==undefined && dmCtrl.choices[i].selectedfoodcal!==0) {
-                        item.numcal = dmCtrl.choices[i].selectedfoodcal;
-                        grosscal=grosscal+parseInt(item.numcal);
+    }
+
+
+
+
+    dmCtrl.saveFood=function (form) {
+        console.log("save")
+        console.log(form.$valid)
+        console.log(form.$submitted)
+        form.$submitted = false;
+        console.log(dmCtrl.choices)
+        if(dmCtrl.choices!==undefined && dmCtrl.choices.length>0){
+
+            let grosscal=0;
+            let req = {
+
+            };
+            req.username = dmCtrl.username;
+            req.entrydate = dmCtrl.entryDate;
+
+            let item={},selecteditem={}
+            req.items=[];
+            for(var i=0;i<dmCtrl.choices.length;i++){
+                item = {};
+                selecteditem = dmCtrl.choices[i].selectedfood!==undefined?dmCtrl.choices[i].selectedfood:{};
+                console.log(selecteditem)
+
+                if(selecteditem.originalObject!==undefined && selecteditem.originalObject.food_name!==undefined){
+                    item.itemname=selecteditem.originalObject.food_name;
+                }
+
+                if(dmCtrl.choices[i].timeofday!==undefined && dmCtrl.choices[i].timeofday.length!==0)
+                    item.itemcat=dmCtrl.choices[i].timeofday;
+
+                if(dmCtrl.choices[i].selectedfoodcal!==undefined && dmCtrl.choices[i].selectedfoodcal!==0) {
+                    item.numcal = dmCtrl.choices[i].selectedfoodcal;
+                    grosscal=grosscal+parseInt(item.numcal);
+                }
+                else {
+                    //calculate
+                    if(dmCtrl.choices[i].selectedfoodqty!==undefined && dmCtrl.choices[i].selectedfoodqty!==0)
+                    {
+                        if(selecteditem.originalObject!==undefined && selecteditem.originalObject.details!==undefined){
+                            console.log(dmCtrl.choices[i].selectedfoodqty)
+                            console.log(selecteditem.originalObject.details.serving_qty)
+                            console.log(selecteditem.originalObject.details.nf_calories)
+
+                            item.numcal = (dmCtrl.choices[i].selectedfoodqty/selecteditem.originalObject.details.serving_qty)*selecteditem.originalObject.details.nf_calories;
+
+                            console.log(item.numcal)
+
+                            grosscal=grosscal+item.numcal;
+                        }
                     }
                     else {
-                        //calculate
-                        if(dmCtrl.choices[i].selectedfoodqty!==undefined && dmCtrl.choices[i].selectedfoodqty!==0)
-                        {
-                            if(selecteditem.originalObject!==undefined && selecteditem.originalObject.details!==undefined){
-                                console.log(dmCtrl.choices[i].selectedfoodqty)
-                                console.log(selecteditem.originalObject.details.serving_qty)
-                                console.log(selecteditem.originalObject.details.nf_calories)
-                                
-                                item.numcal = (dmCtrl.choices[i].selectedfoodqty/selecteditem.originalObject.details.serving_qty)*selecteditem.originalObject.details.nf_calories;
-                                
-                                console.log(item.numcal)
-                                
-                                grosscal=grosscal+item.numcal;
-                            }
-                        }
-                        else {
-                            //default from details
-                            if(selecteditem.originalObject!==undefined && selecteditem.originalObject.details!==undefined){
-                                item.numcal = selecteditem.originalObject.details.nf_calories;
-                                grosscal=grosscal+item.numcal;
-                            }
+                        //default from details
+                        if(selecteditem.originalObject!==undefined && selecteditem.originalObject.details!==undefined){
+                            item.numcal = selecteditem.originalObject.details.nf_calories;
+                            grosscal=grosscal+item.numcal;
                         }
                     }
-                    
-                    if(dmCtrl.choices[i].selectedfoodqty!==undefined && dmCtrl.choices[i].selectedfoodqty!==0)
-                        item.serving_qty=dmCtrl.choices[i].selectedfoodqty;
-                    
-                    if(selecteditem.originalObject!==undefined && selecteditem.originalObject.details!==undefined){
-                        item.serving_unit=selecteditem.originalObject.details.serving_unit;
-                    }
-                    
-                    if(selecteditem.originalObject!==undefined && selecteditem.originalObject.details!==undefined){
-                        item.item_id=selecteditem.originalObject.details.nix_item_id;
-                    }
-                    req.items.push(item)
-                    item={};selecteditem={};
                 }
-                
-                req.grosscal = grosscal;
-                console.log(req)
-                dmCtrl.dietdata = dietdataUpd(req)
-                    .then(data => {
-                        if (data.error)
-                            dmCtrl.errorMessage = data.error;
-                        else {
-                            console.log(data)
-                            refreshStorage.refresh(dmCtrl.data.username, dmCtrl.data.type)
-                            
-                        }
-                    })
-                    .then(dmCtrl.delay(1000))
-                    .then(()=>{
-                        dmCtrl.data = localStorageService.get('genData')
-                        console.log(dmCtrl.data)
-                        dmCtrl.dietdata = dmCtrl.data.data.dietdata;
-                        
-                        dmCtrl.userdiet = dmCtrl.dietdata.filter(item => new Date(dmCtrl.entryDate).toString()===new Date(item.entrydate).toString())[0];
-                        if(dmCtrl.userdiet!==undefined)
-                            dmCtrl.hideForm=true;
-                        else
-                            dmCtrl.hideForm=false;
-                        console.log(dmCtrl.userdiet)
-                    })
-                    /*.then(function (data) {
-                        console.log(data)
-                        if(data.error)
-                            console.log(data.error);
-                        else
-                        {
-                            refreshStorage.refresh(dmCtrl.data.username,dmCtrl.data.type)
-                            dmCtrl.data = localStorageService.get('genData')
-                            dmCtrl.userdiet = data.filter(item => new Date(dmCtrl.entryDate).toString()===new Date(item.entrydate).toString())[0];
-                            console.log(dmCtrl.userdiet)
-                        }
-                        return data;
-                    })*/
-                    .catch(err => {
-                        dmCtrl.errorMessage = err;
-                    });
-                //posting
-                
-                dmCtrl.choices = [];
+
+                if(dmCtrl.choices[i].selectedfoodqty!==undefined && dmCtrl.choices[i].selectedfoodqty!==0)
+                    item.serving_qty=dmCtrl.choices[i].selectedfoodqty;
+
+                if(selecteditem.originalObject!==undefined && selecteditem.originalObject.details!==undefined){
+                    item.serving_unit=selecteditem.originalObject.details.serving_unit;
+                }
+
+                if(selecteditem.originalObject!==undefined && selecteditem.originalObject.details!==undefined){
+                    item.item_id=selecteditem.originalObject.details.nix_item_id;
+                }
+
+                if(selecteditem.originalObject!==undefined && selecteditem.originalObject.details!==undefined){
+                    item.brand_id=selecteditem.originalObject.details.nix_brand_id;
+                }
+
+                if(selecteditem.originalObject!==undefined && selecteditem.originalObject.details!==undefined){
+                    item.nf_calories=selecteditem.originalObject.details.nf_calories;
+                }
+
+                if(selecteditem.originalObject!==undefined && selecteditem.originalObject.details!==undefined){
+                    item.nf_qty=selecteditem.originalObject.details.serving_qty;
+                }
+
+                if(selecteditem.description!==undefined && selecteditem.description.length!==0){
+                    item.nf_desc=selecteditem.description;
+                }
+
+                req.items.push(item)
+                item={};selecteditem={};
             }
-            
-        }
-        
-        dmCtrl.getFood = function (userInputString, timeoutPromise) {
-            return instantFood(userInputString).then(function (data) {
-                //console.log(data)
-                var a=[]
-                if(data.branded)
-                {
-                    for(var i=0;i<data.branded.length;i++) {
-                        if(data.branded[i].nf_calories===undefined)
-                            continue;
-                        var obj = _.pick(data.branded[i], 'food_name', 'photo');
-                        var desc = data.branded[i].nf_calories + "cal for " + data.branded[i].serving_qty + " " + data.branded[i].serving_unit;
-                        obj.description = desc;
-                        obj.details = data.branded[i];
-                        a.push(obj);
+
+            req.grosscal = grosscal;
+            console.log(req)
+            dmCtrl.dietdata = dietdataUpd(req)
+                .then(data => {
+                    if (data.error)
+                        dmCtrl.errorMessage = data.error;
+                    else {
+                        console.log(data)
+                        refreshStorage.refresh(dmCtrl.data.username, dmCtrl.data.type)
+
                     }
-                }
-                //console.log(a)
-                if(data.common)
-                {
-                    for(var i=0;i<data.common.length;i++) {
-                        if(data.branded[i].nf_calories===undefined)
-                            continue;
-                        var obj = _.pick(data.common[i], 'food_name', 'photo');
-                        var desc = data.common[i].nf_calories + " Cal for " + data.common[i].serving_qty + " " + data.common[i].serving_unit;
-                        obj.description = desc;
-                        obj.details = data.common[i];
-                        
-                        a.push(obj);
+                })
+                .then(dmCtrl.delay(1000))
+                .then(()=>{
+                    dmCtrl.data = localStorageService.get('genData')
+                    console.log(dmCtrl.data)
+                    dmCtrl.dietdata = dmCtrl.data.data.dietdata;
+
+                    dmCtrl.userdiet = dmCtrl.dietdata.filter(item => new Date(dmCtrl.entryDate).toString()===new Date(item.entrydate).toString())[0];
+                    if(dmCtrl.userdiet!==undefined) {
+                        dmCtrl.hideForm = true;
+                        dmCtrl.processDiet(dmCtrl.userdiet)
                     }
+                    else
+                        dmCtrl.hideForm=false;
+                    console.log(dmCtrl.userdiet)
+                })
+                .catch(err => {
+                    dmCtrl.errorMessage = err;
+                });
+               dmCtrl.choices = [];
+        }
+
+    }
+
+    dmCtrl.getFood = function (userInputString, timeoutPromise) {
+        return instantFood(userInputString).then(function (data) {
+            //console.log(data)
+            var a=[]
+            if(data.branded)
+            {
+                for(var i=0;i<data.branded.length;i++) {
+                    if(data.branded[i].nf_calories===undefined)
+                        continue;
+                    var obj = _.pick(data.branded[i], 'food_name', 'photo');
+                    var desc = data.branded[i].nf_calories + "cal for " + data.branded[i].serving_qty + " " + data.branded[i].serving_unit;
+                    obj.description = desc;
+                    obj.details = data.branded[i];
+                    a.push(obj);
                 }
-                return  {"data": a};
-            })
-        }
-        
-        dmCtrl.delay = function sleeper(ms) {
-            return function(x) {
-                console.log("in delay")
-                return new Promise(resolve => setTimeout(() => resolve(x), ms));
-            };
-        }
-        dmCtrl.logout = function (target) {
-            console.log("logout")
-            localStorageService.remove('genData')
-            $location.url('/')
+            }
+            //console.log(a)
+            if(data.common)
+            {
+                for(var i=0;i<data.common.length;i++) {
+                    if(data.branded[i].nf_calories===undefined)
+                        continue;
+                    var obj = _.pick(data.common[i], 'food_name', 'photo');
+                    var desc = data.common[i].nf_calories + " Cal for " + data.common[i].serving_qty + " " + data.common[i].serving_unit;
+                    obj.description = desc;
+                    obj.details = data.common[i];
+
+                    a.push(obj);
+                }
+            }
+            return  {"data": a};
+        })
+    }
+
+    dmCtrl.delay = function sleeper(ms) {
+        return function(x) {
+            console.log("in delay")
+            return new Promise(resolve => setTimeout(() => resolve(x), ms));
         };
-    }])
+    }
+    dmCtrl.logout = function (target) {
+        console.log("logout")
+        localStorageService.remove('genData')
+        $location.url('/')
+    };
+}])
     
 .controller('MessageCenterCtrl',['$scope','$rootScope','$location','localStorageService','providerList','messageList','messagePost','$uibModal','$log',function ($scope, $rootScope,$location,localStorageService,providerList,messageList,messagePost,$uibModal,$log) {
         console.log("MessageCenterCtrl");

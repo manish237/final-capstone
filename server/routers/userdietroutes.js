@@ -73,9 +73,17 @@ router.post('/', jsonParser, (req, res) => {
             if (req.body.items[i].numcal !== undefined && req.body.items[i].numcal !== 0) {
                 itemObj.numcal = req.body.items[i].numcal
             }
-
+    
+            if (req.body.items[i].nf_calories !== undefined && req.body.items[i].nf_calories !== 0) {
+                itemObj.nf_calories = req.body.items[i].nf_calories
+            }
+            
             if (req.body.items[i].serving_qty !== undefined && req.body.items[i].serving_qty !== 0) {
                 itemObj.serving_qty = req.body.items[i].serving_qty
+            }
+    
+            if (req.body.items[i].nf_qty !== undefined && req.body.items[i].nf_qty !== 0) {
+                itemObj.nf_qty = req.body.items[i].nf_qty
             }
 
             if (req.body.items[i].serving_unit !== undefined && req.body.items[i].serving_unit.length !== 0) {
@@ -84,6 +92,10 @@ router.post('/', jsonParser, (req, res) => {
 
             if (req.body.items[i].serving_weight_grams !== undefined && req.body.items[i].serving_weight_grams !== 0) {
                 itemObj.serving_weight_grams = req.body.items[i].serving_weight_grams
+            }
+    
+            if (req.body.items[i].nf_desc !== undefined && req.body.items[i].nf_desc.length !== 0) {
+                itemObj.nf_desc = req.body.items[i].nf_desc
             }
 
             if (req.body.items[i].brand_id !== undefined && req.body.items[i].brand_id.length !== 0) {

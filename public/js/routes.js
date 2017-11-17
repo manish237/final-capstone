@@ -1,4 +1,5 @@
 angular.module('routeLibrary',['ngRoute'])
+
     .config(['$routeProvider','$locationProvider',function ($routeProvider,$locationProvider) {
         $locationProvider.hashPrefix('');
         $routeProvider.caseInsensitiveMatch=true;
@@ -7,34 +8,58 @@ angular.module('routeLibrary',['ngRoute'])
                 templateUrl: './home.html',
                 controller : 'HomeController',
                 controllerAs: 'hCtrl',
-                css:'css/home.css'
+                css: {
+                    href: 'css/home.css',
+                    persist: true,
+                    preload: true,
+                    bustCache: true
+                }
             })
             .when('/Overview',{
                 templateUrl: './overview.html',
                 controller : 'OverviewCtrl',
                 controllerAs: 'oCtrl',
-                css:'css/overview.css'
+                css: {
+                    href: 'css/overview.css',
+                    persist: true,
+                    preload: true,
+                    bustCache: true
+                }
 
             })
             .when('/Profile',{
                 templateUrl: './profile.html',
                 controller : 'ProfileCtrl',
                 controllerAs: 'pCtrl',
-                css:'css/profile.css'
+                css: {
+                    href: 'css/profile.css',
+                    persist: true,
+                    preload: true,
+                    bustCache: true
+                }
 
             })
             .when('/MessageCenter',{
                 templateUrl: './messagecenter.html',
                 controller : 'MessageCenterCtrl',
                 controllerAs: 'mcCtrl',
-                css:'css/mcenter.css'
-
+                css: {
+                    href: 'css/mcenter.css',
+                    persist: true,
+                    preload: true,
+                    bustCache: true
+                }
             })
             .when('/Diet',{
                 templateUrl: './dietmanager.html',
                 controller : 'DietManagerCtrl',
                 controllerAs: 'dmCtrl',
-                css:'css/dietmanager.css'
+                css: {
+                    href: './css/dietmanager.css',
+                    persist: true,
+                    preload: true,
+                    bustCache: true
+                }
 
             })
             .when('/error', {
