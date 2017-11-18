@@ -8,6 +8,10 @@
     box-sizing: border-box;
 }
 
+/*
+    BODY
+ */
+
 html,
 body {
     background-color: #474747;
@@ -19,18 +23,32 @@ body {
     overflow-x: hidden;
 }
 
+/*
+    HEADER
+ */
+
+
 header {
     background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/vintage-concrete.png);
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/vintage-concrete.png);
     background-size: cover;
     background-position: center;
-    height: 45vh;
+    height: 40vh;
     background-attachment: fixed;
+}
+
+/*
+    HEADER NAVIGATION
+ */
+
+#navbarHeader,#navbarCollapse{
+    background-color: #474747;
 }
 
 .main-nav {
     list-style: none;
-    margin-top: 4vh;
+    margin-top: 2vh;
+    margin-bottom: 10px;
 }
 
 .main-nav li {
@@ -46,20 +64,28 @@ header {
     text-transform: uppercase;
     font-size: 90%;
     border-bottom: 2px solid transparent;
+    background-color: transparent;
     -webkit-transition: border-bottom 0.2s;
-    transition: border-bottom 0.2s;
+    transition: 0.2s;
 }
 
 .main-nav li a:hover,
+.main-nav li a:focus,
 .main-nav li a:active {
     border-bottom: 2px solid #CE6D39;
+    background-color: transparent;
+    color:#CE6D39;
 }
+
+/*
+    H1 FONT
+ */
 
 h1{
     font-weight: 300;
     text-transform: uppercase;
 
-    margin-top: 12vh;
+    margin-top: 10vh;
     margin-bottom: 20px;
 
     color: #FFEEE4;
@@ -79,101 +105,22 @@ h2{
     text-align: center;
     margin-bottom: 30px;
     letter-spacing: 1px;
-    padding:5px;
-}
-
-
-.section-tabs{
-    margin-top: 8px;
-    /*padding-right: 1%;*/
-    width:100%;
-}
-
-
-.tab-small{
-    background-color: #F6B352;
-    /*border-radius: 5px;*/
-    margin-top:1em;
-    /*width: 95%;*/
-    /*margin-left: 4%;*/
-
-    /*box-shadow: 0 1px 1px #F6B352;*/
-    height: 38vh;
-
-    /*position: relative;*/
-}
-/*.tab-small-1,.tab-small-2,.tab-small-3{
-    -webkit-transition: transform 0.2s;
-    !*transition: transform 0.2s, margin-left 0.2s, z-index 0.2s, width 0.2s, margin-top 0.2s, box-shadow 0.2s,height 0.2s;*!
-    transition:1s ease;
-}*/
-
-/*.tab-small-1:hover {
-    transform: scale(1.2);
-    z-index: 12;
-    margin-left: 10%;
-}
-
-.tab-small-2:hover {
-    transform: scale(1.2);
-    z-index: 12;
-}
-
-.tab-small-3:hover {
-    transform: scale(1.2);
-    z-index: 10;
-}*/
-
-.tab-small ul{
-    list-style: none;
-    padding-left: 20px;
-}
-
-.tab-small div {
-    padding: 15px;
-    border-bottom: 1px solid #CE6D39;
-}
-
-.tab-content{
-    height: 12vh;
-
-}
-
-.tab-small ul li {
-    padding: 5px 0;
-    font-size: 90%;
-}
-
-.tab-small div:last-child{
-    text-align: center;
-}
-
-.tab-small div:first-child{
-    text-align: center;
 }
 
 h3 {
     font-weight: 300;
     text-transform: uppercase;
 
-    font-size: 110%;
+    font-size: 100%;
     margin-bottom: 15px;
 }
 
-.icon-small {
-    display: inline-block;
-    width: 30px;
-    text-align: center;
-    color: #000000;
-    font-size: 140%;
-    margin-right: 10px;
 
-    /*secrets to align text and icons*/
-    line-height: 120%;
-    vertical-align: middle;
-    margin-top: -5px;
-}
-/* Main navi */
+
+/*
+Buttons
+*/
+
 
 .btn:link,
 .btn:visited,
@@ -211,7 +158,91 @@ input[type=button]:active{
     color: #fff;
 }
 
+/*
+    FEATURE SECTION
+ */
 
+.section-tabs{
+    margin-top: 1em;
+    padding-right: 1%;
+}
+
+/*
+    FEATURES
+ */
+.tab-small{
+    background-color: #F6B352;
+    border-radius: 5px;
+    width: 98%;
+    margin-left: 2%;
+
+    box-shadow: 0 1px 1px #F6B352;
+    height: 35vh;
+
+    position: relative;
+
+    -webkit-transition: transform 0.2s;
+    /*transition: transform 0.2s, margin-left 0.2s, z-index 0.2s, width 0.2s, margin-top 0.2s, box-shadow 0.2s,height 0.2s;*/
+    transition:1s ease;
+}
+
+.tab-small:hover {
+    transform: scale(1.05);
+    z-index: 12;
+}
+
+.tab-small ul{
+    list-style: none;
+    padding-left: 20px;
+}
+
+.tab-small ul li {
+    padding: 5px 0;
+    font-size: 90%;
+}
+
+
+.tab-small div {
+    padding: 15px;
+    border-bottom: 1px solid #CE6D39;
+}
+
+.tab-small div:first-child{
+    text-align: center;
+}
+
+.tab-small div:last-child{
+    text-align: center;
+}
+
+.tab-content{
+    height: 15vh;
+}
+
+.tab-small-3 .tab-content{
+
+    padding-right: 10px;
+}
+
+.icon-small {
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+    color: #000000;
+    font-size: 140%;
+    margin-right: 10px;
+
+    /*secrets to align text and icons*/
+    line-height: 120%;
+    vertical-align: middle;
+    margin-top: -5px;
+}
+
+
+
+/*
+MODALS
+*/
 .m-container{
     background-color: #F6B352;
 }
@@ -222,21 +253,19 @@ Login Modal
 
 .loginmodelbody{
     font-weight: 300;
-    font-size: 70%;
+    font-size: 80%;
 }
 .loginmodelbody .row{
     margin-top: 5px;
 }
 .loginmodelbody .reqd{
     color: red;
-    font-size: 75%;
+    font-size: 80%;
     margin-left: 5px;
 }
 .loginmodelbody span{
     font-size: 60%;
 }
-
-
 
 .loginmodelfoot{
     text-align: left;
@@ -280,10 +309,6 @@ Login Modal
     color: #CE6D39;
 }
 
-.loginmodelfoot a{
-    font-size: 60%;
-}
-
 .loginmodelfoot .loginmodelfootlink{
     text-align: right;
 }
@@ -292,23 +317,21 @@ Login Modal
 Register Modal
 */
 
-.registermodelbody label{
+.registermodelbody{
     font-weight: 300;
-    font-size: 90%;
+    font-size: 80%;
 }
 .registermodelbody .row{
     margin-top: 5px;
 }
 .registermodelbody .reqd{
     color: red;
-    font-size: 75%;
+    font-size: 80%;
     margin-left: 5px;
 }
 .registermodelbody span{
     font-size: 60%;
 }
-
-
 
 .registermodelfoot{
     text-align: left;
@@ -340,23 +363,21 @@ Register Modal
 Reset Modal
 */
 
-.resetmodelbody label{
+.resetmodelbody{
     font-weight: 300;
-    font-size: 90%;
+    font-size: 80%;
 }
 .resetmodelbody .row{
     margin-top: 5px;
 }
 .resetmodelbody .reqd{
     color: red;
-    font-size: 75%;
+    font-size: 80%;
     margin-left: 5px;
 }
 .resetmodelbody span{
     font-size: 60%;
 }
-
-
 
 .resetmodelfoot{
     text-align: left;

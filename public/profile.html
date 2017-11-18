@@ -1,9 +1,21 @@
 <!--<link rel="stylesheet" href="./css/profile.css">-->
 <header>
-    <nav>
-        <div class="row">
-            <ul class="main-nav">
-                <li><a href="#/Overview" ng-class="{active:oCtrl.overview}">Home</a></li>
+    <nav class="navbar navbar-default navContainer">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header" id="navbarHeader">
+            <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <!-- Collection of nav links and other content for toggling -->
+        <div id="navbarCollapse" class="collapse navbar-collapse">
+            <ul class="nav main-nav">
+              <li><a href="#/Overview" ng-class="{active:oCtrl.overview}">Home</a></li>
                 <li><a ng-if="pCtrl.data.usertype==='CONSUMER'" href="#/Diet" ng-class="{active:dmCtrl.diet}">Manage Diet</a></li>
                 <li><a href="#/MessageCenter" ng-class="{active:mcCtrl.mcenter}">Message Center</a></li>
                 <li><a href="#/Profile" ng-class="{active:pCtrl.profile}">Profile</a></li>
@@ -12,7 +24,7 @@
         </div>
     </nav>
     <div class="hero-text-box">
-        <h1>HealthBasics - Your personal dental health manager</h1>
+        <h1>Health-Basics - Your personal dental health manager</h1>
     </div>
 </header>
 <div class="alert-container" ng-if="pCtrl.savesuccess===true" >
@@ -110,8 +122,8 @@
                     <div class="col-md-2"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4 col-xs-2"></div>
-                    <div class="col-sm-4 col-xs-6 form-common-btn"><input type="submit" class="btn btn-primary" value="Save">
+                    <div class="col-md-4 col-xs-3"></div>
+                    <div class="col-sm-4 col-xs-5 form-common-btn"><input type="submit" class="btn btn-primary" value="Save">
                     </div>
                     <div class="col-md-4"></div>
                 </div>
@@ -154,7 +166,7 @@
                                 ng-disabled="false"
                                 sortable="true"
                                 close-on-select="true">
-                            <ui-select-match placeholder="Select known languages...">
+                            <ui-select-match placeholder="Select language">
                                 {{$select.selected.name}}
                             </ui-select-match>
                             <ui-select-choices repeat="lang in pCtrl.metalanguages | propsFilter: {name: $select.search, code: $select.search}">
@@ -216,10 +228,13 @@
                     <div class="col-md-4 col-xs-4 form-consumer-field">Date of last complete physical examination</div>
                     <div class="col-md-4 col-xs-6 form-consumer-input">
                         <p class="input-group">
-                            <input type="text" class="form-control" uib-datepicker-popup="{{pCtrl.format}}" ng-model="pCtrl.dateLastPhysical" is-open="pCtrl.popup1.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" />
-                            <span class="input-group-btn">
+                            <!-- <input type="text" class="form-control" uib-datepicker-popup="{{pCtrl.format}}" ng-model="pCtrl.dateLastPhysical" is-open="pCtrl.popup1.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" /> -->
+                            
+                            <input type="date" class="form-control" uib-datepicker-popup="{{pCtrl.format}}" ng-model="pCtrl.dateLastPhysical" is-open="pCtrl.popup1.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats"/>
+                            
+                            <!-- <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="pCtrl.open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-                            </span>
+                            </span> -->
                         </p>
                     </div>
                     <div class="col-md-2"></div>
@@ -230,10 +245,12 @@
                     <div class="col-md-4 col-xs-4 form-consumer-field">Date of last dental check up</div>
                     <div class="col-md-4 col-xs-6 form-consumer-input">
                         <p class="input-group">
-                            <input type="text" class="form-control" uib-datepicker-popup="{{pCtrl.format}}" ng-model="pCtrl.dateLastDental" is-open="pCtrl.popup2.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" />
-                            <span class="input-group-btn">
+                            <!-- <input type="text" class="form-control" uib-datepicker-popup="{{pCtrl.format}}" ng-model="pCtrl.dateLastDental" is-open="pCtrl.popup2.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" /> -->
+                            <input type="date" class="form-control" uib-datepicker-popup="{{pCtrl.format}}" ng-model="pCtrl.dateLastDental" is-open="pCtrl.popup2.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats"/>
+
+                            <!-- <span class="input-group-btn">
                                 <button type="button" class="btn btn-default" ng-click="pCtrl.open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                            </span>
+                             --></span>
                         </p>
                     </div>
                     <div class="col-md-2"></div>
@@ -314,8 +331,8 @@
                     <div class="col-md-2"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4 col-xs-2"></div>
-                    <div class="col-sm-4 col-xs-4 form-consumer-btn"><input type="submit" class="btn btn-primary" value="Save">
+                    <div class="col-md-4 col-xs-3"></div>
+                    <div class="col-sm-4 col-xs-5 form-consumer-btn"><input type="submit" class="btn btn-primary" value="Save">
                     </div>
                     <div class="col-md-4"></div>
                 </div>
@@ -383,8 +400,8 @@
                     <div class="col-md-2"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4 col-xs-2"></div>
-                    <div class="col-sm-4 col-xs-4 form-provider-btn"><input type="submit" class="btn btn-primary" value="Save">
+                    <div class="col-md-4 col-xs-3"></div>
+                    <div class="col-sm-4 col-xs-5 form-provider-btn"><input type="submit" class="btn btn-primary" value="Save">
                     </div>
                     <div class="col-md-4"></div>
                 </div>

@@ -16,9 +16,9 @@
         <div class="modal-body registermodelbody" id="modal-body">
             <div class="row fields" id="md-form-row">
                 <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4"><label>Username<span class="reqd"><sup>*</sup></span></label></div>
-                    <div class="col-md-4">
+                    <div class="col-md-2 col-xs-2"></div>
+                    <div class="col-md-4 col-xs-4">Username<span class="reqd"><sup>*</sup></span></div>
+                    <div class="col-md-4 col-xs-4">
                         <input type="email" class="form-control" ng-model="$ctrl.uname" id="username" name="username" required
                                username-validator
                                ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/"
@@ -35,9 +35,9 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4"><label for="password">Password<span class="reqd"><sup>*</sup></span></label></div>
-                    <div class="col-md-4">
+                    <div class="col-md-2 col-xs-2"></div>
+                    <div class="col-md-4 col-xs-4">Password<span class="reqd"><sup>*</sup></span></div>
+                    <div class="col-md-4 col-xs-4">
                         <input type="password" class="form-control" ng-model="$ctrl.pwd" id="password" name="password" required
                                ng-minlength="6">
                         <div ng-if="registerForm.$submitted" ng-messages="registerForm.username.$error">
@@ -48,9 +48,9 @@
                     <div class="col-md-2"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4"><label for="cpassword">Confirm Password<span class="reqd"><sup>*</sup></span></label></div>
-                    <div class="col-md-4">
+                    <div class="col-md-2 col-xs-2"></div>
+                    <div class="col-md-4 col-xs-4">Confirm Password<span class="reqd"><sup>*</sup></span></div>
+                    <div class="col-md-4 col-xs-4">
                         <input type="password" class="form-control" ng-model="$ctrl.cpwd" id="cpassword" name="cpassword" required
                                ng-minlength="6"
                                password-matcher="{{$ctrl.pwd}}"
@@ -66,9 +66,9 @@
                     <div class="col-md-2"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4"><label for="name">Name<span class="reqd"><sup>*</sup></span></label></div>
-                    <div class="col-md-4">
+                    <div class="col-md-2 col-xs-2"></div>
+                    <div class="col-md-4 col-xs-4">Name<span class="reqd"><sup>*</sup></span></div>
+                    <div class="col-md-4 col-xs-4">
                         <input type="text" class="form-control" ng-model="$ctrl.name" id="name" name="name" required
                                ng-minlength="6" ng-pattern="/^[a-zA-Z ]*$/">
 
@@ -82,9 +82,9 @@
                     <div class="col-md-2"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4"><label for="utype">Medical Provider<span class="reqd"><sup>*</sup></span></label></div>
-                    <div class="col-md-4">
+                    <div class="col-md-2 col-xs-2"></div>
+                    <div class="col-md-4 col-xs-4">Medical Provider<span class="reqd"><sup>*</sup></span></div>
+                    <div class="col-md-4 col-xs-4">
                         <select ng-model="$ctrl.utype" id="utype" required name="utype">
                             <option value = "CONSUMER" selected>No</option>
                             <option value = "PROVIDER">Yes</option>
@@ -99,8 +99,8 @@
         </div>
         <div class="modal-footer registermodelfoot">
             <div class="row">
-                <div class="col-md-6"><input type="submit" class="btn btn-ghost btn-register-submit form-control" value="Register"></div>
-                <div class="col-md-6"><input type="button" class="btn btn-ghost btn-register-cancel form-control" ng-click="$ctrl.cancel()" value="Cancel"></div>
+                <div class="col-md-6 col-xs-6"><input type="submit" class="btn btn-ghost btn-register-submit form-control" value="Register"></div>
+                <div class="col-md-6 col-xs-6"><input type="button" class="btn btn-ghost btn-register-cancel form-control" ng-click="$ctrl.cancel()" value="Cancel"></div>
             </div>
         </div>
     </form>

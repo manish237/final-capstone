@@ -1,8 +1,17 @@
+/* ----------------------------------------------- */
+/* BASIC SETUP */
+/* ----------------------------------------------- */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+/*
+    BODY
+ */
+
 html,
 body {
     background-color: #474747;
@@ -14,6 +23,11 @@ body {
     overflow-x: hidden;
 }
 
+/*
+    HEADER
+ */
+
+
 header {
     background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/vintage-concrete.png);
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/vintage-concrete.png);
@@ -23,61 +37,70 @@ header {
     background-attachment: fixed;
 }
 
+/*
+    HEADER NAVIGATION
+ */
+
+#navbarHeader,#navbarCollapse{
+    background-color: #474747;
+}
+
 .main-nav {
     list-style: none;
-    margin-top: 3vh;
+    margin-top: 2vh;
+    margin-bottom: 10px;
 }
 
 .main-nav li {
     display: inline-block;
-    margin-left: 5px;
-}
-.main-nav li:first-child {
-    margin-left: 15px;
-}
-
-.main-nav li:last-child {
-    margin-left: 5px;
+    margin-left: 40px;
 }
 
 .main-nav li a:link,
 .main-nav li a:visited {
-    padding: 2px 0;
+    padding: 8px 0;
     color: #FFEEE4;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 50%;
+    font-size: 90%;
     border-bottom: 2px solid transparent;
+    background-color: transparent;
     -webkit-transition: border-bottom 0.2s;
-    transition: border-bottom 0.2s;
+    transition: 0.2s;
 }
 
 .main-nav li a:hover,
+.main-nav li a:focus,
 .main-nav li a:active {
     border-bottom: 2px solid #CE6D39;
+    background-color: transparent;
+    color:#CE6D39;
 }
 
+/*
+    H1 FONT
+ */
 
-h1 {
+h1{
     font-weight: 300;
     text-transform: uppercase;
 
-    margin-top: 6vh;
+    margin-top: 10vh;
     margin-bottom: 20px;
 
     color: #FFEEE4;
-    font-size: 150%;
+    font-size: 200%;
     word-spacing: 4px;
     letter-spacing: 1px;
     text-align: center;
 }
 
-h2 {
+h2{
     font-weight: 300;
     text-transform: uppercase;
 
     color: #CE6D39;
-    font-size: 180%;
+    font-size: 150%;
     word-spacing: 2px;
     text-align: center;
     margin-bottom: 30px;
@@ -105,7 +128,6 @@ h3 {
 
 .form-common-col .row, .form-consumer-col .row ,.form-provider-col .row{
     margin-top:5px;
-    margin-left:5px;
     padding:5px;
     font-weight: 300;
     font-size: 80%;
@@ -114,10 +136,6 @@ h3 {
 .form-common-field{
      padding-left: 5%;
  }
-
-.form-common-field,  .form-consumer-field, .form-provider-field{
-    font-size: 75%;
-}
 
 
 .form-common-btn,.form-consumer-btn,.form-provider-btn{
@@ -129,12 +147,8 @@ h3 {
     width: 100px;
 }
 
-.form-consumer-title-col{
-    text-align: center;
-}
-
 .form-consumer-title-col h4{
-    margin-top:40px;
+    margin-top:100px;
 }
 
 .curr-loc{

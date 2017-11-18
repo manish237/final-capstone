@@ -1,17 +1,12 @@
-@import url("./overview-media/overview-min-1265.css") only screen
-and (min-width:1265px );
-
 @import url("./overview-media/overview-min-992.css") only screen
-and (min-width:992px ) and (max-width:1264px );
+and (min-width:992px );
 
-@import url("./overview-media/overview-min-650.css") only screen
-and (min-width:650px ) and (max-width:991px );
+@import url("./overview-media/overview-min-768.css") only screen
+and (min-width:768px ) and (max-width:991px );
 
-@import url("./overview-media/overview-min-430.css") only screen
-and (min-width:430px ) and (max-width:649px );
+@import url("./overview-media/overview-min-1265.css") only screen
+and (min-width:300px ) and (max-width:767px );
 
-@import url("./overview-media/overview-min-1340.css") only screen
-and (min-width:300px ) and (max-width:429px );
 
 
 .active{

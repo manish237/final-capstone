@@ -2,7 +2,9 @@
    <form id="form-input" name="loginForm" novalidate ng-submit="$ctrl.loginSubmit(loginForm)">
         <div class="modal-header loginmodelhead">
             <button type="button" class="close" ng-click="$ctrl.cancel()">x</button>
-            <h3 class="modal-title" id="modal-title">Login</h3><a href="#" data-toggle="tooltip" data-placement="right" title="TestUser-consumer1@gmail.com<br>TestPassword-11111111"><i class="glyphicon glyphicon-info-sign"></i></a>
+            <h3 class="modal-title" id="modal-title">Login</h3>
+            
+                <!-- My <a href="#" title="This is a<br />test..." class="my_tooltip">Tooltip</a> test. -->
 
             <!-- <span>Form Submitted! {{loginForm.$submitted}}</span><br>
             <span>Form $valid! {{loginForm.$valid}}</span><br>
@@ -17,9 +19,16 @@
 
             <div class="row fields" id="md-form-row">
                     <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-4"><label>Username<span class="reqd"><sup>*</sup></span></label></div>
-                        <div class="col-md-4">
+                        <div class="col-md-2 col-xs-2"></div>
+                        <div class="col-md-4 col-xs-4">Username
+                            <span class="reqd">
+                                <sup>*</sup>
+                                <a href="#" data-toggle="tooltip" data-placement="right" title="Test User - [ consumer1@gmail.com ]">
+                                    <i class="glyphicon glyphicon-info-sign"></i>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="col-md-4 col-xs-4">
                             <input type="email" class="form-control" ng-model="$ctrl.loginUname" id="username" name="username" required
                                    ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/"
                                    ng-minlength="5">
@@ -33,9 +42,16 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-4"><label for="password">Password<span class="reqd"><sup>*</sup></span></label></div>
-                        <div class="col-md-4">
+                        <div class="col-md-2 col-xs-2"></div>
+                        <div class="col-md-4 col-xs-4">Password
+                            <span class="reqd">
+                                <sup>*</sup>
+                                <a href="#" data-toggle="tooltip" data-placement="right" title="Test Password - [ 11111111 ]">
+                                    <i class="glyphicon glyphicon-info-sign"></i>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="col-md-4 col-xs-4">
                             <input type="password" class="form-control" ng-model="$ctrl.loginPwd" id="password" name="password" required
                                    ng-minlength="6">
                             <div ng-if="loginForm.$submitted" ng-messages="loginForm.password.$error">
@@ -49,15 +65,15 @@
         </div>
         <div class="modal-footer loginmodelfoot">
             <div class="row">
-                <div class="col-md-6"><input type="submit" class="btn btn-ghost btn-login-submit form-control" value="Login"></div>
-                <div class="col-md-6"><input type="button" class="btn btn-ghost btn-login-cancel form-control" ng-click="$ctrl.cancel()" value="Cancel"></div>
+                <div class="col-md-6 col-xs-6"><input type="submit" class="btn btn-ghost btn-login-submit form-control" value="Login"></div>
+                <div class="col-md-6 col-xs-6"><input type="button" class="btn btn-ghost btn-login-cancel form-control" ng-click="$ctrl.cancel()" value="Cancel"></div>
             </div>
             <div class="row loginmodelfootlink">
-                <div class="col-md-6"></div>
-                <div class="col-md-3">
+                <div class="col-md-6 col-xs-5"></div>
+                <div class="col-md-3 col-xs-3">
                     <a href="#" ng-click="$ctrl.registration()">Register</a>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-xs-4">
                     <a href="#" ng-click="$ctrl.reset()">Forgot Password</a>
                 </div>
             </div>

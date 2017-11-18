@@ -1,7 +1,7 @@
 <!--<link rel="stylesheet" href="./css/dietmanager.css">-->
 
 <header>
-    <nav>
+    <!-- <nav>
         <div class="row">
             <ul class="main-nav">
                 <li><a href="#/Overview" ng-class="{active:oCtrl.overview}">Home</a></li>
@@ -11,9 +11,32 @@
                 <li><a href="" ng-click="dmCtrl.logout()">LogOut</a></li>
             </ul>
         </div>
+    </nav> -->
+    <nav class="navbar navbar-default navContainer">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header" id="navbarHeader">
+            <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <!-- Collection of nav links and other content for toggling -->
+        <div id="navbarCollapse" class="collapse navbar-collapse">
+            <ul class="nav main-nav">
+                <li><a href="#/Overview" ng-class="{active:oCtrl.overview}">Home</a></li>
+                <li><a ng-if="dmCtrl.data.usertype==='CONSUMER'" href="#/Diet" ng-class="{active:dmCtrl.diet}">Manage Diet</a></li>
+                <li><a href="#/MessageCenter" ng-class="{active:mcCtrl.mcenter}">Message Center</a></li>
+                <li><a href="#/Profile" ng-class="{active:pCtrl.profile}">Profile</a></li>
+                <li><a href="" ng-click="dmCtrl.logout()">LogOut</a></li>
+            </ul>
+        </div>
     </nav>
     <div class="hero-text-box">
-        <h1>HealthBasics - Your personal dental health manager</h1>
+        <h1>Health-Basics - Your personal dental health manager</h1>
     </div>
 </header>
 <section class="section-input">
@@ -27,12 +50,17 @@
         <div class="col-md-6  cols text-center">
             <p class="input-group">
                 <span class="input-group-btn">
-                        <button type="button" class="btn" ng-click="dmCtrl.dayminusone()"><i class="glyphicon glyphicon-triangle-left"></i></button>
+                    <button type="button" class="btn" ng-click="dmCtrl.dayminusone()"><i class="glyphicon glyphicon-triangle-left"></i></button>
                 </span>
-                <input type="text" class="form-control" uib-datepicker-popup="{{dmCtrl.format}}" ng-model="dmCtrl.dateEntryCurr" is-open="dmCtrl.popup1.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-click="dmCtrl.open1()"/>
+                <!-- <input type="text" class="form-control" uib-datepicker-popup="{{dmCtrl.format}}" ng-model="dmCtrl.dateEntryCurr" is-open="dmCtrl.popup1.opened" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-click="dmCtrl.open1()"/> -->
+                
+                <input type="date" class="form-control" uib-datepicker-popup="{{dmCtrl.format}}" ng-model="dmCtrl.dateEntryCurr" is-open="dmCtrl.popup1.opened" 
+                 datepicker-options="dateOptions" ng-click="dmCtrl.open1()"/>
+            
+
                 <span class="input-group-btn">
-                                    <button type="button" class="btn" ng-click="dmCtrl.dayplusone()"><i class="glyphicon glyphicon-triangle-right"></i></button>
-                            </span>
+                    <button type="button" class="btn" ng-click="dmCtrl.dayplusone()"><i class="glyphicon glyphicon-triangle-right"></i></button>
+                </span>
             </p>
         </div>
         <div class="col-md-3  cols"></div>
@@ -51,7 +79,7 @@
 
                 <div class="fcontainer1">
                     <div ng-if="dmCtrl.choices.length!==0" class="row food-row-head food-row">
-                        <div class="col-xs-2 col-md-2 food-col-head">
+                        <div class="col-xs-3 col-md-2 food-col-head">
                             <span  class="longlbl">Meal Time*</span>
                             <span  class="shortlbl">Time*</span>
                         </div>
@@ -62,7 +90,7 @@
                             <span  class="longlbl">Quantity*</span>
                             <span  class="shortlbl">Qty*</span>
                         </div>
-                        <div class="col-xs-3 col-md-2 food-col-head">
+                        <div class="col-xs-2 col-md-2 food-col-head">
                             <span  class="longlbl">Calories*</span>
                             <span  class="shortlbl">Cal*</span>
                         </div>
@@ -70,7 +98,7 @@
                         </div>
                     </div>
                     <div ng-repeat="choice in dmCtrl.choices track by $index" class="row food-row-item food-row">
-                        <div class="col-xs-2 col-md-2 food-col-item">
+                        <div class="col-xs-3 col-md-2 food-col-item">
                             <select ng-disabled="choice.disableInput" ng-class={disabledSelect:choice.disableInput} ng-model="choice.timeofday"  name="timeofday" required>
                                 <option value="BREAKFAST" ng-selected="choice.timeofday==='BREAKFAST'">BREAKFAST</option>
                                 <option value="LUNCH"     ng-selected="choice.timeofday==='LUNCH'">LUNCH</option>
@@ -113,7 +141,7 @@
                                 <span class="error" ng-message="pattern">Only numbers allowed</span>
                             </div>
                         </div>
-                        <div class="col-xs-3 col-md-2 food-col-item">
+                        <div class="col-xs-2 col-md-2 food-col-item">
                             <input type="text" name="selectedfoodcal"
                                    placeholder="{{choice.selectedfoodqty!==undefined?(choice.selectedfoodqty/choice.selectedfood.originalObject.details.serving_qty)*choice.selectedfood.originalObject.details.nf_calories:0}}"
                                    ng-disabled="choice.disableInput"

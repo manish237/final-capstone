@@ -1,8 +1,17 @@
+/* ----------------------------------------------- */
+/* BASIC SETUP */
+/* ----------------------------------------------- */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+/*
+    BODY
+ */
+
 html,
 body {
     background-color: #474747;
@@ -14,6 +23,11 @@ body {
     overflow-x: hidden;
 }
 
+/*
+    HEADER
+ */
+
+
 header {
     background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/vintage-concrete.png);
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/vintage-concrete.png);
@@ -23,9 +37,18 @@ header {
     background-attachment: fixed;
 }
 
+/*
+    HEADER NAVIGATION
+ */
+
+#navbarHeader,#navbarCollapse{
+    background-color: #474747;
+}
+
 .main-nav {
     list-style: none;
-    margin-top: 5vh;
+    margin-top: 2vh;
+    margin-bottom: 10px;
 }
 
 .main-nav li {
@@ -39,19 +62,26 @@ header {
     color: #FFEEE4;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 75%;
+    font-size: 90%;
     border-bottom: 2px solid transparent;
+    background-color: transparent;
     -webkit-transition: border-bottom 0.2s;
-    transition: border-bottom 0.2s;
+    transition: 0.2s;
 }
 
 .main-nav li a:hover,
+.main-nav li a:focus,
 .main-nav li a:active {
     border-bottom: 2px solid #CE6D39;
+    background-color: transparent;
+    color:#CE6D39;
 }
 
+/*
+    H1 FONT
+ */
 
-h1 {
+h1{
     font-weight: 300;
     text-transform: uppercase;
 
@@ -65,7 +95,7 @@ h1 {
     text-align: center;
 }
 
-h2 {
+h2{
     font-weight: 300;
     text-transform: uppercase;
 
@@ -78,12 +108,53 @@ h2 {
 }
 
 
+/*
+Buttons
+*/
 
 
+/*.btn:link,
+.btn:visited,
+input[type=submit],
+input[type=button]{
+    !*display: inline-block;*!
+    padding: 10px 30px;
+    font-weight: 300;
+    text-decoration: none;
+    border-radius: 200px;
+    -webkit-transition: background-color 0.2s, border 0.2s, color 0.2s;
+    transition: background-color 0.2s, border 0.2s, color 0.2s;
+}
+
+
+.btn:hover,
+.btn:active,
+input[type=submit]:hover,
+input[type=submit]:active,
+input[type=button]:hover,
+input[type=button]:active{
+    background-color: #CE6D39;
+
+}
+
+.btn-ghost:link,
+.btn-ghost:visited {
+    border: 1px solid #e67e22;
+    color: #000000;
+}
+
+.btn-ghost:hover,
+.btn-ghost:active {
+    border: 1px solid #CE6D39;
+    color: #fff;
+}*/
+
+/*
+    INFO SECTION
+ */
 .section-tabs{
     margin:0px;
     margin-top:1px;
-    padding: 0px;
     /*margin-top: .5%;*/
     /*    padding-left: 2%;
         padding-right: 2%;*/
@@ -91,7 +162,7 @@ h2 {
 }
 
 .summary-row{
-    background-color: #ffffff;
+    background-color: #FFEEE4;
     height: 20vh;
 }
 
@@ -100,6 +171,8 @@ h2 {
     line-height: 20vh;
     text-align: center;
 }
+
+
 img {
     height: 15vh;
     width: 15vh;
@@ -121,22 +194,16 @@ img {
 
 }
 
-.info{
-    /*padding-top: 25%;*/
-
-}
-
-/*h5{
-    font-weight: 300;
-    color: #000000;
-}*/
+/*
+MODAL DIALOG
+ */
 .row-2 a:link,
 .row-2 a:visited {
     padding: 8px 0;
     color: #000000;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 25%;
+    font-size: 50%;
     border-bottom: 2px solid transparent;
     -webkit-transition: border-bottom 0.2s;
     transition: color 0.2s;
@@ -147,7 +214,6 @@ img {
     color: #CE6D39;
     /*border-bottom: 2px solid #CE6D39;*/
 }
-
 
 md-toolbar h2{
     color:#ffffff;
@@ -181,7 +247,6 @@ md-radio-button{
     /*color: #CE6D39;*/
     /*font-size: 80%;*/
 }
-
 /*
 Feed Section
  */
@@ -196,15 +261,15 @@ Feed Section
     text-transform: uppercase;
 
     color: #474747;
-    font-size: 140%;
+    font-size: 150%;
     padding-bottom: 5px;
     text-decoration: underline;
 
 }
 
-.feed-title{
+.feed-title h4{
     font-weight: 400;
-    font-size: 100%;
+    font-size: 120%;
     color: black;
     word-spacing: 4px;
     letter-spacing: 1px;
@@ -222,6 +287,11 @@ Feed Section
     display: none;
 }
 
+.feed-desc .more-link:link,
+.feed-desc .more-link:visited{
+    font-weight: bolder;
+}
+
 .item-row{
     border-bottom: 2px solid black;
 }
@@ -232,7 +302,7 @@ Feed Section
     color: #FFEEE4;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 80%;
+    /*font-size: 80%;*/
     border-bottom: 2px solid transparent;
     -webkit-transition: border-bottom 0.2s;
     transition: border-bottom 0.2s;
@@ -242,3 +312,5 @@ Feed Section
 .section-feeds a:active {
     color: #CE6D39;
 }
+
+

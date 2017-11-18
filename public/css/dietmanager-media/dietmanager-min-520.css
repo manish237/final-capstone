@@ -1,8 +1,16 @@
+/* ----------------------------------------------- */
+/* BASIC SETUP */
+/* ----------------------------------------------- */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+/*
+    BODY
+ */
 
 html,
 body {
@@ -15,6 +23,11 @@ body {
     overflow-x: hidden;
 }
 
+/*
+    HEADER
+ */
+
+
 header {
     background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/vintage-concrete.png);
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/vintage-concrete.png);
@@ -24,42 +37,59 @@ header {
     background-attachment: fixed;
 }
 
+/*
+    HEADER NAVIGATION
+ */
+
+#navbarHeader,#navbarCollapse{
+    background-color: #474747;
+}
+
 .main-nav {
     list-style: none;
     margin-top: 2vh;
+    margin-bottom: 10px;
 }
 
 .main-nav li {
     display: inline-block;
-    margin-left: 18px;
+    margin-left: 40px;
 }
 
 .main-nav li a:link,
 .main-nav li a:visited {
-    padding: 4px 0;
+    padding: 8px 0;
     color: #FFEEE4;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 40%;
+    font-size: 90%;
     border-bottom: 2px solid transparent;
+    background-color: transparent;
     -webkit-transition: border-bottom 0.2s;
-    transition: border-bottom 0.2s;
+    transition: 0.2s;
 }
 
 .main-nav li a:hover,
+.main-nav li a:focus,
 .main-nav li a:active {
     border-bottom: 2px solid #CE6D39;
+    background-color: transparent;
+    color:#CE6D39;
 }
+
+/*
+    H1 FONT
+ */
 
 h1{
     font-weight: 300;
     text-transform: uppercase;
 
-    margin-top: 6vh;
+    margin-top: 10vh;
     margin-bottom: 20px;
 
     color: #FFEEE4;
-    font-size: 100%;
+    font-size: 150%;
     word-spacing: 4px;
     letter-spacing: 1px;
     text-align: center;
@@ -70,7 +100,7 @@ h2{
     text-transform: uppercase;
 
     color: #FFEEE4;
-    font-size: 180%;
+    font-size: 120%;
     word-spacing: 2px;
     text-align: center;
     margin-bottom: 30px;
@@ -95,7 +125,6 @@ h2{
 .btn{
     background-color: #F6B352;
     border-color:#5B5858;
-    margin: auto;
     margin-left: 1em;
     margin-right: 1em;
 
@@ -153,7 +182,7 @@ input[type=button]:active{
     border: 1px solid black;
     border-collapse: collapse;
     font-weight: 400;
-    font-size: 60%;
+    font-size: 80%;
 }
 
 
@@ -183,9 +212,12 @@ input[type=button]:active{
     height:35px;
  }
 .food-col-item .btn{
-    width:70%;
-    text-align: center;
-    font-size: 40%;
+    width:80%;
+    /*background-color:#5B5858;*/
+}
+
+.food-col-item span{
+    font-size: 70%;
     /*background-color:#5B5858;*/
 }
 
@@ -213,49 +245,19 @@ input[type=button]:active{
 .section-details{
     background-color: #F6B352;
     font-weight: 400;
-    font-size: 60%;
+    font-size: 80%;
 }
 
-.detail-summ-row,.detail-tab-head-row,.detail-tab-item-row{
+.detail-summ-row{
     margin-top: 5px;
 }
 
-.detail-summ-row:nth-child(2){
-    border-bottom: 2px solid #CE6D39;
-    padding-bottom: 10px;
-}
-
-.detail-tab-head-row{
-    margin-top: 10px;
-    border-bottom: 2px solid #CE6D39;
-}
-.detail-summ-col,.detail-tab-head-col,.detail-tab-item-col{
-    margin-top: 5px;
-    margin-left: 5px;
-    margin-bottom: 5px;
-}
-
-.detail-tab-item-col:first-child{
-    font-size: 70%;
-}
-
-.detail-tab-head-col:first-child,.detail-summ-col:first-child,.detail-tab-item-col:first-child{
-    margin-left: 1em;
-}
-
-.detail-btn-row{
-    margin-top: 10px;
-    border-top: 2px solid #CE6D39;
-    padding-top: 10px;
+.detail-summ-col{
     text-align: center;
-
 }
 
-.detail-btn-row .btn{
-    margin: auto;
-    margin-bottom: 10px;
-}
 
-.longlbl{
+
+.shortlbl{
     display: none;
 }

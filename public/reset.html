@@ -15,9 +15,9 @@
         <div class="modal-body resetmodelbody" id="modal-body">
             <div class="row fields" id="md-form-row">
                 <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4"><label>Username</label></div>
-                    <div class="col-md-4">
+                    <div class="col-md-2 col-xs-2"></div>
+                    <div class="col-md-4 col-xs-4">Username</div>
+                    <div class="col-md-4 col-xs-4">
                         <input type="email" class="form-control" ng-model="$ctrl.resetUname" id="username" name="username" required
                                ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/"
                                ng-minlength="5">
@@ -31,9 +31,9 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4"><label for="password">Password</label></div>
-                    <div class="col-md-4">
+                    <div class="col-md-2 col-xs-2"></div>
+                    <div class="col-md-4 col-xs-4">Password</div>
+                    <div class="col-md-4 col-xs-4">
                         <input type="password" class="form-control" ng-model="$ctrl.pwd" id="password" name="password" required
                                ng-minlength="6">
                         <div ng-if="resetForm.$submitted" ng-messages="resetForm.password.$error">
@@ -44,9 +44,9 @@
                     <div class="col-md-2"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-4"><label for="cpassword">Confirm Password</label></div>
-                    <div class="col-md-4">
+                    <div class="col-md-2 col-xs-2"></div>
+                    <div class="col-md-4 col-xs-4">Confirm Password</div>
+                    <div class="col-md-4 col-xs-4">
                         <input type="password" class="form-control" ng-model="$ctrl.cpwd" id="cpassword" name="cpassword" required
                                ng-minlength="6"
                                password-matcher="{{$ctrl.pwd}}">
@@ -63,8 +63,8 @@
         </div>
         <div class="modal-footer resetmodelfoot">
              <div class="row">
-                <div class="col-md-6"><input type="submit" class="btn btn-ghost btn-login-submit form-control" value="Reset"></div>
-                <div class="col-md-6"><input type="button" class="btn btn-ghost btn-login-cancel form-control" ng-click="$ctrl.cancel()" value="Cancel"></div>
+                <div class="col-md-6 col-xs-6"><input type="submit" class="btn btn-ghost btn-login-submit form-control" value="Reset"></div>
+                <div class="col-md-6 col-xs-6"><input type="button" class="btn btn-ghost btn-login-cancel form-control" ng-click="$ctrl.cancel()" value="Cancel"></div>
             </div>
         </div>
     </form>

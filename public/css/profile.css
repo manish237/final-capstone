@@ -1,10 +1,9 @@
+@import url("./profile-media/profile-min-992.css") only screen
+and (min-width:992px );
+@import url("./profile-media/profile-min-768.css") only screen
+and (min-width:768px ) and (max-width:991px );
 @import url("./profile-media/profile-min-1016.css") only screen
-and (min-width:1016px );
-@import url("./profile-media/profile-min-620.css") only screen
-and (min-width:620px ) and (max-width:1015px );
-@import url("./profile-media/profile-min-1340.css") only screen
-and (min-width:300px ) and (max-width:619px );
-
+and (min-width:300px ) and (max-width:767px );
 .active{
     font-weight: bold;
 }

@@ -1,17 +1,13 @@
 @import url("./dietmanager-media/dietmanager-min-992.css") only screen
 and (min-width:992px );
 
+@import url("./dietmanager-media/dietmanager-min-520.css") only screen
+and (min-width:520px ) and (max-width:991px );
+
 @import url("./dietmanager-media/dietmanager-min-660.css") only screen
-and (min-width:660px ) and (max-width:991px );
+and (min-width:300px ) and (max-width:519px );
 
-@import url("./dietmanager-media/dietmanager-min-1340.css") only screen
-and (min-width:300px ) and (max-width:659px );
 
-/*
-@import url("./overview-media/overview-min-992.css") only screen
-and (min-width:992px ) and (max-width:1264px );
-
-*/
 .active{
     font-weight: bold;
 }

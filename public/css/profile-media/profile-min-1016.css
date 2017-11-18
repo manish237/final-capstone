@@ -1,8 +1,17 @@
+/* ----------------------------------------------- */
+/* BASIC SETUP */
+/* ----------------------------------------------- */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+/*
+    BODY
+ */
+
 html,
 body {
     background-color: #474747;
@@ -14,23 +23,37 @@ body {
     overflow-x: hidden;
 }
 
+/*
+    HEADER
+ */
+
+
 header {
     background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/vintage-concrete.png);
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/vintage-concrete.png);
     background-size: cover;
     background-position: center;
-    height: 35vh;
+    height: 60vh;
     background-attachment: fixed;
+}
+
+/*
+    HEADER NAVIGATION
+ */
+
+#navbarHeader,#navbarCollapse{
+    background-color: #474747;
 }
 
 .main-nav {
     list-style: none;
-    margin-top: 5vh;
+    margin-top: 2vh;
+    margin-bottom: 10px;
 }
 
 .main-nav li {
     display: inline-block;
-    margin-left: 40px;
+    margin-left: 10px;
 }
 
 .main-nav li a:link,
@@ -39,38 +62,45 @@ header {
     color: #FFEEE4;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 90%;
+    font-size: 60%;
     border-bottom: 2px solid transparent;
+    background-color: transparent;
     -webkit-transition: border-bottom 0.2s;
     transition: border-bottom 0.2s;
 }
 
 .main-nav li a:hover,
+.main-nav li a:focus,
 .main-nav li a:active {
     border-bottom: 2px solid #CE6D39;
+    background-color: transparent;
+    color:#CE6D39;
 }
 
+/*
+    H1 FONT
+ */
 
-h1 {
+h1{
     font-weight: 300;
     text-transform: uppercase;
 
-    margin-top: 10vh;
+    margin-top: 15vh;
     margin-bottom: 20px;
 
     color: #FFEEE4;
-    font-size: 240%;
+    font-size: 120%;
     word-spacing: 4px;
     letter-spacing: 1px;
     text-align: center;
 }
 
-h2 {
+h2{
     font-weight: 300;
     text-transform: uppercase;
 
     color: #CE6D39;
-    font-size: 180%;
+    font-size: 80%;
     word-spacing: 2px;
     text-align: center;
     margin-bottom: 30px;
