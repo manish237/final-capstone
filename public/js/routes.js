@@ -10,8 +10,8 @@ angular.module('routeLibrary',['ngRoute'])
                 controllerAs: 'hCtrl',
                 css: {
                     href: 'css/home.css',
-                    // persist: true,
-                    // bustCache: true,
+                    persist: true,
+                    bustCache: true,
                     preload: true
                 }
             })
@@ -21,8 +21,8 @@ angular.module('routeLibrary',['ngRoute'])
                 controllerAs: 'oCtrl',
                 css: {
                     href: 'css/overview.css',
-                    // persist: true,
-                    // bustCache: true,
+                    persist: true,
+                    bustCache: true,
                     preload: true
                 }
 
@@ -33,8 +33,8 @@ angular.module('routeLibrary',['ngRoute'])
                 controllerAs: 'pCtrl',
                 css: {
                     href: 'css/profile.css',
-                    // persist: true,
-                    // bustCache: true,
+                    persist: true,
+                    bustCache: true,
                     preload: true
                 }
 
@@ -45,8 +45,8 @@ angular.module('routeLibrary',['ngRoute'])
                 controllerAs: 'mcCtrl',
                 css: {
                     href: 'css/mcenter.css',
-                    // persist: true,
-                    // bustCache: true,
+                    persist: true,
+                    bustCache: true,
                     preload: true
                 }
             })
@@ -56,8 +56,8 @@ angular.module('routeLibrary',['ngRoute'])
                 controllerAs: 'dmCtrl',
                 css: {
                     href: './css/dietmanager.css',
-                    // persist: true,
-                    // bustCache: true,
+                    persist: true,
+                    bustCache: true,
                     preload: true
                 }
 
