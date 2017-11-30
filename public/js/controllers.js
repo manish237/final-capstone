@@ -120,8 +120,10 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
             oCtrl.track[i]=""
             if(oCtrl.data.data!==undefined && oCtrl.data.data.additionaldata!==undefined){
                 if(oCtrl.data.data.additionaldata.oralassessment!==undefined){
-                    oCtrl.response[oCtrl.qbank[i].quesId]=oCtrl.data.data.additionaldata.oralassessment.filter(item=>item.questionid===oCtrl.qbank[i].quesId)[0].responseid;
-                    oCtrl.track[i]=oCtrl.data.data.additionaldata.oralassessment.filter(item=>item.questionid===oCtrl.qbank[i].quesId)[0].responseid;
+                    oCtrl.response[oCtrl.qbank[i].quesId]=
+                            oCtrl.data.data.additionaldata.oralassessment.filter(item=>item.questionid===oCtrl.qbank[i].quesId)[0]!==undefined?oCtrl.data.data.additionaldata.oralassessment.filter(item=>item.questionid===oCtrl.qbank[i].quesId)[0].responseid:undefined;
+                    oCtrl.track[i]=
+                            oCtrl.data.data.additionaldata.oralassessment.filter(item=>item.questionid===oCtrl.qbank[i].quesId)[0]!==undefined?oCtrl.data.data.additionaldata.oralassessment.filter(item=>item.questionid===oCtrl.qbank[i].quesId)[0].responseid:undefined;
                     oCtrl.radio = oCtrl.track[oCtrl.selectedIndex];
                 }
             }

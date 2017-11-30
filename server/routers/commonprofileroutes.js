@@ -493,14 +493,14 @@ router.get('/providers/list', (req, res) => {
     console.log("provider list get 01")
     let commonData = [];
     return CommonProfileData
-        .find({usertype: 'PROVIDER'}).limit(4)
+        .find({usertype: 'PROVIDER'})
         .exec()
         .then(data => {
-            console.log("provider list get 01a")
+            console.log("provider list get 02")
 
             console.log(data)
             if (data.length >= 0) {
-                console.log("provider list get 02")
+                console.log("provider list get 03")
                 commonData = data;
                 var result = data.map(item => item.username);
                 console.log(result)
@@ -511,39 +511,40 @@ router.get('/providers/list', (req, res) => {
             }
         })
         .then(data=> {
-            console.log("provider list get 03")
+            console.log("provider list get 04")
             console.log(data)
             data = data.sort(config.compareProfileData)
             commonData = commonData.sort(config.compareProfileData)
 
-            if(data.length!=0 && data.length!==commonData.length)
+            let result = [];
+            if(data.length!=0)
             {
-                console.log("provider list get 04")
-
-                return Promise.reject();
-            }
-            else {
                 console.log("provider list get 05")
-                let result = [];
-                for(var i=0;i<commonData.length;i++)
-                {
-/*                    console.log("---------------------------")
-                    console.log(data[i])
-                    console.log(commonData[i])
-                    var x = Object.assign({},commonData[i],data[i])
-                    console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-                    console.log(x)*/
-                    result.push({
-                        common: commonData[i],
-                        providerdata:data[i]
-                    })
+
+                for(var i=0;i<data.length;i++){
+                    var item = commonData.filter((item)=>{ return item.username===data[i].username})[0]
+                    console.log(item)
+                    if(item !=undefined)
+                    {
+                        result.push(
+                                    {
+                                        common: commonData[i],
+                                        providerdata:data[i]
+                                    }
+                                 )
+                    }
                 }
                 res.status(200).json(result)
+            }
+            else{
+                console.log("provider list get 06")
+
+                res.status(404).json({message: 'Data Unavailable'});
             }
         })
         .catch(
             err => {
-                console.log("common profile data get 06")
+                console.log("common profile data get 07")
                 console.error(err);
                 if (err.name === 'InvalidUserError') {
                     return res.status(422).json({message: err.message});

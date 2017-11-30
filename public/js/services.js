@@ -73,8 +73,8 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
             })
             .then(
                 function (response) {
+                    console.log("success list")
                     console.log(response.data)
-                    //console.log("success list")
                     // console.log(response.data.geonames)
                     // myCache.put('myData', response.data.geonames);
                     // console.log(myCache.get('myData'))
