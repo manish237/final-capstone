@@ -154,7 +154,11 @@
                 <div ng-if="mcCtrl.typing===true"><span>someone is typing...</span></div>
                 <div class="col-md-2 col-xs-3 send-msg-label">Message</div>
                 <div class="col-md-4 col-xs-5 send-msg-input"><input type="text" ng-model="mcCtrl.message" ng-keypress="mcCtrl.notifyTyping()"/></div>
-                <div class="col-md-2 col-xs-3 send-msg-btn"><input type="submit" class="btn" value="Send"/></div>
+                <div class="col-md-2 col-xs-3 send-msg-btn">
+                    <input ng-disabled="(mcCtrl.message===undefined) || (mcCtrl.message!==undefined && mcCtrl.message.length===0)" type="submit" class="btn" value="Send"/>
+                </div>
+               <!-- {{mcCtrl.message}}-{{mcCtrl.message.length}}-{{mcCtrl.message===undefined}}-{{mcCtrl.message.length===0}}
+                -{{(mcCtrl.message===undefined) || (mcCtrl.message!==undefined && mcCtrl.message.length===0)}}-->
             </form>
         </div>
         <div class="col-md-4">
