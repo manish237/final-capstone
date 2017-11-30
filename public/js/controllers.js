@@ -1075,7 +1075,7 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
     pCtrl.popup2 = {
         opened: false
     };
-    console.log($(".alert"))
+
     pCtrl.open1 = function() {
         pCtrl.popup1.opened = true;
     };
@@ -1106,11 +1106,10 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
         //console.log("selectedPrefLang--");
         pCtrl.selectedPrefLang = newVal;
         //console.log(newVal)
-
     })
 
 
-    console.log(pCtrl)
+    console.log(pCtrl.data)
     /*
     * Editing Personal Info
     * Name
@@ -1121,118 +1120,115 @@ angular.module('ctrlLibrary', ['apiLibrary','apiLibraryConstants','angucomplete-
     * */
 
     pCtrl.username = pCtrl.data.username;
-    if(pCtrl.data.type === 'login' || pCtrl.data.type === 'reset'){
-        if(pCtrl.data.data!==undefined && pCtrl.data.data.commondata!==undefined){
-            //process common data
-            let commData = pCtrl.data.data.commondata;
-            if(commData.name!==undefined)
-            {
-                pCtrl.name = commData.name;
-            }
-            if(commData.chathandle!==undefined)
-            {
-                pCtrl.chathandle = commData.chathandle;
-            }
-            if(commData.gender!==undefined)
-            {
-                pCtrl.gender = commData.gender;
-            }
-            if(commData.location!==undefined)
-            {
-
-                pCtrl.location = commData.location;
-            }
-            if(commData.longitude!==undefined)
-            {
-                pCtrl.longitude = commData.longitude;
-            }
-            if(commData.latitude!==undefined)
-            {
-                pCtrl.latitude = commData.latitude;
-            }
-            if(commData.usertype!==undefined)
-            {
-                pCtrl.usertype = commData.usertype;
-            }
-            if(commData.languages!==undefined)
-            {
-                pCtrl.languages = commData.languages;
-                pCtrl.selectedLangs = commData.languages;
-            }
+    if(pCtrl.data.data!==undefined && pCtrl.data.data.commondata!==undefined){
+        //process common data
+        let commData = pCtrl.data.data.commondata;
+        if(commData.name!==undefined)
+        {
+            pCtrl.name = commData.name;
         }
-        if(pCtrl.data.data!==undefined && pCtrl.data.data.additionaldata!==undefined){
-            let addData = pCtrl.data.data.additionaldata;
-            if(addData.age!==undefined)
-            {
-                pCtrl.age = addData.age;
-            }
-            if(addData.preferredlanguage!==undefined)
-            {
-                pCtrl.preferredlanguage = addData.preferredlanguage;
-                pCtrl.selectedPrefLang = addData.preferredlanguage;
-            }
-            if(addData.qualifications!==undefined)
-            {
-                pCtrl.qual = addData.qualifications.join();
-            }
-            if(addData.expertise!==undefined)
-            {
-                pCtrl.expert = addData.expertise;
-            }
-            if(addData.servicetype!==undefined)
-            {
-                pCtrl.servicetype = addData.servicetype;
-            }
-            if(addData.chat!==chatavail)
-            {
-                if(addData.chat===true)
-                    pCtrl.chatavail = "YES";
-                else
-                    pCtrl.chatavail = "NO";
-            }
-            if(addData.medHistorylist!==undefined)
-            {
-                console.log(addData.medHistorylist.dateLastPhysical)
-                console.log(addData.medHistorylist.dateLastPhysical!==undefined)
-                console.log(addData.medHistorylist.dateLastPhysical!=='undefined')
-                pCtrl.listPrescription = addData.medHistorylist.listPrescription!==undefined?addData.medHistorylist.listPrescription:"";
-                pCtrl.listNonPrescription = addData.medHistorylist.listNonPrescription!==undefined?addData.medHistorylist.listNonPrescription:"";
+        if(commData.chathandle!==undefined)
+        {
+            pCtrl.chathandle = commData.chathandle;
+        }
+        if(commData.gender!==undefined)
+        {
+            pCtrl.gender = commData.gender;
+        }
+        if(commData.location!==undefined)
+        {
+            pCtrl.location = commData.location;
+        }
+        if(commData.longitude!==undefined)
+        {
+            pCtrl.longitude = commData.longitude;
+        }
+        if(commData.latitude!==undefined)
+        {
+            pCtrl.latitude = commData.latitude;
+        }
+        if(commData.usertype!==undefined)
+        {
+            pCtrl.usertype = commData.usertype;
+        }
+        if(commData.languages!==undefined)
+        {
+            pCtrl.languages = commData.languages;
+            pCtrl.selectedLangs = commData.languages;
+        }
+    }
+    if(pCtrl.data.data!==undefined && pCtrl.data.data.additionaldata!==undefined){
+        let addData = pCtrl.data.data.additionaldata;
+        if(addData.age!==undefined)
+        {
+            pCtrl.age = addData.age;
+        }
+        if(addData.preferredlanguage!==undefined)
+        {
+            pCtrl.preferredlanguage = addData.preferredlanguage;
+            pCtrl.selectedPrefLang = addData.preferredlanguage;
+        }
+        if(addData.qualifications!==undefined)
+        {
+            pCtrl.qual = addData.qualifications.join();
+        }
+        if(addData.expertise!==undefined)
+        {
+            pCtrl.expert = addData.expertise;
+        }
+        if(addData.servicetype!==undefined)
+        {
+            pCtrl.servicetype = addData.servicetype;
+        }
+        if(addData.chat!==undefined)
+        {
+            if(addData.chat===true)
+                pCtrl.chatavail = "YES";
+            else
+                pCtrl.chatavail = "NO";
+        }
+        if(addData.medHistorylist!==undefined)
+        {
+            console.log(addData.medHistorylist.dateLastPhysical)
+            console.log(addData.medHistorylist.dateLastPhysical!==undefined)
+            console.log(addData.medHistorylist.dateLastPhysical!=='undefined')
+            pCtrl.listPrescription = addData.medHistorylist.listPrescription!==undefined?addData.medHistorylist.listPrescription:"";
+            pCtrl.listNonPrescription = addData.medHistorylist.listNonPrescription!==undefined?addData.medHistorylist.listNonPrescription:"";
 
-                // if(addData.medHistorylist.dateLastPhysical!==undefined) {
+            // if(addData.medHistorylist.dateLastPhysical!==undefined) {
 
-                console.log(uibDateParser.parse(new Date(addData.medHistorylist.dateLastPhysical),pCtrl.format))
-                console.log((uibDateParser.parse(new Date(addData.medHistorylist.dateLastPhysical),pCtrl.format)=='Invalid Date'))
-                if((uibDateParser.parse(new Date(addData.medHistorylist.dateLastPhysical),pCtrl.format)=='Invalid Date'))
-                    pCtrl.dateLastPhysical = ""//uibDateParser.parse(new Date(),pCtrl.format)  ;
-                else
-                    pCtrl.dateLastPhysical = uibDateParser.parse(new Date(addData.medHistorylist.dateLastPhysical),pCtrl.format)  ;
-                // }
-
-
-
-                // if(addData.medHistorylist.dateLastDental!==undefined) {
-                console.log(uibDateParser.parse(new Date(addData.medHistorylist.dateLastDental),pCtrl.format))
-                pCtrl.dateLastDental = uibDateParser.parse(new Date(addData.medHistorylist.dateLastDental),pCtrl.format)
-                if((uibDateParser.parse(new Date(addData.medHistorylist.dateLastDental),pCtrl.format)=='Invalid Date'))
-                    pCtrl.dateLastDental = ""//uibDateParser.parse(new Date(),pCtrl.format)  ;
-                else
-                    pCtrl.dateLastDental = uibDateParser.parse(new Date(addData.medHistorylist.dateLastDental),pCtrl.format)  ;
-                // }
+            console.log(uibDateParser.parse(new Date(addData.medHistorylist.dateLastPhysical),pCtrl.format))
+            console.log((uibDateParser.parse(new Date(addData.medHistorylist.dateLastPhysical),pCtrl.format)=='Invalid Date'))
+            if((uibDateParser.parse(new Date(addData.medHistorylist.dateLastPhysical),pCtrl.format)=='Invalid Date'))
+                pCtrl.dateLastPhysical = ""//uibDateParser.parse(new Date(),pCtrl.format)  ;
+            else
+                pCtrl.dateLastPhysical = uibDateParser.parse(new Date(addData.medHistorylist.dateLastPhysical),pCtrl.format)  ;
+            // }
 
 
-                pCtrl.listOtherTest = addData.medHistorylist.listOtherTest!==undefined?addData.medHistorylist.listOtherTest:"";
-                pCtrl.listDrugAllergies = addData.medHistorylist.listDrugAllergies!==undefined?addData.medHistorylist.listDrugAllergies:"";
 
-                pCtrl.smoking = addData.medHistorylist.smoking!==undefined?addData.medHistorylist.smoking===true?"true":"false":"false";
-                pCtrl.alcohol = addData.medHistorylist.alcohol!==undefined?addData.medHistorylist.alcohol===true?"true":"false":"false";
+            // if(addData.medHistorylist.dateLastDental!==undefined) {
+            console.log(uibDateParser.parse(new Date(addData.medHistorylist.dateLastDental),pCtrl.format))
+            pCtrl.dateLastDental = uibDateParser.parse(new Date(addData.medHistorylist.dateLastDental),pCtrl.format)
+            if((uibDateParser.parse(new Date(addData.medHistorylist.dateLastDental),pCtrl.format)=='Invalid Date'))
+                pCtrl.dateLastDental = ""//uibDateParser.parse(new Date(),pCtrl.format)  ;
+            else
+                pCtrl.dateLastDental = uibDateParser.parse(new Date(addData.medHistorylist.dateLastDental),pCtrl.format)  ;
+            // }
 
-                pCtrl.stroke = addData.medHistorylist.stroke!==undefined?addData.medHistorylist.stroke:false;
-                pCtrl.arthritis = addData.medHistorylist.arthritis!==undefined?addData.medHistorylist.arthritis:false;
-                pCtrl.diabetes = addData.medHistorylist.diabetes!==undefined?addData.medHistorylist.diabetes:false;
-                pCtrl.anemia = addData.medHistorylist.anemia!==undefined?addData.medHistorylist.anemia:false;
-                pCtrl.asthma = addData.medHistorylist.asthma!==undefined?addData.medHistorylist.asthma:false;
 
-            }
+            pCtrl.listOtherTest = addData.medHistorylist.listOtherTest!==undefined?addData.medHistorylist.listOtherTest:"";
+            pCtrl.listDrugAllergies = addData.medHistorylist.listDrugAllergies!==undefined?addData.medHistorylist.listDrugAllergies:"";
+
+            pCtrl.smoking = addData.medHistorylist.smoking!==undefined?addData.medHistorylist.smoking===true?"true":"false":"false";
+            pCtrl.alcohol = addData.medHistorylist.alcohol!==undefined?addData.medHistorylist.alcohol===true?"true":"false":"false";
+
+            pCtrl.stroke = addData.medHistorylist.stroke!==undefined?addData.medHistorylist.stroke:false;
+            pCtrl.arthritis = addData.medHistorylist.arthritis!==undefined?addData.medHistorylist.arthritis:false;
+            pCtrl.diabetes = addData.medHistorylist.diabetes!==undefined?addData.medHistorylist.diabetes:false;
+            pCtrl.anemia = addData.medHistorylist.anemia!==undefined?addData.medHistorylist.anemia:false;
+            pCtrl.asthma = addData.medHistorylist.asthma!==undefined?addData.medHistorylist.asthma:false;
+
         }
     }
 

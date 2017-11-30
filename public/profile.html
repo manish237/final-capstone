@@ -47,7 +47,7 @@
                     <div class="col-md-2"></div>
                     <div class="col-md-4 col-xs-4 form-common-field">Chat Handle(upto 20 characters)</div>
                     <div class="col-md-4 col-xs-6 form-common-input">
-                        <input type="text" class="form-control" placeholder="pCtrl.chathandle" ng-model="pCtrl.chathandle" id="chathandle" name="chathandle" handle-requestor="{{pCtrl.username}}"
+                        <input type="text" class="form-control" ng-model="pCtrl.chathandle" id="chathandle" name="chathandle" handle-requestor="{{pCtrl.username}}"
                                chat-handle-validator
                                ng-pattern="/^[A-Za-z0-9_]{2,20}$/"
                                ng-minlength="5"
@@ -64,7 +64,7 @@
                     <div class="col-md-2"></div>
                     <div class="col-md-4 col-xs-4 form-common-field">Name</div>
                     <div class="col-md-4 col-xs-6 form-common-input">
-                        <input type="text" class="form-control" placeholder="pCtrl.name!==undefined?pCtrl.name:''" ng-model="pCtrl.name" id="name" name="name" required ng-minlength="6" ng-pattern="/^[a-zA-Z ]*$/">
+                        <input type="text" class="form-control" ng-model="pCtrl.name" id="name" name="name" required ng-minlength="6" ng-pattern="/^[a-zA-Z ]*$/">
                         <div ng-if="inputForm.$submitted" ng-messages="inputForm.name.$error">
                             <span class="error" ng-message="required">Field is required!</span>
                             <span class="error" ng-message="minlength">Minimum 5 characters expected</span>
@@ -131,7 +131,8 @@
         </div>
     </div>
 </section>
-<section ng-show="pCtrl.usertype==='CONSUMER'" class="section-consumer">
+<!--{{pCtrl.usertype}}-{{pCtrl.usertype}}-->
+<section ng-if="pCtrl.usertype==='CONSUMER'" class="section-consumer">
     <div class="row form-consumer-row">
         <div class="col-md-12 col-xs-12 form-consumer-col">
             <form class="form-consumer" id="form-input-1" name="inputConsumerForm" novalidate ng-submit="pCtrl.submitConsumerProfile(inputCommonForm)">
@@ -340,7 +341,7 @@
         </div>
     </div>
 </section>
-<section ng-show="pCtrl.usertype==='PROVIDER'" class="section-provider">
+<section ng-if="pCtrl.usertype==='PROVIDER'" class="section-provider">
     <div  class="row form-provider-row">
         <div class="col-md-12 col-xs-12 form-provider-col">
             <form class="form-provider" id="form-input-3" name="inputProviderForm" novalidate ng-submit="pCtrl.submitProviderProfile(inputCommonForm)">

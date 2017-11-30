@@ -9,40 +9,6 @@ angular.module('apiLibrary', ['apiLibraryConstants'])
         return window._; // assumes underscore has already been loaded on the page
     })
 
-    /*.factory('dataStorage', [function() {
-        var loginData = {};
-        var registerData = {};
-        var resetData = {};
-        var genData = {};
-
-        return {
-            setLoginData: function(data) {
-                loginData = data;
-            },
-            setRegisterData: function(data) {
-                registerData = data;
-            },
-            setResetData: function(data) {
-                resetData = data;
-            },
-            setGenData: function(data) {
-                genData = data;
-            },
-            getLoginData: function() {
-                return loginData;
-            },
-            getRegisterData: function() {
-                return registerData;
-            },
-            getResetData: function() {
-                return resetData;
-            },
-            getGenData: function() {
-                return genData;
-            }
-        };
-    }])*/
-
     .factory('refreshStorage', ['regdata','commondata','consumerdata','providerdata','localStorageService','profiledetails',function(regdata,commondata,consumerdata,providerdata,localStorageService,profiledetails) {
         return {
             refresh: function(uname,type) {
