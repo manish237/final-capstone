@@ -27,7 +27,6 @@ body {
     HEADER
  */
 
-
 header {
     background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/vintage-concrete.png);
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/vintage-concrete.png);
@@ -218,7 +217,7 @@ input[type=button]:active{
 
 
 .tab-title{
-    color: red;
+    /*color: red;*/
     height: 6vh;
 }
 .tab-content{

@@ -269,7 +269,7 @@ Login Modal
     margin-top: 5px;
 }
 .loginmodelbody .reqd{
-    color: red;
+    /*color: red;*/
     font-size: 80%;
     margin-left: 5px;
 }

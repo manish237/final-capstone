@@ -10,3 +10,6 @@ and (min-width:300px ) and (max-width:719px );
     font-weight: bold;
 }
 
+.navbar{
+    border: none;
+}

@@ -7,3 +7,6 @@ and (min-width:300px ) and (max-width:767px );
 .active{
     font-weight: bold;
 }
+.navbar{
+    border: none;
+}

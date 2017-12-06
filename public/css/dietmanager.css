@@ -21,3 +21,6 @@ and (min-width:300px ) and (max-width:519px );
     background: #dddddd;
 
 }
+.navbar{
+    border: none;
+}
