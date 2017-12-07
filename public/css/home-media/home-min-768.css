@@ -32,7 +32,7 @@ header {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/vintage-concrete.png);
     background-size: cover;
     background-position: center;
-    height: 35vh;
+    height: 45vh;
     background-attachment: fixed;
 }
 
@@ -108,11 +108,14 @@ h2{
 }
 
 h3 {
-    font-weight: 300;
+    font-weight: bolder;
     text-transform: uppercase;
 
-    font-size: 80%;
+    font-size: 100%;
     margin-bottom: 15px;
+    word-spacing: 3px;
+    letter-spacing: 2px;
+
 }
 
 
@@ -127,9 +130,10 @@ input[type=submit],
 input[type=button]{
     /*display: inline-block;*/
     padding: 10px 30px;
-    font-weight: 300;
+    font-weight: bold;
     text-decoration: none;
     border-radius: 200px;
+    background-color:white;
     -webkit-transition: background-color 0.2s, border 0.2s, color 0.2s;
     transition: background-color 0.2s, border 0.2s, color 0.2s;
 }
@@ -162,34 +166,35 @@ input[type=button]:active{
  */
 
 .section-tabs{
-    margin-top: 1em;
-    padding-right: 1%;
+    margin-top: 5px;
+    /*padding-right: 1%;*/
 }
 
 /*
     FEATURES
  */
 .tab-small{
-    background-color: #F6B352;
-    border-radius: 5px;
-    width: 98%;
-    margin-left: 2%;
+    /*background-color: #F6B352;*/
+    background-color: white;
+    /*border-radius: 5px;*/
+    width: 100%;
+    /*margin-left: 2%;*/
 
-    box-shadow: 0 1px 1px #F6B352;
-    height: 30vh;
+    /*box-shadow: 0 1px 1px #F6B352;*/
+    height: 45vh;
 
     position: relative;
 
-    -webkit-transition: transform 0.2s;
+    /*-webkit-transition: transform 0.2s;*/
     /*transition: transform 0.2s, margin-left 0.2s, z-index 0.2s, width 0.2s, margin-top 0.2s, box-shadow 0.2s,height 0.2s;*/
-    transition:1s ease;
-    margin-bottom: 20px;
+    /*transition:1s ease;*/
+    margin-bottom: 5px;
 }
 
-.tab-small:hover {
+/*.tab-small:hover {
     transform: scale(1.05);
     z-index: 12;
-}
+}*/
 
 .tab-small ul{
     list-style: none;
@@ -197,14 +202,16 @@ input[type=button]:active{
 }
 
 .tab-small ul li {
-    padding: 5px 0;
-    font-size: 80%;
+    padding: 10px 0;
+    font-size: 90%;
+    letter-spacing: 1px;
+    word-spacing: 2px;
 }
 
 
 .tab-small div {
     padding: 10px;
-    border-bottom: 1px solid #CE6D39;
+    /*border-bottom: 1px solid #CE6D39;*/
 }
 
 .tab-small div:first-child{
@@ -215,6 +222,34 @@ input[type=button]:active{
     text-align: center;
 }
 
+.tab-small-1 {
+    color: white;
+    background-image: -webkit-linear-gradient(rgba(100, 100, 100 0.8), rgba(0, 0, 0, 0.8)), url(../../images/vintage-concrete.png);
+    background-image: linear-gradient(rgba(100, 100, 100, 0.8), rgba(100, 100, 100, 0.8)), url(../../images/healthassessment.jpg);
+    background-size: cover;
+    background-position: center;
+    /*height: 40vh;*/
+    /*background-attachment: fixed;*/
+}
+
+.tab-small-2 {
+    color: white;
+    background-image: -webkit-linear-gradient(rgba(100, 100, 100 0.8), rgba(0, 0, 0, 0.8)), url(../../images/diet_track.jpg);
+    background-image: linear-gradient(rgba(100, 100, 100, 0.8), rgba(100, 100, 100, 0.8)), url(../../images/diet_track.jpg);
+    background-size: cover;
+    background-position: center;
+    /*height: 40vh;*/
+    /*background-attachment: fixed;*/
+}
+.tab-small-3 {
+    color: white;
+    background-image: -webkit-linear-gradient(rgba(100, 100, 100 0.8), rgba(0, 0, 0, 0.8)), url(../../images/consult.jpg);
+    background-image: linear-gradient(rgba(100, 100, 100, 0.8), rgba(100, 100, 100, 0.8)), url(../../images/consult.jpg);
+    background-size: cover;
+    background-position: center;
+    /*height: 40vh;*/
+    /*background-attachment: fixed;*/
+}
 
 .tab-title{
     /*color: red;*/
@@ -222,9 +257,19 @@ input[type=button]:active{
 }
 .tab-content{
     height: 15vh;
+    margin-top: 20px;
+
 }
 
+.tab-content>ul>li{
+    /*color: red;*/
+    /*margin-top: 20px;*/
+    margin-bottom: 20px;
+}
 
+.tab-link{
+    margin-top: 20px;
+}
 
 .tab-small-3 .tab-content{
 
@@ -235,7 +280,7 @@ input[type=button]:active{
     display: inline-block;
     width: 30px;
     text-align: center;
-    color: #000000;
+    color: white;
     font-size: 140%;
     margin-right: 10px;
 
@@ -266,7 +311,7 @@ Login Modal
     margin-top: 5px;
 }
 .loginmodelbody .reqd{
-    color: red;
+    /*color: red;*/
     font-size: 80%;
     margin-left: 5px;
 }
