@@ -180,6 +180,15 @@ img {
     vertical-align: middle;
 }
 
+
+.info-container{
+    padding: 10px;
+    padding-top: 20px;
+}
+.info-container h2{
+    margin: 0px;
+}
+
 .row-1{
     height: 75%;
     padding-top:15px;

@@ -12,7 +12,7 @@
 
         <md-dialog-content style="max-width:800px;max-height:810px; ">
             <md-tabs md-dynamic-height md-border-bottom md-selected="oCtrl.selectedIndex">
-                <md-tab ng-repeat="ques in oCtrl.qbank track by $index" label="{{$index}}">
+                <md-tab ng-repeat="ques in oCtrl.qbank track by $index" label="{{$index+1}}">
                     <md-content class="md-padding">
                         <h5 class="md-display-2">{{ques.question}}</h5>
 

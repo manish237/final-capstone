@@ -251,6 +251,10 @@ input[type=button]:active{
     width: 100%;
 }
 
+.col-btn{
+    text-align: center;
+}
+
 .col-btn .btn{
     padding: 5px;
 }

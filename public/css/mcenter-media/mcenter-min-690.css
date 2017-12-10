@@ -85,7 +85,7 @@ h1{
     font-weight: 300;
     text-transform: uppercase;
 
-    margin-top: 15vh;
+    margin-top: 18vh;
     margin-bottom: 20px;
 
     color: #FFEEE4;
@@ -254,6 +254,10 @@ input[type=button]:active{
 
 .col-field select{
     width: 100%;
+}
+
+.col-btn{
+    text-align: center;
 }
 
 .col-btn .btn{

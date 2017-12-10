@@ -44,6 +44,12 @@ header {
     background-color: #474747;
 }
 
+.navbar-brand{
+    margin-top: .3vh;
+    font-size: 70%;
+    color: #FFEEE4 !important;
+}
+
 .main-nav {
     list-style: none;
     margin-top: 1vh;
@@ -118,7 +124,15 @@ h3 {
 
 }
 
-
+.hero-text-box>h2{
+    padding-top: 50px;
+}
+@media screen and ( max-height: 667px ){
+    .hero-text-box>h2{
+        padding-top: 2px;
+        margin-top: 2px;
+    }
+}
 /*
 Buttons
 */

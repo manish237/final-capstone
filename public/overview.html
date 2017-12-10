@@ -50,16 +50,18 @@
         <div class="col-md-3 col-xs-2"></div>
 
         <div class="col-md-2 col-xs-2 info-container">
-            <div class="info row title">
+            <div class="info title">
                 <h2>Welcome</h2>
-            </div>
-            <div class="info row uname">
+                <!--<br>-->
                 <h2>{{oCtrl.name}}</h2>
             </div>
+<!--            <div class="info row uname">
+
+            </div>-->
         </div>
         <div class="col-md-3 col-xs-2"></div>
 
-        <div ng-if="oCtrl.data.usertype==='CONSUMER'" class="col-md-2  col-xs-2 gg-container">
+        <div  class="col-md-2 col-xs-4 gg-container" ng-if="oCtrl.data.usertype==='CONSUMER'">
             <div class="row row-1"><div id="gg2" class="gauge"></div></div>
             <div class="row row-2"><a href="" ng-click="oCtrl.showTabDialog($event)"><h5>Update Score Now</h5></a></div>
         </div>

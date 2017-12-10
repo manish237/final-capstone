@@ -181,9 +181,18 @@ img {
     margin-left: 10px;
 }
 
+.info-container{
+    padding: 10px;
+    padding-top: 20px;
+}
+.info-container h2{
+    margin: 0px;
+}
+
+
 .row-1{
     height: 75%;
-    padding-top:10px;
+    margin-top:10px;
 }
 .row-2{
     height: 25%;

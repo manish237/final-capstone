@@ -2,8 +2,7 @@
    <form id="form-input" name="loginForm" novalidate ng-submit="$ctrl.loginSubmit(loginForm)">
         <div class="modal-header loginmodelhead">
             <button type="button" class="close" ng-click="$ctrl.cancel()">x</button>
-            <h3 class="modal-title" id="modal-title">Login</h3>
-            
+            <h3 class="modal-title" id="modal-title">Login </h3>
                 <!-- My <a href="#" title="This is a<br />test..." class="my_tooltip">Tooltip</a> test. -->
 
             <!-- <span>Form Submitted! {{loginForm.$submitted}}</span><br>
@@ -18,17 +17,15 @@
             <span ng-if="$ctrl.errorMessage!==undefined && $ctrl.errorMessage.length!==0">{{$ctrl.errorMessage}}</span>
 
             <div class="row fields" id="md-form-row">
+                <div class="col-xs-12">
                     <div class="row">
-                        <div class="col-md-2 col-xs-2"></div>
-                        <div class="col-md-4 col-xs-4">Username
+                        <div class="col-md-2 col-xs-1"></div>
+                        <div class="col-md-4 col-xs-4 login-lbl">Email
                             <span class="reqd">
                                 <sup>*</sup>
-                                <a href="#" data-toggle="tooltip" data-placement="right" title="Test User - [ consumer1@gmail.com ]">
-                                    <i class="glyphicon glyphicon-info-sign"></i>
-                                </a>
                             </span>
                         </div>
-                        <div class="col-md-4 col-xs-4">
+                        <div class="col-md-4 col-xs-6">
                             <input type="email" class="form-control" ng-model="$ctrl.loginUname" id="username" name="username" required
                                    ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/"
                                    ng-minlength="5">
@@ -38,20 +35,17 @@
                                 <span class="error" ng-message="minlength">Minimum 5 characters expected</span>
                             </div>
                         </div>
-                        <div class="col-md-2"></div>
+                        <div class="col-md-2 col-xs-1"></div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-2 col-xs-2"></div>
-                        <div class="col-md-4 col-xs-4">Password
+                        <div class="col-md-2 col-xs-1"></div>
+                        <div class="col-md-4 col-xs-4 login-lbl">Password
                             <span class="reqd">
                                 <sup>*</sup>
-                                <a href="#" data-toggle="tooltip" data-placement="right" title="Test Password - [ 11111111 ]">
-                                    <i class="glyphicon glyphicon-info-sign"></i>
-                                </a>
                             </span>
                         </div>
-                        <div class="col-md-4 col-xs-4">
+                        <div class="col-md-4 col-xs-6">
                             <input type="password" class="form-control" ng-model="$ctrl.loginPwd" id="password" name="password" required
                                    ng-minlength="6">
                             <div ng-if="loginForm.$submitted" ng-messages="loginForm.password.$error">
@@ -59,8 +53,20 @@
                                 <span class="error" ng-message="minlength">Minimum 5 characters expected</span>
                             </div>
                         </div>
+                        <div class="col-md-2 col-xs-1"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4 col-xs-6">
+                            <span>Test User - consumer1@gmail.com</span>
+                        </div>
+                        <div class="col-md-4 col-xs-6">
+                            <span>Test Password - 11111111</span>
+                        </div>
                         <div class="col-md-2"></div>
                     </div>
+                </div>
             </div>
         </div>
         <div class="modal-footer loginmodelfoot">

@@ -38,13 +38,13 @@
         <div class="col-md-12 col-xs-12 form-common-col">
             <form class="form-common" id="form-input" name="inputCommonForm" novalidate ng-submit="pCtrl.submitCommonProfile(inputCommonForm)">
                 <div class="row form-common-title-row">
-                    <div class="col-md-1"></div>
+                    <div class="col-md-1 col-xs-1"></div>
                     <div class="col-md-11 col-xs-11 form-common-title-col">
                         <h3 class="form-common-title">Personal Info</h3>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2"></div>
+                    <div class="col-md-2 col-xs-1"></div>
                     <div class="col-md-4 col-xs-4 form-common-field">Chat Handle(upto 20 characters)</div>
                     <div class="col-md-4 col-xs-6 form-common-input">
                         <input type="text" class="form-control" ng-model="pCtrl.chathandle" id="chathandle" name="chathandle" handle-requestor="{{pCtrl.username}}"
@@ -61,7 +61,7 @@
                     <div class="col-md-2"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2"></div>
+                    <div class="col-md-2 col-xs-1"></div>
                     <div class="col-md-4 col-xs-4 form-common-field">Name</div>
                     <div class="col-md-4 col-xs-6 form-common-input">
                         <input type="text" class="form-control" ng-model="pCtrl.name" id="name" name="name" required ng-minlength="6" ng-pattern="/^[a-zA-Z ]*$/">
@@ -74,7 +74,7 @@
                     <div class="col-md-2"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2"></div>
+                    <div class="col-md-2 col-xs-1"></div>
                     <div class="col-md-4 col-xs-4 form-common-field">Gender</div>
                     <div class="col-md-4 col-xs-6 form-common-input">
                         <select ng-model="pCtrl.gender" id="gender" name="gender">
@@ -86,7 +86,7 @@
                     <div class="col-md-2"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2"></div>
+                    <div class="col-md-2 col-xs-1"></div>
                     <div class="col-md-4 col-xs-4 form-common-field">Current Location</div>
                     <div class="col-md-4 col-xs-6 form-common-input">
                         <input name="location" id="location" ng-model="pCtrl.chosenPlace" details="pCtrl.chosenPlaceDetails"
@@ -95,7 +95,7 @@
                     <div class="col-md-2"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2"></div>
+                    <div class="col-md-2 col-xs-1"></div>
                     <div class="col-md-4 col-xs-4 form-common-field">Languages Known</div>
                     <div class="col-md-4 col-xs-6 form-common-input">
                         <ui-select

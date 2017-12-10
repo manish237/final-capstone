@@ -49,6 +49,11 @@ header {
     background-color: #474747;
 }
 
+.navbar-brand{
+    margin-top: 1.5vh;
+    color: #FFEEE4 !important;
+}
+
 .main-nav {
     list-style: none;
     margin-top: 2vh;

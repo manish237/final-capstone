@@ -85,7 +85,7 @@ h1{
     font-weight: 300;
     text-transform: uppercase;
 
-    margin-top: 15vh;
+    margin-top: 20vh;
     margin-bottom: 20px;
 
     color: #FFEEE4;
@@ -185,6 +185,10 @@ input[type=button]:active{
     font-size: 80%;
 }
 
+select,.food-col-item>input{
+    padding-left: 8px !important;
+    font-size: 60%;
+}
 
 .food-col-head,.food-col-item{
     border-right: 1px solid black;

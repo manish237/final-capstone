@@ -185,6 +185,9 @@ input[type=button]:active{
     font-size: 80%;
 }
 
+select,.food-col-item>input{
+    padding-left: 8px !important;
+}
 
 .food-col-head,.food-col-item{
     border-right: 1px solid black;

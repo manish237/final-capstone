@@ -33,7 +33,7 @@ header {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../../images/vintage-concrete.png);
     background-size: cover;
     background-position: center;
-    height: 60vh;
+    height: 50vh;
     background-attachment: fixed;
 }
 
@@ -168,7 +168,7 @@ input[type=button]:active{
 
 .img-container,.gg-container,.ln-container,.info-container{
     height: 100%;
-    line-height: 15vh;
+    line-height: 20vh;
     text-align: center;
 }
 
@@ -179,6 +179,18 @@ img {
     border-radius: 60%;
     vertical-align: middle;
     margin-left: 10px;
+}
+
+.info-container{
+    padding: 10px;
+    padding-top: 30px;
+}
+.info-container h2{
+    margin: 0px;
+}
+
+.gg-container{
+    margin-top: 10px!important;
 }
 
 .row-1{
